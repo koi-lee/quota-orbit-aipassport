@@ -21,6 +21,35 @@ Use an Apple silicon Mac with Codex CLI installed and signed in, or the Codex de
 3. Sync starts automatically after pairing. Once personal quota appears on Character, unplug USB. The assistant continues syncing when the device starts again. If you manually paused it, click Resume sync on the Mac.
 4. On its first normal launch, the assistant registers a login item for the current user. Disable it in System Settings > General > Login Items. Quitting does not unpair the device. To revoke access, select Unpair Mac in device Settings and follow its confirmation prompt.
 
+## If something goes wrong
+
+| What you see | What to do next |
+| --- | --- |
+| Waiting for device / first sync fails | Complete the USB pairing steps above. Do not remove an existing pairing first. |
+| Pairing incomplete | Check the data cable and device power; connect only one Passport. Click Connect on the Mac, wait for the device to boot, then choose Connect Mac in device Settings and confirm permission. |
+| Personal quota sync fails | Check that Codex is signed in, then check that the Mac and powered-on device share the same Wi-Fi. The assistant retries automatically; click Resume sync if you paused it manually. |
+| The browser page does not open, or shows another program | Confirm the assistant is running and reopen it. If another program still occupies local port 8942, report it; do not enter credentials on an unfamiliar page. |
+| The page says Waiting after Quit assistant | The assistant has exited, but its old browser page may remain. Close that page; reopen the app to run it again. |
+| macOS blocks the app | Check that you downloaded `-notarized.zip`. Report the exact system message; do not disable system security. |
+
+The current sync failure message does not distinguish sign-in, network, and pairing errors. Check them in the order above. Closing a browser tab does not quit the assistant; click Quit assistant to stop it.
+
+## Report a problem
+
+[Open a usage question](https://github.com/koi-lee/quota-orbit-aipassport/issues/new?template=passport_helper.yml). Copy these details; use “unknown” for versions you cannot identify:
+
+```text
+Assistant version / package filename:
+macOS version / Apple silicon model:
+Community firmware version:
+Steps to reproduce:
+Expected result:
+Actual result / exact error message:
+Does it happen every time:
+```
+
+Redact personal quota and account details from screenshots. Do not upload pairing files, sign-in credentials, Wi-Fi passwords, or unreviewed full logs.
+
 ## Scope and limitations
 
 - Data refreshes about every 30 seconds. Missing Codex quota windows are not converted into zero. When offline or the Mac sleeps, the device keeps the last snapshot and marks its update age.
