@@ -2,7 +2,26 @@
 
 # 额度星盘 · AI Passport
 
-这是 Quota Orbit 的 AI Passport 随身版：设备通过 Wi-Fi 查看公开重置消息；需要查看个人 Codex 额度时，再选装 Passport Mac 同步助手。
+给经常使用 Codex 的你：在 AI Passport 小屏上查看公开重置消息；配合 Mac 同步助手，还能抬眼看自己的剩余额度，少一次切换窗口查询。
+
+## 额度星盘是什么？
+
+**额度星盘（Quota Orbit）是面向 Codex 用户的额度查看与重置消息工具。** Mac 主客户端通过桌宠和菜单栏，帮你了解「还剩多少额度、什么时候恢复」，查看本次会话中的额度变化，并关注公开重置公告，方便安排接下来的工作。
+
+[了解额度星盘](https://www.starshoreai.com/quota-orbit/) · [Mac 主客户端与使用说明](https://github.com/koi-lee/quota-orbit)
+
+## AI Passport 随身版能帮你做什么？
+
+把 AI Passport 放在桌边或随身携带，你可以：
+
+- **少刷消息页面，直接看重置进展。** 设备连上 Wi-Fi 后，独立读取公开公告，在首页和来信页查看最新消息、发布时间，以及来源明确提供的预计或完成时间。只看公告不需要 Mac，也不需要登录 Codex。
+- **用声音留意新消息。** 开启提示音后，有效的新预告与完成公告会使用不同提示音；首次同步、重复和旧消息不会反复提醒。公开消息约每五分钟检查一次，不是即时推送。
+- **抬眼看个人额度，减少切换窗口。** 选装 Passport Mac 同步助手并配对后，角色页用剩余数值和书灯显示 Mac 上已登录 Codex 的额度摘要，帮助你判断接下来如何安排使用。
+- **想看详情时再用手机。** 在来信页按确定，用微信扫描屏幕上的小程序码，进入「星岸重置助手」继续查看。
+
+**个人额度同步有使用条件：** 首次需通过 USB 配对，之后可以拔线，但 Mac 仍须保持运行、唤醒、登录 Codex，并与设备连接同一 Wi-Fi，运行同步助手。Mac 休眠或同步中断后，设备会标记旧数据；它不能离开 Mac 独立查询个人额度。
+
+公开重置公告不代表你的个人额度已经恢复。额度星盘帮助你查看信息，不会增加额度或替你执行重置。
 
 ## 先选你要安装的内容
 
@@ -10,7 +29,7 @@
 |---|---|---|
 | 在 AI Passport 上查看额度星盘 | **AI Passport 社区固件**，安装到硬件，不是 Mac 安装包 | [社区作品 1250 · 安装固件](https://ai-passport.folotoy.cn/plays/1250/) |
 | 把 Mac 上的 Codex 个人额度同步到设备 | **Passport Mac 同步助手**，选装；只用于个人额度 | [0.3.0 预发布（Apple 芯片）](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.0) · [简体中文说明](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/README.zh_CN.md) · [繁體中文](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/README.zh_TW.md) · [English](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/README.en.md) |
-| 在 Mac 上使用桌宠、菜单栏和额度星盘 | **Quota Orbit Mac 主客户端**，不需要 AI Passport | [主客户端正式版本](https://github.com/koi-lee/quota-orbit/releases/latest) |
+| 在 Mac 上使用桌宠、菜单栏和额度星盘 | **Quota Orbit Mac 主客户端**，不需要 AI Passport | [Mac 主客户端公开试用版](https://github.com/koi-lee/quota-orbit/releases/latest) |
 
 只看公开公告时，不需要 Passport Mac 同步助手。社区安装会替换设备当前玩法，并可能清除原配置；请先阅读社区页面的安装提示。
 
@@ -30,7 +49,7 @@
 - 社区页面提供可直接安装的公开版本；仓库根目录的固件源码持续更新，不代表社区安装包已更新。源码变化不会自动更改社区版本。
 - Mac 同步助手 `0.3.0` 是 Apple 芯片预发布包。登录后自动启动、Mac 重启后的恢复及网络换址能力仍有未验证范围；设备自动找回地址还需要包含 `/discover` 的固件。该接口当前不在社区公开固件中。
 - 助手未使用 Developer ID 签名或 Apple 公证。首次打开时 macOS 可能提示确认。Intel Mac 尚未验证。
-- 主客户端与助手是两个独立应用。主客户端正式版和 Latest 下载入口仍在 [koi-lee/quota-orbit](https://github.com/koi-lee/quota-orbit)；不要用 Passport 助手替换它。
+- 主客户端与助手是两个独立应用。主客户端公开试用版和 Latest 下载入口仍在 [koi-lee/quota-orbit](https://github.com/koi-lee/quota-orbit)；不要用 Passport 助手替换它。
 
 ## 本仓库包含什么
 
