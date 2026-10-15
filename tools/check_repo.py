@@ -218,8 +218,9 @@ def check_document_languages(
         text = path.read_text(encoding="utf-8")
         opening = "\n".join(text.splitlines()[:8])
 
-        if name.endswith(".zh_CN.md"):
-            default_name = f"{name[:-len('.zh_CN.md')]}.md"
+        locale_suffix = next((suffix for suffix in (".zh_CN.md", ".zh_TW.md") if name.endswith(suffix)), None)
+        if locale_suffix:
+            default_name = f"{name[:-len(locale_suffix)]}.md"
             default_path = path.with_name(default_name)
             if default_path not in markdown:
                 errors.append(

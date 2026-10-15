@@ -66,7 +66,7 @@ static inline void orbit_quota_summary(const orbit_quota_t *q, int64_t now,
     }
     if (!q->valid) {
         snprintf(summary, summary_cap, "%s", orbit_tr("等待 Mac 同步个人额度"));
-        snprintf(age, age_cap, "%s", orbit_tr("请在电脑点击开始同步"));
+        snprintf(age, age_cap, "%s", orbit_tr("请在 Mac 查看同步状态"));
         return;
     }
     if (!slots[0] && !slots[1]) {

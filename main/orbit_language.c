@@ -72,7 +72,7 @@ static const char *const words[][3] = {
     {"设备异常，长按重新配网","裝置異常，長按重新配網","Device error · hold OK"},
     {"设置","設定","Settings"},
     {"设置 → 连接 Mac","設定 → 連線 Mac","Settings → Connect Mac"},
-    {"请在电脑点击开始同步","請在電腦點選開始同步","Click Start sync on Mac"},
+    {"请在 Mac 查看同步状态","請在 Mac 查看同步狀態","Check sync on your Mac"},
     {"读取","讀取","Read"},
     {"账号凭据留在电脑","賬號憑據留在電腦","Credentials stay on Mac"},
     {"返回","返回","Back"},

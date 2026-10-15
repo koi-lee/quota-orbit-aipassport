@@ -100,6 +100,19 @@ class VendoredDocumentationTest(unittest.TestCase):
         ]
         self.assertEqual(self.document_errors(files), [])
 
+    def test_traditional_translation_requires_linked_english_default(self) -> None:
+        page = self.document("docs/guide.zh_TW.md", "[English](guide.md)\n# 指南\n")
+        errors: list[str] = []
+        CHECKS.check_document_languages([page], errors)
+        self.assertTrue(any("missing English default guide.md" in error for error in errors))
+        english = self.document("docs/guide.md", "[简体中文](guide.zh_CN.md)\n# Guide\n")
+        simplified = self.document("docs/guide.zh_CN.md", "[English](guide.md)\n# 指南\n")
+        self.assertEqual(self.document_errors([english, simplified, page]), [])
+        page.write_text("# 指南\n", encoding="utf-8")
+        errors = []
+        CHECKS.check_document_languages([english, simplified, page], errors)
+        self.assertTrue(any("missing top language link to guide.md" in error for error in errors))
+
     def test_invalid_root_registrations_fail_closed(self) -> None:
         file_path = self.document("components/vendor_audio/README.md")
         for name in (

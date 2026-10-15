@@ -1,35 +1,32 @@
-# Passport Mac Sync Assistant 0.3.0 (Pre-release)
+# Quota Orbit · Passport Mac Sync Assistant 0.3.0 (public preview)
 
-<p align="right"><a href="README.zh_CN.md">简体中文</a> · <strong>English</strong></p>
+<p align="right"><a href="README.zh_CN.md">简体中文</a> · <a href="README.zh_TW.md">Traditional Chinese</a> · <a href="README.md">English</a></p>
 
-This companion app encrypts and syncs personal quota data readable by a Codex-signed-in Mac to a paired AI Passport on the same Wi-Fi network. It is not the Quota Orbit desktop app and is not device firmware; it does not replace or update the Mac desktop app.
+Send the personal quota available from your signed-in Codex account on a Mac to a paired AI Passport on the same Wi-Fi, using encrypted summaries. The assistant is optional: public reset notices work without it.
 
-## Download and requirements
+## Download
 
-- Package: `StarshorePassport-AppleSilicon-0.3.0.zip` (Apple silicon Macs only).
-- Verify it with `SHA256SUMS.txt` from the same release page: run `shasum -a 256 StarshorePassport-AppleSilicon-0.3.0.zip` and compare the result.
-- Codex CLI must be installed and signed in on the Mac. The Mac and Passport must use the same Wi-Fi. Keep the Mac powered on, awake, and online.
-- First-time pairing requires a USB data cable and confirmation on the device. After pairing, the assistant resumes periodic sync when the device starts; you do not need to click “Start sync” each time.
+[Download for Apple silicon](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/StarshorePassport-AppleSilicon-0.3.0.zip) · [Checksum file](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/SHA256SUMS.txt) · [Release and all assets](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.0)
 
-## Install and pair
+This GitHub Pre-release is ad-hoc signed locally, not Developer ID signed or Apple-notarized. If macOS blocks normal opening, stop installation and report the system message. Do not disable system security protections.
 
-1. Download and unzip the package. Move `StarshorePassport.app` to Applications. If an older helper is running, quit it before replacing it.
-2. Open the helper; its control page opens in your browser (if it does not, visit `http://127.0.0.1:8942/`). Connect USB and click “Connect device” on the Mac page. The device may restart; wait for its home screen.
-3. On the device, hold Confirm, open “Settings → Connect Mac,” and press Confirm to allow pairing. Sync starts automatically after the Mac page reports success. Unplug USB after personal quota appears on the device’s Character page.
-4. On first launch, the app registers a login item for the current macOS user. At later logins it is intended to start quietly and resume sync. Disable it in “System Settings → General → Login Items.”
+## Requirements
 
-## Sync and compatibility
+Use an Apple silicon Mac with Codex CLI installed and signed in, or the Codex desktop app installed in Applications. Keep the Mac and device on the same Wi-Fi, with the Mac awake, running and online. First pairing needs a USB data cable.
 
-- The helper reads and sends a quota summary about every 30 seconds. It cannot refresh while the Mac is shut down, asleep, or offline; the device keeps the last snapshot and marks it old.
-- Version 0.3.0 first checks the saved device address, then tries to find the paired device on supported private networks if that address stops responding. Automatic address recovery also requires matching new device firmware with the discovery endpoint.
-- The firmware currently published in the community does not include this new discovery endpoint, so automatic IP-change recovery is not fully available with the current public firmware. Recovery after an actual DHCP address change has not yet been tested on a device.
-- Automatic sync after a Passport restart was confirmed on one device. Automatic launch after Mac logout/login or restart has not been tested; feedback is welcome.
-- This Apple silicon preview is ad-hoc signed and has not been Developer ID signed or notarized by Apple. macOS may display a security warning. Do not disable system security protections. If macOS will not open the app through its normal approval flow, stop and report the message.
+## First use
 
-## Privacy and feedback
+1. Extract the ZIP and drag `StarshorePassport.app` into Applications. Quit an older running copy before replacing it. The assistant opens its browser control page; if it does not appear, visit http://127.0.0.1:8942/ .
+2. Connect the powered-on device by USB and click Connect device on the Mac first. The device may restart. After its home screen returns, hold Confirm, open Settings > Connect Mac, then press Confirm when asked to allow syncing.
+3. Sync starts automatically after pairing. Once personal quota appears on Character, unplug USB. The assistant continues syncing when the device starts again. If you manually paused it, click Resume sync on the Mac.
+4. On its first normal launch, the assistant registers a login item for the current user. Disable it in System Settings > General > Login Items. Quitting does not unpair the device. To revoke access, select Unpair Mac in device Settings and follow its confirmation prompt.
 
-Codex sign-in credentials and the pairing key stay on the user’s Mac; only an encrypted quota summary is sent to the device. Do not share account credentials, Wi-Fi passwords, pairing files, or access tokens. For feedback, include the helper version, macOS version, Passport firmware version, steps, and screenshots without private data.
+## Scope and limitations
 
-To unpair, confirm “Settings → Unpair Mac” on the device. This revokes authorization and clears personal quota data from the device. Quitting the helper does not unpair it.
+- Data refreshes about every 30 seconds. Missing Codex quota windows are not converted into zero. When offline or the Mac sleeps, the device keeps the last snapshot and marks its update age.
+- Periodic sync after a device restart was checked on one device. Actual Mac logout/login or reboot startup, and recovery after a real DHCP address change, remain untested.
+- Address recovery needs a paired-device discovery endpoint in device firmware. Older community REV-2840 lacks it but can still use the saved address. A newer candidate includes it; check the [community changelog](https://ai-passport.folotoy.cn/plays/1250/) to see whether it is public. Some large network subnets are not scanned automatically and may require reconnecting after an address change.
+- Codex credentials and pairing keys stay on the Mac; the device receives only encrypted quota summaries. A public reset announcement does not establish that your own quota recovered.
+- When reporting an issue, include assistant, firmware and macOS versions and the steps taken. Never send sign-in credentials, pairing files or Wi-Fi passwords.
 
-This is an independent community project and is not officially endorsed by OpenAI or FoloToy.
+This is the AI Passport companion, with a separate installer from the Quota Orbit Mac desktop client. This independent project is not officially endorsed by OpenAI or FoloToy.
