@@ -511,7 +511,7 @@ void orbit_ui_draw(const orbit_ui_t *u, const orbit_network_t *n, int battery, i
         box(screen, 20, 123, 28, 2, 0, 0x9A7B55);
         for (unsigned i = 0; i < 3; i++)
             timing_row(140 + (int)i * 36, timing[i]);
-        timestamp(text, sizeof(text), orbit_tr("读取"), n->snapshot.received);
+        timestamp(text, sizeof(text), orbit_tr("上次同步"), n->snapshot.received);
         centered_font(245, text, PAPER_MUTED, font_12());
         centered_font(265, orbit_tr("北京时间 · 确定打开小程序"), PAPER_MUTED, font_12());
     } else {
