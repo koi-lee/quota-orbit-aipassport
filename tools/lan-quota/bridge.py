@@ -120,11 +120,27 @@ def push_to_device(ip,key,windows):
     request=urllib.request.Request(f'http://{ip}:8899/quota',data=packet,headers={'Content-Type':'application/octet-stream'},method='POST')
     with opener.open(request,timeout=3) as response:
         if response.read(16)!=b'OK':raise RuntimeError('Device did not accept quota')
+class SyncFailure(RuntimeError):
+    def __init__(self, code):
+        self.code=code
+        super().__init__('Quota sync unavailable')
+
 def push_once():
-    config=json.loads(STATE.read_text());key=bytes.fromhex(config['key'])
+    try:
+        config=json.loads(STATE.read_text());key=bytes.fromhex(config['key'])
+        if len(key)!=32:raise ValueError('Invalid pairing key')
+    except FileNotFoundError:raise SyncFailure(20) from None
+    except (OSError,ValueError,KeyError,TypeError):raise SyncFailure(21) from None
+    try:
+        return push_paired(config,key)
+    except SyncFailure:raise
+    except Exception:raise SyncFailure(22) from None
+
+def push_paired(config,key):
     ip=select_device(config,key)
     if config.get('ip')!=ip:save_pair(key,ip,config['serial'])
-    windows=read_quota()
+    try:windows=read_quota()
+    except Exception:raise SyncFailure(23) from None
     try:push_to_device(ip,key,windows)
     except (OSError,urllib.error.URLError,urllib.error.HTTPError,TimeoutError,socket.timeout):
         replacement=find_device(key)
@@ -145,7 +161,7 @@ def main():
         try:push_once()
         except Exception as error:
             print('同步未完成：'+type(error).__name__+'。设备将标记旧数据；检查Mac登录、Wi-Fi或配对。',flush=True)
-            if args.command=='once':raise SystemExit(1)
+            if args.command=='once':raise SystemExit(error.code if isinstance(error,SyncFailure) else 1)
         if args.command=='once':return
         time.sleep(30)
 if __name__=='__main__':main()

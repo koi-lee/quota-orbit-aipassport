@@ -1,8 +1,9 @@
 """Local Mac helper UI. UI binds loopback; private quota never enters project previews."""
-import argparse, json, os, plistlib, secrets, subprocess, sys, tempfile, threading, time, webbrowser
+import argparse, errno, json, os, plistlib, secrets, subprocess, sys, tempfile, threading, time, webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlsplit
+import urllib.request
 TOKEN=secrets.token_hex(24)
 state={'busy':False,'syncing':False,'message':'waiting','updated_at':''}
 lock=threading.Lock();stop=threading.Event()
@@ -17,13 +18,57 @@ const copy={
 'zh-TW':{title:'隨身星盤 · Mac 同步助手',languageLabel:'語言',flow:'已登入 Codex 的 Mac → 同一 Wi-Fi → 你的 AI Passport',setup:'首次使用 USB 傳輸線連接裝置，先點選下方「連接裝置」。裝置可能重新啟動並回到首頁；啟動後，長按硬體確定鍵進入設定，選擇「連接 Mac」，再於硬體按確定允許同步。配對成功後會自動同步，不必每次手動點選。',pair:'連接裝置',start:'恢復同步',pause:'暫停同步',quit:'結束助手',hint:'Mac 登入後，助手會自動啟動並恢復同步。Mac 需要保持執行；每 30 秒更新。離線或休眠時，裝置顯示舊額度和更新時間。可在系統設定→一般→登入項目中關閉自動啟動。登入憑證留在電腦；裝置只接收加密額度摘要。',revoke:'解除配對：在硬體設定中選擇「解除 Mac 配對」並確認。這會撤銷授權並清除裝置上的個人額度。',waiting:'等待連接裝置',pairing:'正在連接裝置…',preview:'預覽模式：尚未啟用配對與同步',pairSuccess:'配對成功，正在自動同步',pairFail:'配對未完成，請檢查 USB 和裝置確認',syncSuccess:'個人額度已同步',syncFail:'同步未完成：請檢查 Wi-Fi、Mac 登入狀態與配對；裝置會保留舊記錄',syncTimeout:'同步逾時，裝置會保留舊記錄，稍後再試',syncing:'自動同步已執行，等待裝置連線',paused:'已暫停，裝置會標示舊資料'},
 en:{title:'Quota Orbit · Mac Sync Assistant',languageLabel:'Language',flow:'Signed-in Codex on your Mac → same Wi-Fi → your AI Passport',setup:'For first-time setup, connect the device with a USB data cable and click “Connect device”. The device may restart to its home screen. After it boots, hold Confirm on the device, open Settings > Connect Mac, then press Confirm to allow syncing. Sync starts automatically after pairing; no need to click Start each time.',pair:'Connect device',start:'Resume sync',pause:'Pause sync',quit:'Quit assistant',hint:'The assistant starts at Mac login and resumes syncing automatically. Keep your Mac running; data refreshes about every 30 seconds. When offline or asleep, the device shows the last value and update time. Disable auto-start in System Settings > General > Login Items. Sign-in credentials stay on your Mac; only an encrypted quota summary is sent to the device.',revoke:'To unpair, choose “Unpair Mac” in device Settings and confirm. This revokes access and clears personal quota data from the device.',waiting:'Waiting for device',pairing:'Connecting to device…',preview:'Preview mode: pairing and sync are disabled',pairSuccess:'Paired. Syncing automatically.',pairFail:'Pairing incomplete. Check USB and confirm on the device.',syncSuccess:'Personal quota synced',syncFail:'Sync incomplete. Check Wi-Fi, Mac sign-in and pairing; the device keeps the previous snapshot.',syncTimeout:'Sync timed out. The device keeps the previous snapshot; retrying later.',syncing:'Automatic sync is running; waiting for device',paused:'Sync paused. The device will mark the data as old.'}
 };
+const extraCopy={"zh-CN": {"pairMissing": "尚未配对：用 USB 连接设备，点击「连接设备」，再在硬件上确认。", "pairInvalid": "无法读取配对记录，请重新通过 USB 连接并确认配对。", "deviceUnavailable": "暂时无法连接设备：确认设备开机，并与 Mac 连接同一 Wi-Fi；稍后自动重试。", "codexUnavailable": "无法读取 Codex 额度：确认 Mac 已安装并登录 Codex，稍后自动重试。", "exited": "助手已退出。可关闭此页面；重新打开应用可恢复同步。", "disconnected": "无法连接本机助手，请重新打开应用。", "actionFailed": "操作未完成，请稍后重试。"}, "zh-TW": {"pairMissing": "尚未配對：使用 USB 連接裝置，點「連接裝置」，再於硬體確認。", "pairInvalid": "無法讀取配對記錄，請重新使用 USB 連接並確認配對。", "deviceUnavailable": "暫時無法連接裝置：確認裝置開機，且與 Mac 使用同一 Wi-Fi；稍後自動重試。", "codexUnavailable": "無法讀取 Codex 額度：確認 Mac 已安裝並登入 Codex，稍後自動重試。", "exited": "助手已結束。可關閉此頁面；重新開啟應用程式可恢復同步。", "disconnected": "無法連接本機助手，請重新開啟應用程式。", "actionFailed": "操作未完成，請稍後再試。"}, "en": {"pairMissing": "Not paired yet. Connect by USB, click Connect device, then confirm on the device.", "pairInvalid": "Cannot read pairing records. Connect by USB and confirm pairing again.", "deviceUnavailable": "Device unavailable. Check that it is on and shares Wi-Fi with your Mac; retrying automatically.", "codexUnavailable": "Cannot read Codex quota. Check that Codex is installed and signed in on your Mac; retrying automatically.", "exited": "Assistant exited. Close this page; reopen the app to resume syncing.", "disconnected": "Cannot reach the local assistant. Reopen the app.", "actionFailed": "Action incomplete. Please try again."}};
+Object.keys(extraCopy).forEach(k=>Object.assign(copy[k],extraCopy[k]));
+let exited=false, actionPending=false;
 let lang='zh-CN';try{const saved=localStorage.getItem('quotaOrbitLanguage');if(copy[saved])lang=saved}catch(_){}
 function applyLanguage(){document.documentElement.lang=lang==='en'?'en':lang;document.title=copy[lang].title;document.querySelectorAll('[data-i18n]').forEach(e=>{const key=e.dataset.i18n;e.textContent=copy[lang][key]});document.querySelector('#language').value=lang;refresh()}
 document.querySelector('#language').addEventListener('change',e=>{lang=copy[e.target.value]?e.target.value:'zh-CN';try{localStorage.setItem('quotaOrbitLanguage',lang)}catch(_){}applyLanguage()});
-async function send(action){await fetch('/action',{method:'POST',headers:{'Content-Type':'application/json','X-Local-Token':'TOKEN'},body:JSON.stringify({action})});await refresh()}
-async function refresh(){try{const r=await fetch('/status');const s=await r.json();const c=copy[lang];const suffix=s.updated_at?' · '+s.updated_at:'';document.querySelector('#status').textContent=(c[s.message]||c.waiting)+suffix;document.querySelectorAll('button').forEach(b=>{b.disabled=b.id!=='quit'&&(s.busy||!s.allow_device||(b.dataset.action==='start'&&s.syncing)||(b.dataset.action==='stop'&&!s.syncing))})}catch(_){document.querySelector('#status').textContent=copy[lang].waiting}}
-document.querySelectorAll('button[data-action]').forEach(b=>b.addEventListener('click',()=>send(b.dataset.action)));applyLanguage();setInterval(refresh,1500);
+function closedState(message){document.querySelector('#status').textContent=copy[lang][message];document.querySelectorAll('button').forEach(b=>{b.disabled=true})}
+async function send(action){
+ if(exited||actionPending)return;actionPending=true;
+ try{const r=await fetch('/action',{method:'POST',headers:{'Content-Type':'application/json','X-Local-Token':'TOKEN'},body:JSON.stringify({action})});
+ if(!r.ok)throw new Error('action');
+ if(action==='quit'){exited=true;clearInterval(pollTimer);closedState('exited')}else{actionPending=false;await refresh()}
+ }catch(_){document.querySelector('#status').textContent=copy[lang].actionFailed}finally{actionPending=false}
+}
+async function refresh(){
+ if(exited){closedState('exited');return}if(actionPending)return;
+ try{const r=await fetch('/status');if(!r.ok)throw new Error('status');const s=await r.json();
+ if(exited||actionPending)return;
+ const c=copy[lang];const suffix=s.updated_at?' · '+s.updated_at:'';document.querySelector('#status').textContent=(c[s.message]||c.waiting)+suffix;
+ document.querySelectorAll('button').forEach(b=>{b.disabled=b.id!=='quit'&&(s.busy||!s.allow_device||(b.dataset.action==='start'&&s.syncing)||(b.dataset.action==='stop'&&!s.syncing))})
+ }catch(_){if(!exited&&!actionPending)closedState('disconnected')}
+}
+document.querySelectorAll('button[data-action]').forEach(b=>b.addEventListener('click',()=>send(b.dataset.action)));const pollTimer=setInterval(refresh,1500);applyLanguage();
 </script></html>'''.replace('TOKEN',TOKEN)
+SYNC_MESSAGES={20:'pairMissing',21:'pairInvalid',22:'deviceUnavailable',23:'codexUnavailable'}
+def sync_message(code):
+    return 'syncSuccess' if code==0 else SYNC_MESSAGES.get(code,'syncFail')
+
+def existing_helper(port):
+    # Read a bounded, loopback response without proxy or redirect navigation.
+    class NoRedirect(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self,*args,**kwargs):return None
+    opener=urllib.request.build_opener(urllib.request.ProxyHandler({}),NoRedirect())
+    try:
+        with opener.open(f'http://127.0.0.1:{port}/',timeout=2) as response:
+            page=response.read(32768).decode('utf-8')
+        # Supports the already installed 0.3.0 page too. This is identity detection,
+        # not an authentication boundary; never send a token or action here.
+        return all(marker in page for marker in ('quotaOrbitLanguage','X-Local-Token','data-action="pair"','Mac同步助手'))
+    except (OSError,ValueError):return False
+
+def show_port_conflict(port, open_browser):
+    message=f'本机端口 {port} 被其他程序占用，助手未启动。请关闭占用程序后重新打开助手。'
+    print(message,file=sys.stderr,flush=True)
+    if open_browser:
+        page=Path(tempfile.mkdtemp(prefix='passport-port-'))/'notice.html'
+        page.write_text('<meta charset="utf-8"><title>Mac helper</title><h1>Mac 同步助手未启动 / 未啟動 / Not started</h1>'
+                        +f'<p>{message}</p><p>本機連接埠 {port} 被其他程式占用。請關閉占用程式後重新開啟助手。</p>'
+                        +f'<p>Local port {port} is in use by another application. Close that application and reopen the helper.</p>',encoding='utf-8')
+        webbrowser.open(page.as_uri())
+
 def update(**values):
     with lock:state.update(values)
 def start_sync_locked():
@@ -86,7 +131,7 @@ def sync_loop():
                 process.terminate();process.wait(timeout=3);raise
             finally:
                 with lock:children.discard(process)
-            update(message='syncSuccess' if process.returncode==0 else 'syncFail',updated_at=time.strftime('%H:%M:%S') if process.returncode==0 else '')
+            update(message=sync_message(process.returncode),updated_at=time.strftime('%H:%M:%S') if process.returncode==0 else '')
         except subprocess.TimeoutExpired:
             update(message='syncTimeout')
         if stop.wait(30):break
@@ -134,13 +179,16 @@ def main():
     PORT=args.port
     state['allow_device']=args.allow_device
     if not args.allow_device:state['message']='preview'
+    try:SERVER=ThreadingHTTPServer(('127.0.0.1',PORT),Handler)
+    except OSError as error:
+        if error.errno==errno.EADDRINUSE and existing_helper(PORT):
+            if not args.no_browser:webbrowser.open(f'http://127.0.0.1:{PORT}/')
+            raise SystemExit(0)
+        show_port_conflict(PORT,not args.no_browser)
+        raise SystemExit(1)
     if args.allow_device:
         try:install_login_agent()
         except OSError as error:print(f'无法配置登录启动：{error}',file=sys.stderr,flush=True)
-    try:SERVER=ThreadingHTTPServer(('127.0.0.1',PORT),Handler)
-    except OSError:
-        if not args.no_browser:webbrowser.open(f'http://127.0.0.1:{PORT}/')
-        raise SystemExit(0)
     if not args.no_browser:webbrowser.open(f'http://127.0.0.1:{PORT}/')
     print(f'Mac助手：http://127.0.0.1:{PORT}/（仅本机）',flush=True)
     if args.allow_device and args.auto_sync:
