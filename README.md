@@ -4,6 +4,14 @@
 
 **Keep Codex quota and public reset news on a small screen beside your desk, with fewer window switches.** This play runs on AI Passport hardware. It is not a Mac desktop app.
 
+
+## Install here
+
+**1. [Install the device play](https://ai-passport.folotoy.cn/plays/1250/)** — Connect AI Passport by USB and use Chrome or Edge on your computer. This is all you need for public notices.
+
+**2. [Get the Mac quota sync assistant](docs/ai-passport/mac-helper/README.md)** — Add this only to see your own quota on Role. Apple silicon Mac required; the separate Quota Orbit desktop app is not required.
+
+
 - **Follow announcements:** Wi-Fi lets the device read public forecasts and completion notices independently, with distinct optional sounds. No Mac or Codex sign-in is needed for public news.
 - **See your own quota:** add the optional Mac Sync Assistant to show remaining quota and matching lights on the Moonlight Archivist's book.
 - **Interact:** press Confirm for stars and a prayer sound, or scan the message screen's code in WeChat to open the Starshore Reset Assistant.
@@ -25,9 +33,9 @@ You need an AI Passport device. Choose the first item for public news; add the s
 | Required: Quota Orbit firmware | AI Passport hardware | [Community play 1250 → Install latest](https://ai-passport.folotoy.cn/plays/1250/) |
 | Optional: Passport Mac Sync Assistant 0.3.0 | Apple silicon Mac | [Download and setup guide](docs/ai-passport/mac-helper/README.md) · [Release assets](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.0) |
 
-Firmware does not install on a Mac. **Source code archives are not installers.** The helper installer is `StarshorePassport-AppleSilicon-0.3.0.zip`; Python is not required.
+Firmware does not install on a Mac. **Source code archives are not installers.** The helper installer is `StarshorePassport-AppleSilicon-0.3.0-notarized.zip`; Python is not required.
 
-The helper is a pre-release without Apple notarization. If macOS blocks normal opening, stop and report the message rather than disabling system protection. No verified helper installer is provided for Intel Macs or Windows.
+The new `-notarized.zip` helper is Developer ID signed and Apple-notarized, and remains a pre-release. If macOS blocks normal opening, stop and report the message rather than disabling system protection. No verified helper installer is provided for Intel Macs or Windows.
 
 ## First use in four steps
 

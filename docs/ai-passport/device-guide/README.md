@@ -9,7 +9,7 @@
 | Install device firmware first | AI Passport hardware | [Community play 1250 → Install latest](https://ai-passport.folotoy.cn/plays/1250/) |
 | Optional helper for personal quota | Apple silicon Mac | [Helper 0.3.0 download and setup](../mac-helper/README.md) |
 
-The Quota Orbit Mac desktop app is not required. Source code archives are for developers, not installers. The helper is not notarized; if macOS blocks normal opening, stop and report it rather than disabling system protection.
+The Quota Orbit Mac desktop app is not required. Source code archives are for developers, not installers. The new `-notarized.zip` helper is Apple-notarized; if macOS blocks normal opening, stop and report it rather than disabling system protection.
 
 ## Setup and controls
 
@@ -35,7 +35,7 @@ Authentication failure means Wi-Fi did not connect: recheck the household networ
 
 ## Evidence and limits
 
-Community REV-2886 and later include three-language UI, confirmation screens and address discovery; check the public release notes for the installed revision. Existing user acceptance covers pages, readability, mini-program scan, USB pairing, Wi-Fi sync after unplugging, repeated taps and sound. Controlled forecast/completion and duplicate/mute replay passed. Natural real-message triggering, long-run sleep/network recovery and fresh community installation remain unverified. Only the current Apple silicon Mac was tested; the helper is not Developer ID signed/notarized. Credentials remain on the Mac; do not share pairing files. Example images do not establish current announcements or account quota.
+Community REV-2886 and later include three-language UI, confirmation screens and address discovery; check the public release notes for the installed revision. Existing user acceptance covers pages, readability, mini-program scan, USB pairing, Wi-Fi sync after unplugging, repeated taps and sound. Controlled forecast/completion and duplicate/mute replay passed. Natural real-message triggering, long-run sleep/network recovery and fresh community installation remain unverified. Only the current Apple silicon Mac was tested; the new `-notarized.zip` helper is Developer ID signed and Apple-notarized. Credentials remain on the Mac; do not share pairing files. Example images do not establish current announcements or account quota.
 
 <details>
 <summary>All example screens and states</summary>

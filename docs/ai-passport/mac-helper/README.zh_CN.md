@@ -6,9 +6,9 @@
 
 ## 下载
 
-[下载 Apple 芯片 Mac 安装包](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/StarshorePassport-AppleSilicon-0.3.0.zip) · [校验文件](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/SHA256SUMS.txt) · [版本与全部附件](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.0)
+[下载 Apple 芯片 Mac 安装包](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/StarshorePassport-AppleSilicon-0.3.0-notarized.zip) · [校验文件](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/SHA256SUMS.txt) · [版本与全部附件](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.0)
 
-这是 GitHub Pre-release，当前为本地 ad-hoc 签名，尚未 Developer ID 签名或 Apple 公证。若 macOS 阻止正常打开，请停止安装并反馈系统提示，不要关闭系统安全保护。
+这是 GitHub Pre-release，新版 `-notarized.zip` 已通过 Developer ID 签名与 Apple 公证，旧的无后缀 ZIP 仍是未公证历史包。若 macOS 阻止正常打开，请停止安装并反馈系统提示，不要关闭系统安全保护。
 
 ## 准备
 

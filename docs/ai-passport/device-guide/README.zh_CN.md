@@ -9,7 +9,7 @@
 | 先装设备固件 | AI Passport 硬件 | [社区作品 1250 → 安装最新版](https://ai-passport.folotoy.cn/plays/1250/) |
 | 个人额度选装助手 | Apple 芯片 Mac | [助手 0.3.0 下载与安装](../mac-helper/README.zh_CN.md) |
 
-不必安装额度星盘 Mac 主客户端。Source code 是开发者源码，不是安装包。助手未公证，若 macOS 阻止正常打开，请停止并反馈，不要关闭系统保护。
+不必安装额度星盘 Mac 主客户端。Source code 是开发者源码，不是安装包。新版助手 `-notarized.zip` 已通过 Apple 公证，若 macOS 阻止正常打开，请停止并反馈，不要关闭系统保护。
 
 ## 第一次使用
 
@@ -62,7 +62,7 @@ flowchart LR
 
 社区 REV-2886 起包含三语、二次确认及地址发现支持；以社区公开更新日志为准。已有用户验收覆盖三页、中文可读性、小程序扫码、USB配对、拔线后同Wi-Fi同步、连续点星和声音。预告/完成与重复/静音的受控回放通过；真实新公告的自然触发、长期休眠/断网、社区从零完整安装仍待验证。
 
-助手仅当前Apple芯片Mac经过验证，未Developer ID签名/公证；Intel与其他系统未验收。登录凭据留在Mac，密钥留在用户本地；不要分享配对文件。示例图不代表当前公告或个人额度。
+助手仅当前Apple芯片Mac经过验证，新版 `-notarized.zip` 已通过 Developer ID 签名与公证；Intel与其他系统未验收。登录凭据留在Mac，密钥留在用户本地；不要分享配对文件。示例图不代表当前公告或个人额度。
 
 <details>
 <summary>展开全部页面与状态示意图</summary>

@@ -6,9 +6,9 @@ Send the personal quota available from your signed-in Codex account on a Mac to 
 
 ## Download
 
-[Download for Apple silicon](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/StarshorePassport-AppleSilicon-0.3.0.zip) · [Checksum file](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/SHA256SUMS.txt) · [Release and all assets](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.0)
+[Download for Apple silicon](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/StarshorePassport-AppleSilicon-0.3.0-notarized.zip) · [Checksum file](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/SHA256SUMS.txt) · [Release and all assets](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.0)
 
-This GitHub Pre-release is ad-hoc signed locally, not Developer ID signed or Apple-notarized. If macOS blocks normal opening, stop installation and report the system message. Do not disable system security protections.
+The new `-notarized.zip` build is Developer ID signed and Apple-notarized. The original ZIP without that suffix remains an unnotarized historical build. This remains a GitHub Pre-release. If macOS blocks normal opening, stop installation and report the system message. Do not disable system security protections.
 
 ## Requirements
 

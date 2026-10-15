@@ -4,6 +4,14 @@
 
 **把 Codex 额度与公开重置消息放在桌边的小屏上，少一次切换窗口查询。** 这是安装在 AI Passport 硬件上的玩法，不是 Mac 桌面应用。
 
+
+## 安装入口
+
+**① [给 AI Passport 安装玩法](https://ai-passport.folotoy.cn/plays/1250/)** — 用电脑 Chrome / Edge，USB 连接硬件。只看公开消息，到这里即可。
+
+**② [给 Mac 下载个人额度同步助手](docs/ai-passport/mac-helper/README.zh_CN.md)** — 想在角色页看自己的额度，再安装此助手。仅 Apple 芯片 Mac；无需安装额度星盘桌面主客户端。
+
+
 - **看公告：** 设备连上 Wi-Fi，即可独立查看公开预告和完成公告；新消息可用不同提示音提醒，不需要 Mac 或登录 Codex。
 - **看自己的额度：** 选装 Mac 同步助手，角色页显示个人剩余额度，月夜档案员手中的书灯随额度变化。
 - **轻松互动：** 按确定点亮星星、听祈愿音；来信页微信扫码进入「星岸重置助手」查看详情。
@@ -25,9 +33,9 @@
 | 必装：额度星盘设备固件 | AI Passport 硬件 | [社区作品 1250 → 安装最新版](https://ai-passport.folotoy.cn/plays/1250/) |
 | 选装：Passport Mac 同步助手 0.3.0 | Apple 芯片 Mac | [下载与安装说明](docs/ai-passport/mac-helper/README.zh_CN.md) · [Release 附件](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.0) |
 
-设备固件不能装到 Mac；Release 中的 **Source code 是源码，不是安装包**。助手安装包名为 `StarshorePassport-AppleSilicon-0.3.0.zip`，无需安装 Python。
+设备固件不能装到 Mac；Release 中的 **Source code 是源码，不是安装包**。助手安装包名为 `StarshorePassport-AppleSilicon-0.3.0-notarized.zip`，无需安装 Python。
 
-助手目前是预发布，未通过 Apple 公证；如 macOS 阻止正常打开，请停止并反馈提示，不要关闭系统安全保护。Intel Mac 和 Windows 尚未提供经过验证的助手安装包。
+助手目前是预发布，新版 `-notarized.zip` 已通过 Apple 公证；如 macOS 阻止正常打开，请停止并反馈提示，不要关闭系统安全保护。Intel Mac 和 Windows 尚未提供经过验证的助手安装包。
 
 ## 第一次使用，按这四步
 
