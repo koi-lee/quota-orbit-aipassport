@@ -1,62 +1,58 @@
-<p align="right"><a href="README.md">English</a> · <strong>简体中文</strong></p>
+<p align="right"><strong>简体中文</strong> · <a href="docs/ai-passport/device-guide/README.zh_TW.md">繁體中文</a> · <a href="README.md">English</a></p>
 
 # 额度星盘 · AI Passport
 
-给经常使用 Codex 的你：在 AI Passport 小屏上查看公开重置消息；配合 Mac 同步助手，还能抬眼看自己的剩余额度，少一次切换窗口查询。
+**把 Codex 额度与公开重置消息放在桌边的小屏上，少一次切换窗口查询。** 这是安装在 AI Passport 硬件上的玩法，不是 Mac 桌面应用。
 
-## 额度星盘是什么？
+- **看公告：** 设备连上 Wi-Fi，即可独立查看公开预告和完成公告；新消息可用不同提示音提醒，不需要 Mac 或登录 Codex。
+- **看自己的额度：** 选装 Mac 同步助手，角色页显示个人剩余额度，月夜档案员手中的书灯随额度变化。
+- **轻松互动：** 按确定点亮星星、听祈愿音；来信页微信扫码进入「星岸重置助手」查看详情。
 
-**额度星盘（Quota Orbit）是面向 Codex 用户的额度查看与重置消息工具。** Mac 主客户端通过桌宠和菜单栏，帮你了解「还剩多少额度、什么时候恢复」，查看本次会话中的额度变化，并关注公开重置公告，方便安排接下来的工作。
+| 公开消息：首页／来信 | 个人额度：角色／书灯 |
+|---|---|
+| ![公开重置公告示意](docs/ai-passport/device-guide/images/home.png) | ![个人剩余额度示意](docs/ai-passport/device-guide/images/quota-week-only.png) |
 
-[了解额度星盘](https://www.starshoreai.com/quota-orbit/) · [Mac 主客户端与使用说明](https://github.com/koi-lee/quota-orbit)
+图片由界面代码渲染，数据为示例，并非实机照片；部分截图可能保留较早文案。**公开重置公告不代表你的个人额度已经恢复；点星也不会增加额度。**
 
-## AI Passport 随身版能帮你做什么？
+[查看角色额度与点按祈愿效果示意](docs/ai-passport/device-guide/images/role-prayer.jpg)
 
-把 AI Passport 放在桌边或随身携带，你可以：
+## 我需要下载什么？
 
-- **少刷消息页面，直接看重置进展。** 设备连上 Wi-Fi 后，独立读取公开公告，在首页和来信页查看最新消息、发布时间，以及来源明确提供的预计或完成时间。只看公告不需要 Mac，也不需要登录 Codex。
-- **用声音留意新消息。** 开启提示音后，有效的新预告与完成公告会使用不同提示音；首次同步、重复和旧消息不会反复提醒。公开消息约每五分钟检查一次，不是即时推送。
-- **抬眼看个人额度，减少切换窗口。** 选装 Passport Mac 同步助手并配对后，角色页用剩余数值和书灯显示 Mac 上已登录 Codex 的额度摘要，帮助你判断接下来如何安排使用。
-- **想看详情时再用手机。** 在来信页按确定，用微信扫描屏幕上的小程序码，进入「星岸重置助手」继续查看。
+先准备一台 AI Passport。只看公告选第一项；想看个人额度，再加第二项。
 
-**个人额度同步有使用条件：** 首次需通过 USB 配对，之后可以拔线，但 Mac 仍须保持运行、唤醒、登录 Codex，并与设备连接同一 Wi-Fi，运行同步助手。Mac 休眠或同步中断后，设备会标记旧数据；它不能离开 Mac 独立查询个人额度。
-
-公开重置公告不代表你的个人额度已经恢复。额度星盘帮助你查看信息，不会增加额度或替你执行重置。
-
-## 先选你要安装的内容
-
-| 你要做什么 | 安装什么 | 下载入口 |
+| 用途 | 安装到哪里 | 入口 |
 |---|---|---|
-| 在 AI Passport 上查看额度星盘 | **AI Passport 社区固件**，安装到硬件，不是 Mac 安装包 | [社区作品 1250 · 安装固件](https://ai-passport.folotoy.cn/plays/1250/) |
-| 把 Mac 上的 Codex 个人额度同步到设备 | **Passport Mac 同步助手**，选装；只用于个人额度 | [0.3.0 预发布（Apple 芯片）](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.0) · [简体中文说明](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/README.zh_CN.md) · [繁體中文](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/README.zh_TW.md) · [English](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/README.en.md) |
-| 在 Mac 上使用桌宠、菜单栏和额度星盘 | **Quota Orbit Mac 主客户端**，不需要 AI Passport | [Mac 主客户端公开试用版](https://github.com/koi-lee/quota-orbit/releases/latest) |
+| 必装：额度星盘设备固件 | AI Passport 硬件 | [社区作品 1250 → 安装最新版](https://ai-passport.folotoy.cn/plays/1250/) |
+| 选装：Passport Mac 同步助手 0.3.0 | Apple 芯片 Mac | [下载与安装说明](docs/ai-passport/mac-helper/README.zh_CN.md) · [Release 附件](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.0) |
 
-只看公开公告时，不需要 Passport Mac 同步助手。社区安装会替换设备当前玩法，并可能清除原配置；请先阅读社区页面的安装提示。
+设备固件不能装到 Mac；Release 中的 **Source code 是源码，不是安装包**。助手安装包名为 `StarshorePassport-AppleSilicon-0.3.0.zip`，无需安装 Python。
 
-## 上手与页面说明
+助手目前是预发布，未通过 Apple 公证；如 macOS 阻止正常打开，请停止并反馈提示，不要关闭系统安全保护。Intel Mac 和 Windows 尚未提供经过验证的助手安装包。
 
-- [设备页面、状态和配网／同步流程图](docs/ai-passport/device-guide/README.zh_CN.md)（[English](docs/ai-passport/device-guide/README.md)）
-- [语言支持矩阵（简体中文）](docs/ai-passport/language-support.zh_CN.md)
-- [版本兼容表](docs/ai-passport/COMPATIBILITY.zh_CN.md)
-- [Passport Mac 同步助手源码](tools/lan-quota/)
-- [AI Passport 固件源码与构建说明](main/)
-- [Release 标签与分发边界](docs/development/releasing.zh_CN.md)
+## 第一次使用，按这四步
 
-设备通过屏幕上的临时热点配网，网页入口为 `http://192.168.4.1`，仅使用 2.4 GHz Wi-Fi。个人额度同步须先用 USB 完成一次硬件配对；之后 Mac 和设备在同一 Wi-Fi 下自动同步。
+1. **安装与配网。** 用电脑 Chrome 或 Edge 打开社区作品页，将开机设备用 USB 数据线连接，点「安装最新版」并选择设备；完成前保持连接。安装会替换当前玩法，可能清除旧设置。手机连接设备屏幕所示 `Starshore-…` 热点，使用屏幕密码；手机浏览器打开 [http://192.168.4.1](http://192.168.4.1)，填写家中 **2.4 GHz Wi-Fi**，点「连接并保存」。设备出现「已同步 · 公开消息」即可看公告。失败重填；超时或换网时，长按确定 → 设置 → 重新配网，再确认。
+2. **看消息。** 上下键切换首页、来信、角色。来信页按确定显示小程序码，微信扫码查看详情；再按确定返回。长按确定进设置，可开启提示音或切换简体／繁体／English。
+3. **想看个人额度，再装助手。** Mac 先安装并登录 Codex CLI，或使用“应用程序”中的 Codex 桌面应用；两者与设备在同一 Wi-Fi。安装并打开[同步助手](docs/ai-passport/mac-helper/README.zh_CN.md)，USB 连接设备，先点电脑「连接设备」。等硬件启动后，在硬件设置选「连接 Mac」，按确定允许。
+4. **确认同步后拔线。** 配对后自动同步，角色页出现个人额度就是成功。可拔 USB；日常保持 Mac 开机唤醒、助手运行。曾手动暂停时点「恢复同步」。角色页短按确定点星；不再使用时，可在设置确认解除 Mac 配对。
 
-## 版本与兼容范围
+公开公告约每 **5 分钟**检查；个人额度约每 **30 秒**同步。来信的「上次同步」是最近一次成功获取公开消息的时间，不是当前时钟。Mac 休眠或两分钟无个人额度更新时显示旧数据、书灯变灰；不提供的额度窗口不会补成 0。
 
-- 社区页面提供可直接安装的公开版本；仓库根目录的固件源码持续更新，不代表社区安装包已更新。源码变化不会自动更改社区版本。
-- Mac 同步助手 `0.3.0` 是 Apple 芯片预发布包。登录后自动启动、Mac 重启后的恢复及网络换址能力仍有未验证范围；设备自动找回地址还需要包含 `/discover` 的固件。该接口当前不在社区公开固件中。
-- 助手未使用 Developer ID 签名或 Apple 公证。首次打开时 macOS 可能提示确认。Intel Mac 尚未验证。
-- 主客户端与助手是两个独立应用。主客户端公开试用版和 Latest 下载入口仍在 [koi-lee/quota-orbit](https://github.com/koi-lee/quota-orbit)；不要用 Passport 助手替换它。
+## 更多说明
 
-## 本仓库包含什么
+- [设备页面、按键、配网与同步流程图](docs/ai-passport/device-guide/README.zh_CN.md)
+- [版本兼容表](docs/ai-passport/COMPATIBILITY.zh_CN.md) · [三语支持说明](docs/ai-passport/language-support.zh_CN.md)
+- [Mac 同步助手源码](tools/lan-quota/) · [固件源码](main/) · [构建与发布说明](docs/development/releasing.zh_CN.md)
 
-- 根目录 `main/`、`components/`、`assets/`：基于 [FoloToy/ai-passport](https://github.com/FoloToy/ai-passport) 的 AI Passport 设备玩法与源码；沿用上游目录结构构建，并保留许可证和致谢。
-- `tools/lan-quota/`：Passport Mac 同步助手源码；配对密钥和额度数据保存在用户自己的 Mac，不放入仓库或安装包。
-- `docs/ai-passport/`：安装、使用、页面状态、语言与流程说明。示意屏幕由固件 LVGL 主机渲染器生成，数据为示例值，不是实机照片或真实账户数据。
-- GitHub 自动生成的 Source code 下载包对应 **本 AI Passport 仓库**；社区页面提供设备安装入口，Mac 助手安装包在 Releases。
+社区 REV-2886 起包含三语界面、操作二次确认及设备地址发现支持；以社区安装页的公开更新日志为准，仓库更新不会自动更新社区固件。助手 0.3.0 已在一台设备验证配对、拔线同步及设备重启恢复；Mac 真实重启后的登录启动、真实 DHCP 换址和长期休眠恢复仍待实测。Codex 登录凭据留在 Mac，设备只接收加密额度摘要。
+
+## 只想用 Mac 桌面版？
+
+不需要 AI Passport 的桌宠、菜单栏应用在[额度星盘 Mac 主仓库](https://github.com/koi-lee/quota-orbit)。它与本同步助手是独立产品，**使用 Passport 不要求安装额度星盘 Mac 主客户端**。更多产品信息见[额度星盘官网](https://www.starshoreai.com/quota-orbit/)。
+
+## 仓库内容
+
+`main/`、`components/`、`assets/` 是基于 [FoloToy/ai-passport](https://github.com/FoloToy/ai-passport) 的设备玩法；`tools/lan-quota/` 是 Mac 助手；`docs/ai-passport/` 是安装、页面和语言说明。安装者使用上方社区与助手入口，开发者再查看源码。
 
 ## 许可与素材
 

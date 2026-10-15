@@ -25,7 +25,7 @@ Use an Apple silicon Mac with Codex CLI installed and signed in, or the Codex de
 
 - Data refreshes about every 30 seconds. Missing Codex quota windows are not converted into zero. When offline or the Mac sleeps, the device keeps the last snapshot and marks its update age.
 - Periodic sync after a device restart was checked on one device. Actual Mac logout/login or reboot startup, and recovery after a real DHCP address change, remain untested.
-- Address recovery needs a paired-device discovery endpoint in device firmware. Older community REV-2840 lacks it but can still use the saved address. A newer candidate includes it; check the [community changelog](https://ai-passport.folotoy.cn/plays/1250/) to see whether it is public. Some large network subnets are not scanned automatically and may require reconnecting after an address change.
+- Community REV-2886 and later include device address discovery; older REV-2840 does not. Check the [public release notes](https://ai-passport.folotoy.cn/plays/1250/). Actual DHCP address-change recovery remains unverified. Some larger subnets skip scanning; reconnect the device if needed without first revoking pairing.
 - Codex credentials and pairing keys stay on the Mac; the device receives only encrypted quota summaries. A public reset announcement does not establish that your own quota recovered.
 - When reporting an issue, include assistant, firmware and macOS versions and the steps taken. Never send sign-in credentials, pairing files or Wi-Fi passwords.
 

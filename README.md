@@ -1,61 +1,58 @@
-<p align="right"><a href="README.zh_CN.md">简体中文</a> · <strong>English</strong></p>
+<p align="right"><a href="README.zh_CN.md">简体中文</a> · <a href="docs/ai-passport/device-guide/README.zh_TW.md">Traditional Chinese</a> · <strong>English</strong></p>
 
 # Quota Orbit · AI Passport
 
-For people who use Codex regularly: check public reset announcements on a small AI Passport screen. Add the Mac sync assistant to see your own remaining quota at a glance, with fewer window switches.
+**Keep Codex quota and public reset news on a small screen beside your desk, with fewer window switches.** This play runs on AI Passport hardware. It is not a Mac desktop app.
 
-## What is Quota Orbit?
+- **Follow announcements:** Wi-Fi lets the device read public forecasts and completion notices independently, with distinct optional sounds. No Mac or Codex sign-in is needed for public news.
+- **See your own quota:** add the optional Mac Sync Assistant to show remaining quota and matching lights on the Moonlight Archivist's book.
+- **Interact:** press Confirm for stars and a prayer sound, or scan the message screen's code in WeChat to open the Starshore Reset Assistant.
 
-**Quota Orbit helps Codex users check their quota and follow reset announcements.** Its Mac desktop app uses a desktop companion and menu bar to show how much quota remains, when it recovers, and quota changes during the current session. Public reset announcements help you follow updates and plan your work.
+| Public announcements: Home / Letter | Personal quota: Character / book lights |
+|---|---|
+| ![Example public reset notice](docs/ai-passport/device-guide/images/home.png) | ![Example personal quota](docs/ai-passport/device-guide/images/quota-week-only.png) |
 
-[Explore Quota Orbit](https://www.starshoreai.com/quota-orbit/) · [Mac desktop app and guide](https://github.com/koi-lee/quota-orbit)
+These are code-rendered examples with sample data, not device photos; some screenshots retain earlier wording. **A public reset notice does not confirm your account has recovered. Star taps do not increase quota.**
 
-## What can AI Passport do for you?
+[View the character quota and prayer interaction example](docs/ai-passport/device-guide/images/role-prayer.jpg)
 
-Keep AI Passport on your desk or carry it with you to:
+## What do I install?
 
-- **Check reset progress without repeatedly opening a news page.** Over Wi-Fi, the device independently reads public announcements. Its home and message screens show the latest message, publication time, and estimated or completion times explicitly provided by the source. Public announcements require neither a Mac nor a Codex login.
-- **Hear when a new announcement arrives.** Enable sounds for distinct alerts on valid new forecasts and completion announcements. Initial sync, duplicates and old messages do not trigger repeated alerts. Public messages are checked about every five minutes, not pushed instantly.
-- **Glance at personal quota with fewer window switches.** With the optional Passport Mac Sync Assistant installed and paired, the character screen shows remaining quota values and a book light based on the quota summary from Codex signed in on your Mac, helping you plan your usage.
-- **Open more detail on your phone when needed.** Press confirm on the message screen and scan the mini-program code with WeChat to continue in the Starshore Reset Assistant.
+You need an AI Passport device. Choose the first item for public news; add the second for personal quota.
 
-**Personal quota sync has requirements:** pair once over USB, then unplug the cable. Your Mac must still be running and awake, signed in to Codex, on the same Wi-Fi as the device, and running the sync assistant. If the Mac sleeps or sync stops, the device marks the data as stale; it cannot independently query personal quota away from the Mac.
-
-A public reset announcement does not mean your personal quota has recovered. Quota Orbit displays information; it does not increase quota or perform resets for you.
-
-## Choose what you need
-
-| Goal | Install | Download |
+| Purpose | Install on | Entry |
 |---|---|---|
-| Use Quota Orbit on AI Passport | **AI Passport community firmware**, installed on the hardware; it is not a Mac installer | [Community play 1250 · install firmware](https://ai-passport.folotoy.cn/plays/1250/) |
-| Sync personal Codex quota from Mac to Passport | **Passport Mac Sync Assistant**, optional and only for personal quota | [0.3.0 pre-release (Apple silicon)](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.0) · [Chinese (Simplified)](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/README.zh_CN.md) · [Chinese (Traditional)](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/README.zh_TW.md) · [English instructions](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/README.en.md) |
-| Use the Mac desktop pet, menu bar and quota orbit | **Quota Orbit Mac desktop app**; AI Passport is not required | [Mac desktop public trial](https://github.com/koi-lee/quota-orbit/releases/latest) |
+| Required: Quota Orbit firmware | AI Passport hardware | [Community play 1250 → Install latest](https://ai-passport.folotoy.cn/plays/1250/) |
+| Optional: Passport Mac Sync Assistant 0.3.0 | Apple silicon Mac | [Download and setup guide](docs/ai-passport/mac-helper/README.md) · [Release assets](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.0) |
 
-The Mac assistant is not needed to read public announcements. Installing from the community replaces the device's current play and may clear existing settings; read the community installation notes first.
+Firmware does not install on a Mac. **Source code archives are not installers.** The helper installer is `StarshorePassport-AppleSilicon-0.3.0.zip`; Python is not required.
 
-## Setup and screen guide
+The helper is a pre-release without Apple notarization. If macOS blocks normal opening, stop and report the message rather than disabling system protection. No verified helper installer is provided for Intel Macs or Windows.
 
-- [Device screens, states, Wi-Fi setup and sync flows](docs/ai-passport/device-guide/README.md) ([Chinese (Simplified)](docs/ai-passport/device-guide/README.zh_CN.md))
-- [Language support matrix](docs/ai-passport/language-support.md)
-- [Passport Mac Sync Assistant source](tools/lan-quota/)
-- [AI Passport firmware source](main/)
-- [Release naming and distribution boundaries](docs/development/releasing.md)
+## First use in four steps
 
-Use the temporary hotspot shown on the device to configure Wi-Fi at `http://192.168.4.1`; only 2.4 GHz Wi-Fi is supported. Personal quota sync requires one initial USB pairing confirmed on the device. After pairing, the Mac and Passport sync automatically while on the same Wi-Fi.
+1. **Install and connect Wi-Fi.** Open the community play in Chrome or Edge on your computer, connect the powered-on device with a USB data cable, choose Install latest and select your device. Keep it connected until installation finishes. This replaces the current play and may clear settings. On your phone, join the device's displayed `Starshore-…` hotspot using its displayed password. Open [http://192.168.4.1](http://192.168.4.1) in the phone browser, enter your home **2.4 GHz Wi-Fi**, and select Connect and save. “Synced · public notices” confirms success. Retry incorrect entries; after timeout or for a new network, hold Confirm → Settings → Wi-Fi setup, then confirm.
+2. **Read messages.** Up/Down switches Home, Letter and Character. Confirm on Letter opens the mini-program code; scan with WeChat for detail, then press Confirm to return. Hold Confirm for Settings to enable sound or select Simplified Chinese, Traditional Chinese or English.
+3. **Add personal quota if wanted.** Sign in to Codex CLI on the Mac, or use the Codex desktop app in Applications. Keep the Mac and device on the same Wi-Fi. Install and open the [helper](docs/ai-passport/mac-helper/README.md), connect USB and click Connect device on the Mac first. Wait for hardware startup, then select Connect Mac in hardware Settings and approve with Confirm.
+4. **Unplug after quota appears.** Sync starts automatically after pairing. Quota on Character confirms success; you can remove USB. Keep the Mac awake and the helper running. If you paused manually, click Resume sync. Tap Confirm on Character for stars; revoke pairing through hardware Settings when no longer wanted.
 
-## Versions and compatibility
+Public news is checked about every **5 minutes**; personal quota syncs about every **30 seconds**. Letter's “Last sync” is the latest successful public fetch, not a clock. Mac sleep or two minutes without a quota update marks old data and greys the book lights. Missing windows are not filled with zero.
 
-- The community page provides the installable public firmware. The firmware source at this repository root is evolving, not a claim that the community package has been updated. Source changes do not update the community release automatically.
-- Passport Mac Sync Assistant `0.3.0` is an Apple silicon pre-release. Some behavior around login startup, Mac restart and network address changes has not been fully verified. Automatic device rediscovery also requires firmware with the `/discover` endpoint, which is not in the current public community firmware.
-- The assistant is not Developer ID signed or Apple notarized; macOS may ask you to confirm on first launch. Intel Macs are unverified.
-- The desktop app and Passport assistant are separate products. The desktop app's public trial and Latest download remains in [koi-lee/quota-orbit](https://github.com/koi-lee/quota-orbit). Do not replace the desktop app with the Passport assistant.
+## More help
 
-## Contents
+- [Device screens, controls, Wi-Fi setup and sync diagrams](docs/ai-passport/device-guide/README.md)
+- [Version compatibility](docs/ai-passport/COMPATIBILITY.md) · [Language support](docs/ai-passport/language-support.md)
+- [Mac helper source](tools/lan-quota/) · [Firmware source](main/) · [Build and release notes](docs/development/releasing.md)
 
-- Root `main/`, `components/` and `assets/`: AI Passport application derived from [FoloToy/ai-passport](https://github.com/FoloToy/ai-passport), with the upstream license and notices retained.
-- `tools/lan-quota/`: Passport Mac Sync Assistant source. Pairing keys and quota data stay on the user's Mac and are not included in this repository or installer.
-- `docs/`: setup, usage, screen states, language support and flows. Example screens are generated by the firmware's native LVGL host renderer with sample values; they are not device photos or real account data.
-- GitHub's automatic Source code archives contain **this AI Passport repository**. The community page is the device install path; the Mac assistant installer is in Releases.
+Community REV-2886 and later include three-language UI, confirmation screens and device-address discovery. Consult the community release notes: repository updates do not automatically update public firmware. Helper 0.3.0 pairing, unplugged sync and device-restart recovery were verified on one device. Actual Mac reboot/login startup, real DHCP address changes and prolonged sleep recovery still need testing. Codex credentials stay on the Mac; hardware receives only encrypted quota summaries.
+
+## Looking for the Mac desktop app?
+
+The independent desktop-pet and menu-bar app is in the [Quota Orbit Mac repository](https://github.com/koi-lee/quota-orbit). **It is not required to use Passport or its sync helper.** See the [Quota Orbit website](https://www.starshoreai.com/quota-orbit/) for the wider product.
+
+## Repository contents
+
+`main/`, `components/` and `assets/` contain the device play based on [FoloToy/ai-passport](https://github.com/FoloToy/ai-passport); `tools/lan-quota/` contains the Mac helper; `docs/ai-passport/` contains setup, screen and language guides. Users should use the community and helper links above; source is for development.
 
 ## License and assets
 
