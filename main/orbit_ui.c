@@ -325,24 +325,26 @@ int orbit_ui_key(orbit_ui_t *u, int key) {
         if (key)
             u->settings_row = (u->settings_row + (key > 0 ? 1 : 5)) % 6;
         else if (u->settings_row == 0) {
+            u->settings = false;
+        } else if (u->settings_row == 1) {
             u->confirm_action = 1;
             u->confirm_yes = false;
             return 0;
-        } else if (u->settings_row == 1) {
+        } else if (u->settings_row == 2) {
             u->sound = !u->sound;
             return 2;
-        } else if (u->settings_row == 2) {
+        } else if (u->settings_row == 3) {
             if (!u->wish.ready) return 0;
             if (u->wish.enabled) return 8;
             u->confirm_action = 3; u->confirm_yes = false; return 0;
-        } else if (u->settings_row == 3) {
+        } else if (u->settings_row == 4) {
             if (u->quota.paired) {
                 u->confirm_action = 2;
                 u->confirm_yes = false;
                 return 0;
             }
             u->settings = false; u->pairing = true; return 3;
-        } else if (u->settings_row == 4) {
+        } else if (u->settings_row == 5) {
             u->language = (u->language + 1) % ORBIT_LANGUAGE_COUNT;
             return 6;
         } else
@@ -449,13 +451,13 @@ void orbit_ui_draw(const orbit_ui_t *u, const orbit_network_t *n, int battery, i
 
     if (u->settings) {
         center(46, orbit_tr("设置"), GOLD);
-        const char *rows[] = {orbit_tr("重新配网"), u->sound ? orbit_tr("提示音：开") : orbit_tr("提示音：关"), orbit_tr(u->wish.enabled ? "官网祈愿：开" : "官网祈愿：关"), u->quota.paired ? orbit_tr("解除 Mac 配对") : orbit_tr("连接 Mac"), orbit_tr(u->language == ORBIT_EN ? "语言：English" : u->language == ORBIT_ZH_HANT ? "语言：繁體中文" : "语言：简体中文"), orbit_tr("返回")};
+        const char *rows[] = {orbit_tr("返回"), orbit_tr("重新配网"), u->sound ? orbit_tr("提示音：开") : orbit_tr("提示音：关"), orbit_tr(u->wish.enabled ? "官网祈愿：开" : "官网祈愿：关"), u->quota.paired ? orbit_tr("解除 Mac 配对") : orbit_tr("连接 Mac"), orbit_tr(u->language == ORBIT_EN ? "语言：English" : u->language == ORBIT_ZH_HANT ? "语言：繁體中文" : "语言：简体中文")};
         for (unsigned i = 0; i < 6; i++) {
             if (u->settings_row == i)
                 box(screen, 20, 68 + (int)i * 26, 200, 24, 8, 0x483951);
             label(32, 71 + (int)i * 26, 180, rows[i], INK);
         }
-        if (u->settings_row == 2) {
+        if (u->settings_row == 3) {
             const char *status = u->wish.status == WISH_STORAGE_ERROR ? "保存失败 · 暂停上传" :
                 u->wish.status == WISH_UNAVAILABLE ? "服务未就绪" :
                 u->wish.status == WISH_FULL ? "部分点击未记录" :
@@ -522,34 +524,57 @@ void orbit_ui_draw(const orbit_ui_t *u, const orbit_network_t *n, int battery, i
                         : n->snapshot.kind == ORBIT_COMPLETED ? orbit_tr("已宣布完成")
                         : n->snapshot.kind == ORBIT_FORECAST  ? orbit_tr("已预告")
                                                               : orbit_tr("暂无公告");
+    const orbit_snapshot_t *snap = &n->snapshot;
+    int64_t forecast_end = snap->time_kind == ORBIT_TIME_EXPECTED ? snap->expected :
+        snap->time_kind == ORBIT_TIME_START ? snap->window_start : snap->window_end;
+    bool overdue = snap->kind == ORBIT_FORECAST && forecast_end > 0 && now > forecast_end;
+    const char *summary = !snap->received ? (n->link == NET_OFFLINE ? "暂未同步 · 稍后自动重试" : "首次连接，正在获取消息") :
+        snap->kind == ORBIT_COMPLETED ? "公开重置已有完成公告" :
+        snap->kind == ORBIT_FORECAST ? (overdue ? "预告时间已过，等待后续" : "公开来源已发布重置预告") :
+        "目前没有可展示的重置消息";
     if (u->page == 0) {
         lv_obj_t *portrait = lv_image_create(screen);
         lv_image_set_src(portrait, &orbit_archivist_small);
         lv_obj_set_pos(portrait, 170, 35);
         lv_obj_t *eyebrow = label(20, 48, 145, orbit_tr("公开重置公告"), MUTED);
         lv_obj_set_style_text_font(eyebrow, font_14(), 0);
-        lv_obj_t *heading = label(20, 71, 145, title, GOLD);
-        lv_obj_set_style_text_font(heading, font_24(), 0);
-        lv_obj_t *hint = label(20, 108, 146, orbit_tr("个人额度需核实"), MUTED);
-        lv_obj_set_style_text_font(hint, font_12(), 0);
-        centered_font(133, status, MUTED, font_12());
+        lv_obj_t *heading = label(20, 78, 145, overdue ? orbit_tr("等待后续") : title, GOLD);
+        lv_obj_set_style_text_font(heading, u->language == ORBIT_EN ? font_20() : font_24(), 0);
         box(screen, 0, 156, 240, 164, 0, PAPER);
-        for (unsigned i = 0; i < 3; i++)
-            timing_row(172 + (int)i * 32, timing[i]);
-        centered_font(264, orbit_tr("北京时间 · 确定查看详情"), PAPER_MUTED, font_12());
+        centered_font(170, orbit_tr(summary), PLUM, font_12());
+        if (snap->received && snap->kind == ORBIT_FORECAST && !overdue) {
+            timing_row(200, timing[1]);
+            if (snap->time_kind == ORBIT_TIME_WINDOW) timing_row(226, timing[2]);
+        } else {
+            centered_font(207, orbit_tr("个人额度请到角色页查看"), PAPER_MUTED, font_12());
+        }
+        centered_font(247, status, PAPER_MUTED, font_12());
+        centered_font(270, orbit_tr("确定 · 查看来信"), PLUM, font_12());
     } else if (u->page == 1) {
-        lv_obj_t *heading = label(20, 59, 200, orbit_tr("星夜来信"), PLUM);
-        lv_obj_set_style_text_font(heading, font_24(), 0);
         centered_font(36, status, PAPER_MUTED, font_12());
-        snprintf(text, sizeof(text), orbit_tr("公开消息 / %s"), title);
-        lv_obj_t *sub = label(20, 97, 200, text, PAPER_MUTED);
-        lv_obj_set_style_text_font(sub, font_14(), 0);
-        box(screen, 20, 123, 28, 2, 0, 0x9A7B55);
-        for (unsigned i = 0; i < 3; i++)
-            timing_row(140 + (int)i * 36, timing[i]);
-        timestamp(text, sizeof(text), orbit_tr("上次同步"), n->snapshot.received);
-        centered_font(245, text, PAPER_MUTED, font_12());
-        centered_font(265, orbit_tr("北京时间 · 确定打开小程序"), PAPER_MUTED, font_12());
+        const char *letter_title = !snap->received ? (n->link == NET_OFFLINE ? "等待同步" : "正在查收来信") :
+            snap->kind == ORBIT_COMPLETED ? "完成公告解读" :
+            snap->kind == ORBIT_FORECAST ? "预告解读" : "暂时没有来信";
+        centered_font(64, orbit_tr(letter_title), PLUM, font_20());
+        centered_font(96, orbit_tr("状态解读 · 非公告原文"), PAPER_MUTED, font_12());
+        box(screen, 20, 121, 28, 2, 0, 0x9A7B55);
+        centered_font(136, orbit_tr(summary), PLUM, font_12());
+        centered_font(157, orbit_tr(!snap->received ? "同步成功后自动显示" :
+            snap->kind == ORBIT_COMPLETED ? "各账号请以自己的额度为准" :
+            snap->kind == ORBIT_FORECAST ? "尚未收到完成公告" : "收到新消息后自动显示"), PLUM, font_12());
+        if (snap->received && snap->kind == ORBIT_FORECAST) {
+            timing_row(182, timing[1]);
+            if (snap->time_kind == ORBIT_TIME_WINDOW) timing_row(205, timing[2]);
+        } else if (snap->received && snap->kind == ORBIT_COMPLETED && snap->effective) {
+            timing_row(190, timing[1]);
+        }
+        if (snap->received && snap->published) {
+            timestamp(text, sizeof(text), orbit_tr("发布"), snap->published);
+            centered_font(230, text, PAPER_MUTED, font_12());
+        }
+        timestamp(text, sizeof(text), orbit_tr("上次同步"), snap->received);
+        centered_font(249, text, PAPER_MUTED, font_12());
+        centered_font(272, orbit_tr("北京时间 · 确定打开小程序"), PAPER_MUTED, font_12());
     } else {
         centered_font(36, orbit_tr("月夜档案员"), GOLD, font_24());
         snprintf(text, sizeof(text), orbit_tr("本次点亮 %u 颗星"), u->stars);

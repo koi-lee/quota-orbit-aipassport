@@ -2,6 +2,22 @@
 #include <string.h>
 static unsigned current_language;
 static const char *const words[][3] = {
+    {"等待后续","等待後續","Awaiting news"},
+    {"首次连接，正在获取消息","首次連線，正在取得訊息","Fetching public notices"},
+    {"公开重置已有完成公告","公開重置已有完成公告","Reset completion announced"},
+    {"预告时间已过，等待后续","預告時間已過，等待後續","Forecast passed; awaiting news"},
+    {"公开来源已发布重置预告","公開來源已發布重置預告","Reset forecast announced"},
+    {"目前没有可展示的重置消息","目前沒有可顯示的重置訊息","No reset notices available"},
+    {"个人额度请到角色页查看","個人額度請到角色頁查看","Your quota: Role tab"},
+    {"确定 · 查看来信","確定 · 查看來信","OK · Read notice"},
+    {"正在查收来信","正在查收來信","Fetching notices"},
+    {"完成公告解读","完成公告解讀","Reset explained"},
+    {"预告解读","預告解讀","Forecast explained"},
+    {"暂时没有来信","暫時沒有來信","No notices yet"},
+    {"状态解读 · 非公告原文","狀態解讀 · 非公告原文","Summary · not a quotation"},
+    {"同步成功后自动显示","同步成功後自動顯示","Displays after sync"},
+    {"各账号请以自己的额度为准","各帳號請以自己的額度為準","Check your own quota"},
+    {"收到新消息后自动显示","收到新訊息後自動顯示","New notices appear here"},
     {"同步官网祈愿？","同步官網祈願？","Sync website wishes?"},
     {"点星计入官网总次数","點星計入官網總次數","Taps add to site total"},
     {"仅发送随机互动编号","僅傳送隨機互動編號","Send random event IDs"},
