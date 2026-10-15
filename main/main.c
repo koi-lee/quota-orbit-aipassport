@@ -107,7 +107,9 @@ void app_main(void) {
             }
             if (action == 7) orbit_quota_revoke();
             if (action == 8) orbit_wish_set_enabled(!ui.wish.enabled);
-            if (action == 9 && s_click_sound_context) orbit_wish_click();
+            orbit_network_t input_net;
+            orbit_net_read(&input_net);
+            orbit_wish_dispatch(action, input_net.setup);
             dirty = true;
         }
         int64_t now = time(NULL), uptime = esp_timer_get_time() / 1000000;

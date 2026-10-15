@@ -25,3 +25,5 @@ The current private website source uses the counter table with nullable country 
 See the [ingress protocol and runbook](../../tools/wish-service/README.md). Candidate files are the Python ingress, a new restricted service unit and one new HTTPS location. They preserve the existing browser endpoint and counter service. The deployed default `CONFIG_ORBIT_WISH_URL` is `https://www.starshoreai.com/quota-orbit/api/passport/wishes`. Flashing still requires authorization for the exact new application image.
 
 Rollback removes only the new proxy route and service, then restores the previous device application if authorized. Existing shared counter rows are preserved. Do not automatically delete user clicks, withdraw a community revision, push this branch or modify the public release as part of local development.
+
+Accepted UI tap actions are routed independently from the asynchronous audio-context hint. A later navigation or long press must not discard an earlier accepted tap. Host regression covers this ordering; physical count accuracy after this fix still needs retesting.

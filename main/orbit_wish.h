@@ -13,3 +13,7 @@ void orbit_wish_start(void);
 void orbit_wish_read(orbit_wish_view_t *out);
 void orbit_wish_set_enabled(bool enabled);
 void orbit_wish_click(void);
+/* Consume the UI's accepted action, never the asynchronously invalidated audio hint. */
+static inline void orbit_wish_dispatch(int action, bool provisioning) {
+    if (action == 9 && !provisioning) orbit_wish_click();
+}
