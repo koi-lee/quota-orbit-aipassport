@@ -31,9 +31,9 @@ You need an AI Passport device. Choose the first item for public news; add the s
 | Purpose | Install on | Entry |
 |---|---|---|
 | Required: Quota Orbit firmware | AI Passport hardware | [Community play 1250 → Install latest](https://ai-passport.folotoy.cn/plays/1250/) |
-| Optional: Passport Mac Sync Assistant 0.3.0 | Apple silicon Mac | [Download and setup guide](docs/ai-passport/mac-helper/README.md) · [Release assets](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.0) |
+| Optional: Passport Mac Sync Assistant 0.3.1 | Apple silicon Mac | [Download and setup guide](docs/ai-passport/mac-helper/README.md) · [Release assets](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.1) |
 
-Firmware does not install on a Mac. **Source code archives are not installers.** The helper installer is `StarshorePassport-AppleSilicon-0.3.0-notarized.zip`; Python is not required.
+Firmware does not install on a Mac. **Source code archives are not installers.** The helper installer is `StarshorePassport-AppleSilicon-0.3.1-notarized.zip`; Python is not required.
 
 The new `-notarized.zip` helper is Developer ID signed and Apple-notarized, and remains a pre-release. If macOS blocks normal opening, stop and report the message rather than disabling system protection. No verified helper installer is provided for Intel Macs or Windows.
 

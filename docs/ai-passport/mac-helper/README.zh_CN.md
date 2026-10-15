@@ -1,4 +1,4 @@
-# 额度星盘 · Passport Mac 同步助手 0.3.0（公开试用版）
+# 额度星盘 · Passport Mac 同步助手 0.3.1（公开试用版）
 
 <p align="right"><a href="README.zh_CN.md">简体中文</a> · <a href="README.zh_TW.md">繁體中文</a> · <a href="README.md">English</a></p>
 
@@ -6,9 +6,9 @@
 
 ## 下载
 
-[下载 Apple 芯片 Mac 安装包](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/StarshorePassport-AppleSilicon-0.3.0-notarized.zip) · [校验文件](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/SHA256SUMS.txt) · [版本与全部附件](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.0)
+[下载 Apple 芯片 Mac 安装包](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.1/StarshorePassport-AppleSilicon-0.3.1-notarized.zip) · [校验文件](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.1/SHA256SUMS.txt) · [版本与全部附件](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.1)
 
-这是 GitHub Pre-release，新版 `-notarized.zip` 已通过 Developer ID 签名与 Apple 公证，旧的无后缀 ZIP 仍是未公证历史包。若 macOS 阻止正常打开，请停止安装并反馈系统提示，不要关闭系统安全保护。
+安装包已完成 Developer ID 签名与 Apple 公证，已装订公证票据并通过 Gatekeeper 检查。仍作为公开试用版发布；功能测试范围见下方限制。
 
 ## 准备
 
@@ -29,10 +29,10 @@
 | 配对未完成 | 检查数据线和设备是否开机，只连接一台 Passport；电脑点连接后，等设备启动，再在硬件设置选「连接 Mac」并确认允许。 |
 | 个人额度同步未完成 | 先确认 Codex 已登录，再检查 Mac 和设备是否在同一 Wi-Fi、设备是否开机。助手会自动重试；手动暂停过则点「恢复同步」。 |
 | 浏览器页面打不开，或显示其他程序 | 先确认助手正在运行；重新打开助手。若本机 8942 端口仍被其他程序占用，请反馈，不要在陌生页面输入凭据。 |
-| 点击「退出助手」后页面显示等待连接 | 助手已经退出，旧浏览器页面可能仍保留。关闭该页；再次打开应用可恢复运行。 |
+| 点击「退出助手」后 | 退出成功后显示「助手已退出」并停止刷新。关闭该页；再次打开应用可恢复运行。 |
 | macOS 阻止打开 | 确认下载的是 `-notarized.zip`；记录系统原文并反馈，不关闭系统安全保护。 |
 
-当前同步失败提示不会细分登录、网络和配对原因，请按上述顺序检查。关闭浏览器标签页不会退出助手；要停止运行，请点击「退出助手」。
+助手会分别提示尚未配对、配对记录无法读取、设备不可达或 Codex 额度读取失败；读取失败时请检查安装和登录，不代表一定已退出登录。关闭浏览器标签页不会退出助手；要停止运行，请点击「退出助手」。
 
 ## 反馈问题
 

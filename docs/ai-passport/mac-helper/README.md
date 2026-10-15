@@ -1,4 +1,4 @@
-# Quota Orbit · Passport Mac Sync Assistant 0.3.0 (public preview)
+# Quota Orbit · Passport Mac Sync Assistant 0.3.1 (public preview)
 
 <p align="right"><a href="README.zh_CN.md">简体中文</a> · <a href="README.zh_TW.md">Traditional Chinese</a> · <a href="README.md">English</a></p>
 
@@ -6,9 +6,9 @@ Send the personal quota available from your signed-in Codex account on a Mac to 
 
 ## Download
 
-[Download for Apple silicon](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/StarshorePassport-AppleSilicon-0.3.0-notarized.zip) · [Checksum file](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.0/SHA256SUMS.txt) · [Release and all assets](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.0)
+[Download for Apple silicon](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.1/StarshorePassport-AppleSilicon-0.3.1-notarized.zip) · [Checksum file](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.1/SHA256SUMS.txt) · [Release and all assets](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.1)
 
-The new `-notarized.zip` build is Developer ID signed and Apple-notarized. The original ZIP without that suffix remains an unnotarized historical build. This remains a GitHub Pre-release. If macOS blocks normal opening, stop installation and report the system message. Do not disable system security protections.
+This package is Developer ID signed and Apple-notarized, with its notarization ticket stapled and Gatekeeper assessment passed. It remains a public preview; functional test limits are listed below.
 
 ## Requirements
 
@@ -29,10 +29,10 @@ Use an Apple silicon Mac with Codex CLI installed and signed in, or the Codex de
 | Pairing incomplete | Check the data cable and device power; connect only one Passport. Click Connect on the Mac, wait for the device to boot, then choose Connect Mac in device Settings and confirm permission. |
 | Personal quota sync fails | Check that Codex is signed in, then check that the Mac and powered-on device share the same Wi-Fi. The assistant retries automatically; click Resume sync if you paused it manually. |
 | The browser page does not open, or shows another program | Confirm the assistant is running and reopen it. If another program still occupies local port 8942, report it; do not enter credentials on an unfamiliar page. |
-| The page says Waiting after Quit assistant | The assistant has exited, but its old browser page may remain. Close that page; reopen the app to run it again. |
+| After Quit assistant | The page confirms the assistant has exited and stops refreshing. Close that page; reopen the app to run it again. |
 | macOS blocks the app | Check that you downloaded `-notarized.zip`. Report the exact system message; do not disable system security. |
 
-The current sync failure message does not distinguish sign-in, network, and pairing errors. Check them in the order above. Closing a browser tab does not quit the assistant; click Quit assistant to stop it.
+The assistant distinguishes missing or unreadable pairing records, an unreachable device, and Codex quota-read failures. A quota-read failure asks you to check installation and sign-in; it does not necessarily mean you are signed out. Closing a browser tab does not quit the assistant; click Quit assistant to stop it.
 
 ## Report a problem
 
