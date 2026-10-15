@@ -302,7 +302,7 @@ int orbit_ui_key(orbit_ui_t *u, int key) {
             u->settings = false;
             return 1;
         }
-        return 7;
+        return action == 3 ? 8 : 7;
     }
     if (u->pairing) {
         if (key == 0 && (u->quota.offer || u->quota.paired)) return 4;
@@ -320,7 +320,7 @@ int orbit_ui_key(orbit_ui_t *u, int key) {
     }
     if (u->settings) {
         if (key)
-            u->settings_row = (u->settings_row + (key > 0 ? 1 : 4)) % 5;
+            u->settings_row = (u->settings_row + (key > 0 ? 1 : 5)) % 6;
         else if (u->settings_row == 0) {
             u->confirm_action = 1;
             u->confirm_yes = false;
@@ -329,13 +329,17 @@ int orbit_ui_key(orbit_ui_t *u, int key) {
             u->sound = !u->sound;
             return 2;
         } else if (u->settings_row == 2) {
+            if (!u->wish.ready) return 0;
+            if (u->wish.enabled) return 8;
+            u->confirm_action = 3; u->confirm_yes = false; return 0;
+        } else if (u->settings_row == 3) {
             if (u->quota.paired) {
                 u->confirm_action = 2;
                 u->confirm_yes = false;
                 return 0;
             }
             u->settings = false; u->pairing = true; return 3;
-        } else if (u->settings_row == 3) {
+        } else if (u->settings_row == 4) {
             u->language = (u->language + 1) % ORBIT_LANGUAGE_COUNT;
             return 6;
         } else
@@ -353,8 +357,10 @@ int orbit_ui_key(orbit_ui_t *u, int key) {
         u->page = 1;
     else if (u->page == 1)
         u->source = true;
-    else
+    else {
         u->stars = (u->stars + 1) % 100;
+        return 9;
+    }
     return 0;
 }
 void orbit_ui_draw(const orbit_ui_t *u, const orbit_network_t *n, int battery, int64_t now) {
@@ -411,6 +417,19 @@ void orbit_ui_draw(const orbit_ui_t *u, const orbit_network_t *n, int battery, i
 
     if (u->confirm_action) {
         bool unpair = u->confirm_action == 2;
+        if (u->confirm_action == 3) {
+            center(57, orbit_tr("同步官网祈愿？"), GOLD);
+            centered_font(98, orbit_tr("点星计入官网总次数"), INK, font_14());
+            centered_font(122, orbit_tr("仅发送随机互动编号"), INK, font_14());
+            centered_font(146, orbit_tr("不发送账号或个人额度"), INK, font_14());
+            centered_font(170, orbit_tr("无需 Mac · 联网自动同步"), MUTED, font_12());
+            box(screen, u->confirm_yes ? 126 : 20, 205, 88, 32, 8, 0x483951);
+            label(40, 212, 56, orbit_tr("取消"), u->confirm_yes ? MUTED : GOLD);
+            label(144, 212, 68, orbit_tr("开启"), u->confirm_yes ? GOLD : MUTED);
+            centered_font(263, orbit_tr("上下选择 · 确定执行"), MUTED, font_12());
+            centered_font(286, orbit_tr("长按确定返回"), MUTED, font_12());
+            return;
+        }
         center(70, orbit_tr(unpair ? "解除 Mac 配对？" : "重新配网？"), GOLD);
         centered_font(119, orbit_tr(unpair ? "将清除设备额度与授权" : "旧 Wi-Fi 保留至连接成功"), INK, font_14());
         box(screen, u->confirm_yes ? 126 : 20, 171, 88, 32, 8, 0x483951);
@@ -422,15 +441,25 @@ void orbit_ui_draw(const orbit_ui_t *u, const orbit_network_t *n, int battery, i
     }
 
     if (u->settings) {
-        center(62, orbit_tr("设置"), GOLD);
-        const char *rows[] = {orbit_tr("重新配网"), u->sound ? orbit_tr("提示音：开") : orbit_tr("提示音：关"), u->quota.paired ? orbit_tr("解除 Mac 配对") : orbit_tr("连接 Mac"), orbit_tr(u->language == ORBIT_EN ? "语言：English" : u->language == ORBIT_ZH_HANT ? "语言：繁體中文" : "语言：简体中文"), orbit_tr("返回")};
-        for (unsigned i = 0; i < 5; i++) {
+        center(46, orbit_tr("设置"), GOLD);
+        const char *rows[] = {orbit_tr("重新配网"), u->sound ? orbit_tr("提示音：开") : orbit_tr("提示音：关"), orbit_tr(u->wish.enabled ? "官网祈愿：开" : "官网祈愿：关"), u->quota.paired ? orbit_tr("解除 Mac 配对") : orbit_tr("连接 Mac"), orbit_tr(u->language == ORBIT_EN ? "语言：English" : u->language == ORBIT_ZH_HANT ? "语言：繁體中文" : "语言：简体中文"), orbit_tr("返回")};
+        for (unsigned i = 0; i < 6; i++) {
             if (u->settings_row == i)
-                box(screen, 20, 88 + (int)i * 32, 200, 28, 8, 0x483951);
-            label(32, 91 + (int)i * 32, 180, rows[i], INK);
+                box(screen, 20, 68 + (int)i * 26, 200, 24, 8, 0x483951);
+            label(32, 71 + (int)i * 26, 180, rows[i], INK);
         }
-        center(261, orbit_tr("上下选择 · 确定执行"), MUTED);
-        center(283, orbit_tr("长按确定返回"), MUTED);
+        if (u->settings_row == 2) {
+            const char *status = u->wish.status == WISH_STORAGE_ERROR ? "保存失败 · 暂停上传" :
+                u->wish.status == WISH_UNAVAILABLE ? "服务未就绪" :
+                u->wish.status == WISH_FULL ? "部分点击未记录" :
+                !u->wish.enabled ? "仅在本机点星" :
+                u->wish.pending ? "等待联网同步" : "没有待同步记录";
+            snprintf(text, sizeof(text), "%s · %u", orbit_tr(status), u->wish.pending);
+            centered_font(235, text, MUTED, font_12());
+            centered_font(253, orbit_tr("关闭清除待发，已发不可撤回"), MUTED, font_12());
+            centered_font(273, orbit_tr("上下选择 · 确定执行"), MUTED, font_12());
+        } else centered_font(261, orbit_tr("上下选择 · 确定执行"), MUTED, font_12());
+        centered_font(291, orbit_tr("长按确定返回"), MUTED, font_12());
         return;
     }
     if (n->setup) {

@@ -73,6 +73,7 @@ void app_main(void) {
     key_guard_sync_released(&guard, bsp_button_read_mv() >= BSP_BTN_MV_RELEASED_MIN);
     orbit_net_start(ui.sound);
     orbit_quota_start();
+    orbit_wish_start();
     s_input_ready = true;
     orbit_network_t previous = {0};
     orbit_quota_t previous_quota = {0};
@@ -105,6 +106,8 @@ void app_main(void) {
                 nvs_commit(settings);
             }
             if (action == 7) orbit_quota_revoke();
+            if (action == 8) orbit_wish_set_enabled(!ui.wish.enabled);
+            if (action == 9 && s_click_sound_context) orbit_wish_click();
             dirty = true;
         }
         int64_t now = time(NULL), uptime = esp_timer_get_time() / 1000000;
@@ -116,6 +119,10 @@ void app_main(void) {
         orbit_network_t net;
         orbit_net_read(&net);
         orbit_quota_read(&ui.quota);
+        orbit_wish_view_t wish;
+        orbit_wish_read(&wish);
+        if (memcmp(&ui.wish, &wish, sizeof(wish))) dirty = true;
+        ui.wish = wish;
         if (memcmp(&ui.quota, &previous_quota, sizeof(ui.quota))) dirty = true;
         if (orbit_quota_fresh(&ui.quota, now) != previous_quota_fresh) dirty = true;
         if (ui.pairing && !ui.quota.paired && !ui.quota.pairing) ui.pairing = false;

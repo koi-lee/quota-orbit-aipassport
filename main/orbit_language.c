@@ -2,6 +2,22 @@
 #include <string.h>
 static unsigned current_language;
 static const char *const words[][3] = {
+    {"同步官网祈愿？","同步官網祈願？","Sync website wishes?"},
+    {"点星计入官网总次数","點星計入官網總次數","Taps add to site total"},
+    {"仅发送随机互动编号","僅傳送隨機互動編號","Send random event IDs"},
+    {"不发送账号或个人额度","不傳送帳號或個人額度","No account or quota data"},
+    {"无需 Mac · 联网自动同步","無需 Mac · 連網自動同步","Wi-Fi sync; no Mac"},
+    {"开启","開啟","Enable"},
+    {"官网祈愿：开","官網祈願：開","Website wishes: on"},
+    {"官网祈愿：关","官網祈願：關","Website wishes: off"},
+    {"保存失败 · 暂停上传","儲存失敗 · 暫停上傳","Storage failed"},
+    {"服务未就绪","服務未就緒","Service not ready"},
+    {"部分点击未记录","部分點按未記錄","Some taps not saved"},
+    {"仅在本机点星","僅在本機點星","Local stars only"},
+    {"等待联网同步","等待連網同步","Waiting for sync"},
+    {"没有待同步记录","沒有待同步記錄","Nothing pending"},
+    {"关闭清除待发，已发不可撤回","關閉清除待發，已發不可撤回","Off clears pending; sent stays"},
+
     {"%lu分钟额度","%lu分鐘額度","%lumin quota"},
     {"%s剩余 %u%%","%s剩餘 %u%%","%s left %u%%"},
     {"10 分钟未完成会关闭","10 分鐘未完成會關閉","Hotspot closes in 10min"},

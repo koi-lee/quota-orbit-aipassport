@@ -1,0 +1,20 @@
+[Unit]
+Description=Quota Orbit Passport anonymous wish ingress
+After=network.target
+[Service]
+Type=simple
+User=codex-meter-web
+WorkingDirectory=/opt/quota-orbit-passport-wishes
+ExecStart=/usr/bin/python3 /opt/quota-orbit-passport-wishes/server.py --db /var/lib/codex-meter-wishes/clicks.sqlite3 --port 8970
+Restart=on-failure
+RestartSec=3
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/codex-meter-wishes
+MemoryMax=96M
+TasksMax=48
+[Install]
+WantedBy=multi-user.target

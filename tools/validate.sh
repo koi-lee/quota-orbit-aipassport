@@ -93,8 +93,11 @@ run_static_checks() {
     "${test_dir}/test_orbit_input_dispatch"
     "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Imain tests/test_orbit_quota_model.c main/orbit_language.c -o "${test_dir}/test_orbit_quota_model"
     "${test_dir}/test_orbit_quota_model"
+    "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Imain tests/test_orbit_wish_model.c -o "${test_dir}/test_orbit_wish_model"
+    "${test_dir}/test_orbit_wish_model"
     rm -rf "${test_dir}"
     PYTHONDONTWRITEBYTECODE=1 python3 tests/test_orbit_wifi_config.py
+    PYTHONDONTWRITEBYTECODE=1 python3 tools/wish-service/test_server.py
     echo "Host tests: PASS"
 }
 

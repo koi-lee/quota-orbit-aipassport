@@ -179,7 +179,7 @@ int main(int argc, char **argv) {
         ui.quota.windows[0] = (orbit_quota_window_t){10080, 55, render_now + 3600};
         save(argv[1], "character", &ui, &n);
         ui.settings = true;
-        ui.settings_row = 3;
+        ui.settings_row = 4;
         save(argv[1], "settings", &ui, &n);
         ui.confirm_action = 1;
         save(argv[1], "confirm-wifi", &ui, &n);
@@ -212,6 +212,14 @@ int main(int argc, char **argv) {
         n.snapshot.published = render_now - 10800;
         n.snapshot.window_end = render_now - 3600;
         save(argv[1], "overdue-forecast", &ui, &n);
+        ui.settings = true; ui.settings_row = 2; ui.wish.ready = true;
+        save(argv[1], "wish-off", &ui, &n);
+        ui.confirm_action = 3; ui.confirm_yes = false;
+        save(argv[1], "wish-enable-confirm", &ui, &n);
+        ui.confirm_action = 0; ui.wish.enabled = true; ui.wish.pending = 3; ui.wish.status = WISH_OFFLINE;
+        save(argv[1], "wish-pending", &ui, &n);
+        ui.wish.status = WISH_STORAGE_ERROR;
+        save(argv[1], "wish-storage-error", &ui, &n);
         puts("Three-language representative layout PASS");
         return 0;
     }
@@ -330,7 +338,7 @@ int main(int argc, char **argv) {
     assert(orbit_ui_key(&safe, 1) == 0 && safe.confirm_yes);
     assert(orbit_ui_key(&safe, 0) == 1 && !safe.settings && !safe.confirm_action);
 
-    safe = (orbit_ui_t){.settings = true, .settings_row = 2};
+    safe = (orbit_ui_t){.settings = true, .settings_row = 3};
     safe.quota.paired = true;
     assert(orbit_ui_key(&safe, 0) == 0 && safe.confirm_action == 2);
     assert(orbit_ui_key(&safe, 2) == 0 && safe.confirm_action == 0 && safe.settings);
@@ -338,6 +346,26 @@ int main(int argc, char **argv) {
     assert(orbit_ui_key(&safe, 1) == 0 && safe.confirm_yes);
     assert(orbit_ui_key(&safe, 0) == 7 && !safe.confirm_action);
     puts("Wi-Fi setup and Mac unpair confirmation, default-cancel and long-press cancel PASS");
+    safe = (orbit_ui_t){.settings = true, .settings_row = 2, .wish = {.ready = true}};
+    assert(orbit_ui_key(&safe, 0) == 0 && safe.confirm_action == 3 && !safe.confirm_yes);
+    assert(orbit_ui_key(&safe, 0) == 0 && !safe.confirm_action);
+    orbit_ui_key(&safe, 0); orbit_ui_key(&safe, 1);
+    assert(orbit_ui_key(&safe, 0) == 8 && !safe.confirm_action);
+    safe.wish.enabled = true; assert(orbit_ui_key(&safe, 0) == 8);
+    safe.settings = false; safe.page = 2;
+    assert(orbit_ui_key(&safe, 0) == 9 && safe.stars == 1);
+    assert(orbit_ui_key(&safe, 2) == 0 && safe.settings);
+    ui.settings = true; ui.settings_row = 2; ui.wish.ready = true;
+    save(argv[1], "wish-off", &ui, &n);
+    ui.confirm_action = 3; ui.confirm_yes = false;
+    save(argv[1], "wish-enable-confirm", &ui, &n);
+    ui.confirm_action = 0; ui.wish.enabled = true; ui.wish.pending = 3; ui.wish.status = WISH_OFFLINE;
+    save(argv[1], "wish-pending", &ui, &n);
+    ui.wish.pending = 0; ui.wish.status = WISH_SYNCED;
+    save(argv[1], "wish-synced", &ui, &n);
+    ui.settings = false;
+    puts("Wish default-cancel, enable/disable intents, short-tap routing and UI states PASS");
+
     orbit_ui_key(&ui, 2);
     ui.page = 0;
     n.link = NET_SETUP;
