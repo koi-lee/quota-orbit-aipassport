@@ -8,10 +8,10 @@
 | 下载 | 装在哪里 | 作用 | 入口 |
 |---|---|---|---|
 | Quota Orbit Mac主客户端 | Mac | 桌宠、菜单栏和星盘查看额度与公开消息；不要求购买Passport | [正式版本](https://github.com/koi-lee/quota-orbit/releases/latest) |
-| Passport Mac同步助手0.2.0 | Apple芯片Mac | 把已登录Codex的个人额度交给已配对的Passport；无需安装Python | [助手预发布和安装说明](https://github.com/koi-lee/quota-orbit/releases/tag/passport-helper-v0.2.0) |
+| Passport Mac同步助手0.3.0 | Apple芯片Mac | 把已登录Codex的个人额度交给已配对的Passport；无需安装Python | [0.3.0预发布与安装说明](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.0) |
 | Passport设备固件 | AI Passport硬件 | 显示公告、来信、角色、书灯并播放提示音 | [社区作品1250](https://ai-passport.folotoy.cn/plays/1250/) |
 
-助手不会替换Mac主客户端；设备固件不能安装到Mac。GitHub的“Source code”自动归档对应这个Mac主客户端仓库，不是Passport固件源码。Passport固件目前在社区分发，本仓库此目录提供它的使用与展示文档。
+助手不会替换Mac主客户端；设备固件不能安装到Mac。GitHub自动生成的“Source code”归档对应各自仓库：本仓库是Passport固件与助手源码，Quota Orbit主仓库是Mac桌面客户端源码。社区作品1250是设备公开固件的安装入口，本仓库保留固件源码、设备使用指南和页面示意图。
 
 ## 设备上能看什么
 
