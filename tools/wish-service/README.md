@@ -1,8 +1,8 @@
 <p align="right"><a href="README.zh_CN.md">简体中文</a> · <strong>English</strong></p>
 
-# Passport wish ingress (local candidate)
+# Passport wish ingress
 
-This service adds anonymous hardware events to the **existing website counter database**, not a separate public total. It is not deployed. Firmware transport defaults to an empty URL and therefore cannot submit until an approved HTTPS endpoint is configured.
+This service adds anonymous hardware events to the **existing website counter database**, not a separate public total. The ingress was deployed on 2026-10-15 at `https://www.starshoreai.com/quota-orbit/api/passport/wishes`; this development branch defaults to that address. Physical end-to-end testing is pending, and this feature is not in the community release.
 
 ## Protocol
 
@@ -14,7 +14,7 @@ Firmware derives unlinkable UUID-shaped event IDs from a random 32-byte local se
 
 Run `CC=<host-C-compiler> python3 tools/wish-service/test_server.py` from the repository root. Tests create temporary databases and use loopback only. They drive the firmware C queue model through a compiled bridge, simulate a lost response/restart, and check the same SQL total used by the website. They cover 20 initial taps, deduplicated retries, 3 offline taps after reopening, opt-out, malformed requests, concurrent duplicates, schema refusal and rate limits. No real website writes occur.
 
-The ingress accepts an existing `clicks(id TEXT PRIMARY KEY, received_at INTEGER NOT NULL, version INTEGER NOT NULL)` table, with an optional nullable `country TEXT` column. It refuses missing databases, unknown columns or incompatible country constraints; it performs no schema migration. Hardware records use version 2 and no country, preserving website history and cursor ordering. Current production schema, triggers, permissions and deployed source must still be inspected before live integration.
+The ingress accepts an existing `clicks(id TEXT PRIMARY KEY, received_at INTEGER NOT NULL, version INTEGER NOT NULL)` table, with an optional nullable `country TEXT` column. It refuses missing databases, unknown columns or incompatible country constraints; it performs no schema migration. Hardware records use version 2 and no country, preserving website history and cursor ordering. Production schema, absence of triggers, ownership and service identity were checked before deployment. The online backup passed integrity checks. Public rejection checks preserved the counter; no test events were submitted.
 
 ## Deployment boundary
 

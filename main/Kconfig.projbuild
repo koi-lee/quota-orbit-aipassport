@@ -1,7 +1,7 @@
 menu "Quota Orbit wish sync"
     config ORBIT_WISH_URL
         string "HTTPS URL of the approved Passport wish endpoint"
-        default ""
+        default "https://www.starshoreai.com/quota-orbit/api/passport/wishes"
         help
             Empty disables transport until the shared-count service is deployed.
             Never use the browser endpoint by forging an Origin header.

@@ -1,8 +1,8 @@
 <p align="right"><strong>简体中文</strong> · <a href="README.md">English</a></p>
 
-# Passport 官网祈愿接收服务（本地候选）
+# Passport 官网祈愿接收服务
 
-本服务把匿名硬件事件加入**官网现有计数数据库**，不另建一套公开总数。目前未部署；固件发送地址默认留空，只有配置获准的 HTTPS 接口并重新构建后才会发送。
+本服务把匿名硬件事件加入**官网现有计数数据库**，不另建一套公开总数。2026-10-15已部署至 `https://www.starshoreai.com/quota-orbit/api/passport/wishes`，本开发分支默认使用此地址。硬件端到端联调仍待完成，此功能尚未进入社区版本。
 
 ## 协议与隐私
 
@@ -14,7 +14,7 @@
 
 在仓库根目录运行 `CC=<主机C编译器> python3 tools/wish-service/test_server.py`。测试仅用临时数据库和本机回环地址，通过编译桥接驱动固件实际C排队模型，覆盖20次点按、丢失响应后的重启重发不重复、离线3次恢复、关闭、畸形请求、并发、结构检查和限流。没有向官网写入真实计数。
 
-要求已有 `clicks(id TEXT PRIMARY KEY, received_at INTEGER NOT NULL, version INTEGER NOT NULL)` 表，也支持可空的 `country TEXT` 列。未知列、缺失数据库或不兼容约束时拒绝写入，不做迁移。硬件记录version为2、country留空，保留网页历史与rowid游标顺序。生产实际结构、触发器、权限及部署源仍须上线前核对。
+要求已有 `clicks(id TEXT PRIMARY KEY, received_at INTEGER NOT NULL, version INTEGER NOT NULL)` 表，也支持可空的 `country TEXT` 列。未知列、缺失数据库或不兼容约束时拒绝写入，不做迁移。硬件记录version为2、country留空，保留网页历史与rowid游标顺序。上线前已核对生产结构、无触发器、文件权限和服务身份，在线备份通过完整性检查。公网拒绝请求检查未增加计数，未上传测试事件。
 
 ## 部署边界
 

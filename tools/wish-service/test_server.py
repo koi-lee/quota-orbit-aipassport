@@ -55,6 +55,30 @@ class Wishes(unittest.TestCase):
         with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
             list(pool.map(self.store.accept, [events] * 6))
         self.assertEqual(self.total(), 33)
+    def test_busy_database_returns_retryable_error_without_losing_events(self):
+        http = server.Server(('127.0.0.1', 0), self.store)
+        thread = threading.Thread(target=http.serve_forever, daemon=True); thread.start()
+        payload = json.dumps({'events': [str(uuid.uuid4())]})
+        def send():
+            conn = http_client.HTTPConnection('127.0.0.1', http.server_port, timeout=3)
+            conn.request('POST', server.ROUTE, payload, {'Content-Type': 'application/json'})
+            response = conn.getresponse()
+            result = response.status, json.loads(response.read())
+            conn.close()
+            return result
+        import http.client as http_client
+        try:
+            with closing(sqlite3.connect(self.db)) as writer:
+                writer.execute('BEGIN IMMEDIATE')
+                self.assertEqual(send(), (503, {'error': 'storage'}))
+                self.assertEqual(self.total(), 1)
+                writer.rollback()
+            status, answer = send()
+            self.assertEqual((status, answer['total']), (200, 2))
+            self.assertEqual(send(), (200, answer))
+            self.assertEqual(self.total(), 2)
+        finally:
+            http.shutdown(); http.server_close(); thread.join()
     def test_invalid_or_full_batch_does_not_write(self):
         for events in ([], ['invalid'], ['00000000-0000-0000-0000-000000000000'],
                        [str(uuid.uuid4())] * 2, [str(uuid.uuid4()) for _ in range(33)]):
