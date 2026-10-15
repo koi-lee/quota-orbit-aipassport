@@ -38,6 +38,7 @@ static lv_obj_t *screen;
 static unsigned rendered_stars;
 static bool retained_character;
 static int retained_battery;
+static lv_obj_t *battery_fill, *battery_unknown;
 static lv_obj_t *star_count, *orbit_stars[3], *celebration;
 static unsigned celebration_level;
 static int celebration_step;
@@ -78,24 +79,26 @@ static lv_obj_t *box(lv_obj_t *parent, int x, int y, int w, int h, int radius, u
     return o;
 }
 /* Battery SOC is device power, never personal Codex quota. No charging flag is available. */
+static void battery_update(int percent, uint32_t ink) {
+    int width = percent < 0 ? 0 : (percent > 100 ? 100 : percent) * 21 / 100;
+    if (percent > 0 && width == 0) width = 1;
+    lv_obj_set_width(battery_fill, width ? width : 1);
+    lv_obj_set_style_bg_color(battery_fill, lv_color_hex(percent <= 20 ? 0xC47763 : ink), 0);
+    if (width) lv_obj_remove_flag(battery_fill, LV_OBJ_FLAG_HIDDEN);
+    else lv_obj_add_flag(battery_fill, LV_OBJ_FLAG_HIDDEN);
+    if (percent < 0) lv_obj_remove_flag(battery_unknown, LV_OBJ_FLAG_HIDDEN);
+    else lv_obj_add_flag(battery_unknown, LV_OBJ_FLAG_HIDDEN);
+}
 static void battery_icon(int percent, uint32_t ink) {
     lv_obj_t *body = box(screen, 191, 15, 27, 14, 3, BG);
     lv_obj_set_style_bg_opa(body, LV_OPA_TRANSP, 0);
     lv_obj_set_style_border_width(body, 1, 0);
     lv_obj_set_style_border_color(body, lv_color_hex(ink), 0);
     box(screen, 219, 19, 2, 6, 1, ink);
-    if (percent < 0) {
-        lv_obj_t *unknown = label(199, 14, 11, "?", ink);
-        lv_obj_set_style_text_font(unknown, font_12(), 0);
-        return;
-    }
-    if (percent > 100)
-        percent = 100;
-    int width = percent * 21 / 100;
-    if (percent > 0 && width == 0)
-        width = 1;
-    if (width)
-        box(screen, 194, 18, width, 8, 1, percent <= 20 ? 0xC47763 : ink);
+    battery_fill = box(screen, 194, 18, 1, 8, 1, ink);
+    battery_unknown = label(199, 14, 11, "?", ink);
+    lv_obj_set_style_text_font(battery_unknown, font_12(), 0);
+    battery_update(percent, ink);
 }
 static void center(int y, const char *text, uint32_t color) {
     lv_obj_t *o = label(18, y, 204, text, color);
@@ -368,7 +371,11 @@ void orbit_ui_draw(const orbit_ui_t *u, const orbit_network_t *n, int battery, i
     orbit_language_set(u->language);
     /* A key press updates retained small objects, never the whole character page. */
     bool character = u->page == 2 && !u->settings && !u->source && !u->pairing && !n->setup;
-    if (retained_character && character && battery == retained_battery && before_language == u->language) {
+    if (retained_character && character && before_language == u->language) {
+        if (battery != retained_battery) {
+            battery_update(battery, MUTED);
+            retained_battery = battery;
+        }
         if (u->stars != rendered_stars)
             star_response(u->stars, true);
         rendered_stars = u->stars;

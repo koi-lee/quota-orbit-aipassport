@@ -1,14 +1,14 @@
 <p align="right"><a href="wish-sync.zh_CN.md">简体中文</a> · <strong>English</strong></p>
 
-# Website wish sync: development candidate
+# Website wish sync
 
-This feature is isolated on `feature/passport-wish-sync`, based on `bd409e3`. It is not part of the current community release. The local candidate implements the approved optional setting, default-cancel consent, a bounded anonymous event queue, persistence/retry, and a separate website ingress candidate. The production ingress was deployed on 2026-10-15; firmware now defaults to that HTTPS endpoint. No device has been flashed with this feature.
+Website wishes send Character-page taps to the Quota Orbit website through a dedicated HTTPS endpoint. Mac software is not needed. The receiver and website animation are deployed; community availability depends on the published firmware revision.
 
 ## User path
 
-Hold Confirm > Settings > Website wishes: off > review the data explanation > Enable. Each valid short press on Character adds one wish locally and queues an anonymous event. Mac software is not needed. Returning to Settings shows pending/error state. Disabling stops new events and clears pending records; an already in-flight request can still complete, and publicly counted anonymous events cannot be retracted individually. Existing stars, quota, sound and book-light behavior remain separate.
+On first use, website wishes are on. Hold Confirm > Settings > Website wishes to disable them or review the explanation when re-enabling. Each valid short press on Character adds one wish locally and queues an anonymous event. Mac software is not needed. Returning to Settings shows pending/error state. Disabling stops new events and clears pending records; an already in-flight request can still complete, and publicly counted anonymous events cannot be retracted individually. Existing stars, quota, sound and book-light behavior remain separate.
 
-The setting defaults off. Consent defaults Cancel; a long press cancels. Missing endpoint configuration shows Service not ready rather than claiming sync success. No historic star count is uploaded. The global number is tap count, not people, personal quota or a reset probability.
+The setting defaults on for first use: character-page taps are sent anonymously to the website. It can be disabled in Settings. Updates preserve saved on/off choices. When re-enabling, the explanation defaults to Cancel; a long press cancels. Missing endpoint configuration shows Service not ready rather than claiming sync success. No historic star count is uploaded. The global number is tap count, not people, personal quota or a reset probability.
 
 ## Persistence boundaries
 
@@ -16,9 +16,9 @@ A per-enable random seed and monotonic sequence derive stable event IDs across r
 
 ## Evidence and acceptance
 
-Host tests drive the actual C queue model and a loopback HTTP ingress with a temporary shared website-style SQLite database: 20 taps add 20; a lost response/reopen/retry adds none; 3 offline taps after reopening add 3; opt-out clears pending and prevents additions. Additional tests cover concurrency, malformed payloads, schema refusal, limits, capacity and overflow. Native renders check the opt-in and settings states in Simplified Chinese, Traditional Chinese and English. Firmware build, archive integrity and physical testing are separate gates; physical sound/animation/network concurrency and real power failures remain unverified.
+Host tests drive the actual C queue model and a loopback HTTP ingress with a temporary shared website-style SQLite database: 20 taps add 20; a lost response/reopen/retry adds none; 3 offline taps after reopening add 3; opt-out clears pending and prevents additions. Additional tests cover concurrency, malformed payloads, schema refusal, limits, capacity and overflow. Native renders check the opt-in and settings states in Simplified Chinese, Traditional Chinese and English. A controlled original-device test confirmed 10 taps added exactly 10 website events. A later rapid-input repair processed all 108 observed taps with zero queue drops; the owner confirmed numbers, animation and sound. These observations do not establish long-duration, power-loss or other-device reliability.
 
-The current private website source uses the counter table with nullable country and the live read-only API exposes total/cursor/recent fields. The candidate supports that known schema without migration; the production database schema, absence of triggers, ownership and service identity were inspected before deployment. An online SQLite backup passed integrity checks. Public method/invalid-payload checks and the existing read endpoint passed without adding test events. No production test clicks were submitted.
+The current private website source uses the counter table with nullable country and the live read-only API exposes total/cursor/recent fields. The candidate supports that known schema without migration; the production database schema, absence of triggers, ownership and service identity were inspected before deployment. An online SQLite backup passed integrity checks. Public method/invalid-payload checks and the existing read endpoint passed without adding test events. Subsequent explicitly authorized physical-device tests added real wishes to the website.
 
 ## Integration and rollback
 
@@ -26,4 +26,4 @@ See the [ingress protocol and runbook](../../tools/wish-service/README.md). Cand
 
 Rollback removes only the new proxy route and service, then restores the previous device application if authorized. Existing shared counter rows are preserved. Do not automatically delete user clicks, withdraw a community revision, push this branch or modify the public release as part of local development.
 
-Accepted UI tap actions are routed independently from the asynchronous audio-context hint. A later navigation or long press must not discard an earlier accepted tap. Host regression covers this ordering; physical count accuracy after this fix still needs retesting.
+Accepted UI tap actions are routed independently from the asynchronous audio-context hint. A later navigation or long press must not discard an earlier accepted tap. Host regression covers this ordering; the controlled ten-tap device test also covered immediate navigation after the final tap.

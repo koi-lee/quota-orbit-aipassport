@@ -278,6 +278,9 @@ int main(int argc, char **argv) {
     }
     assert(effect);
     unsigned moving = 0;
+    unsigned char idle_scene[sizeof(pixels)];
+    lv_refr_now(NULL);
+    memcpy(idle_scene, pixels, sizeof(pixels));
     const void *previous_frame = NULL;
     for (unsigned i = 0; i < 30; i++) {
         orbit_ui_key(&ui, 0);
@@ -285,11 +288,28 @@ int main(int argc, char **argv) {
         lv_tick_inc(100);
         lv_timer_handler();
         lv_refr_now(NULL);
+        /* Inspect rendered pixels, not just changing frame pointers. */
+        unsigned visible_pixels = 0;
+        for (int y = 96; y < 256; ++y) for (int x = 24; x < 216; ++x) {
+            if (x >= 148 && x < 159 && y >= 164 && y < 180) continue;
+            unsigned offset = (unsigned)(y * 240 + x) * 3;
+            if (memcmp(pixels + offset, idle_scene + offset, 3)) ++visible_pixels;
+        }
+        assert(visible_pixels > 200);
         const void *frame = lv_obj_get_user_data(effect);
         if (frame != previous_frame)
             moving++;
         previous_frame = frame;
         assert(lv_anim_count_running() > 0);
+        if (i == 10) {
+            /* A background battery update must not destroy an active burst. */
+            const void *active_frame = lv_obj_get_user_data(effect);
+            orbit_ui_draw(&ui, &n, 79, render_now);
+            assert(lv_anim_count_running() > 0);
+            assert(lv_obj_get_user_data(effect) == active_frame);
+            orbit_ui_draw(&ui, &n, 78, render_now);
+            assert(lv_anim_count_running() > 0);
+        }
     }
     assert(moving >= 25);
     for (unsigned i = 0; i < 30; i++) {
@@ -306,6 +326,12 @@ int main(int argc, char **argv) {
         motion_frame(argv[1], "continuous", i);
     }
     assert(lv_anim_count_running() == 0);
+    /* A queued burst can be consumed before one draw without losing tap state. */
+    unsigned burst_start = ui.stars;
+    for (unsigned i = 0; i < 8; ++i) assert(orbit_ui_key(&ui, 0) == 9);
+    assert(ui.stars == (burst_start + 8) % 100);
+    orbit_ui_draw(&ui, &n, 78, render_now);
+    assert(lv_anim_count_running() > 0);
     /* Rapid presses stay bounded; leaving the page cancels all object animations. */
     lv_obj_t *retained_brand = lv_obj_get_child(lv_screen_active(), 0);
     unsigned long input_pixels = flushed_pixels;
@@ -366,7 +392,8 @@ int main(int argc, char **argv) {
     ui.settings = false;
     puts("Wish default-cancel, enable/disable intents, short-tap routing and UI states PASS");
 
-    orbit_ui_key(&ui, 2);
+    /* The wish-settings cases already exited settings above. Do not reopen it. */
+    assert(!ui.settings);
     ui.page = 0;
     n.link = NET_SETUP;
     n.setup = true;

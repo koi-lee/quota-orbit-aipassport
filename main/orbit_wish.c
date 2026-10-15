@@ -128,6 +128,14 @@ static void worker(void *arg) {
         nvs_close(nvs); xSemaphoreTake(mutex, portMAX_DELAY); view.status = WISH_STORAGE_ERROR;
         xSemaphoreGive(mutex); vTaskDelete(NULL); return;
     }
+    /* Only a missing record receives defaults; saved opt-outs remain off. */
+    if (loaded == ESP_ERR_NVS_NOT_FOUND) {
+        uint8_t seed[32]; esp_fill_random(seed, sizeof(seed));
+        if (!orbit_wish_enable(&state, seed) || !persist(nvs, &state)) {
+            nvs_close(nvs); xSemaphoreTake(mutex, portMAX_DELAY); view.status = WISH_STORAGE_ERROR;
+            xSemaphoreGive(mutex); vTaskDelete(NULL); return;
+        }
+    }
     xSemaphoreTake(mutex, portMAX_DELAY);
     desired = state.enabled; view.ready = true; view.enabled = desired;
     xSemaphoreGive(mutex);
