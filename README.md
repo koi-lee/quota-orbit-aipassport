@@ -20,6 +20,7 @@ The Mac assistant is not needed to read public announcements. Installing from th
 - [Language support matrix](docs/ai-passport/language-support.md)
 - [Passport Mac Sync Assistant source](tools/lan-quota/)
 - [AI Passport firmware source](main/)
+- [Release naming and distribution boundaries](docs/development/releasing.md)
 
 Use the temporary hotspot shown on the device to configure Wi-Fi at `http://192.168.4.1`; only 2.4 GHz Wi-Fi is supported. Personal quota sync requires one initial USB pairing confirmed on the device. After pairing, the Mac and Passport sync automatically while on the same Wi-Fi.
 

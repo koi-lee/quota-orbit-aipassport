@@ -3,7 +3,8 @@ name: Build firmware
 on:
   push:
     tags:
-      - "**"
+      # Keep firmware binaries separate from passport-helper-* releases.
+      - "firmware-v*"
   workflow_dispatch:
 
 permissions:
@@ -52,7 +53,7 @@ jobs:
           if-no-files-found: error
 
   release:
-    if: github.ref_type == 'tag'
+    if: github.ref_type == 'tag' && startsWith(github.ref_name, 'firmware-v')
     needs: build
     runs-on: ubuntu-latest
     permissions:

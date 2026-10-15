@@ -21,6 +21,7 @@
 - [版本兼容表](docs/ai-passport/COMPATIBILITY.zh_CN.md)
 - [Passport Mac 同步助手源码](tools/lan-quota/)
 - [AI Passport 固件源码与构建说明](main/)
+- [Release 标签与分发边界](docs/development/releasing.zh_CN.md)
 
 设备通过屏幕上的临时热点配网，网页入口为 `http://192.168.4.1`，仅使用 2.4 GHz Wi-Fi。个人额度同步须先用 USB 完成一次硬件配对；之后 Mac 和设备在同一 Wi-Fi 下自动同步。
 
