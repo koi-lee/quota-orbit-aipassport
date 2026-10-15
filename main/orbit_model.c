@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include "orbit_language.h"
 #include "orbit_model.h"
 #include <ctype.h>
