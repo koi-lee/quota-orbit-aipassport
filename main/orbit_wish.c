@@ -4,6 +4,7 @@
 #include "esp_crt_bundle.h"
 #include "esp_http_client.h"
 #include "esp_netif.h"
+#include "esp_log.h"
 #include "esp_random.h"
 #include "esp_timer.h"
 #include "freertos/FreeRTOS.h"
@@ -17,6 +18,7 @@
 #include <string.h>
 
 static SemaphoreHandle_t mutex;
+typedef struct { uint32_t epoch; int64_t queued_ms; } wish_click_t;
 static QueueHandle_t clicks;
 static orbit_wish_view_t view;
 static bool desired, overflow;
@@ -38,7 +40,8 @@ void orbit_wish_set_enabled(bool enabled) {
 }
 void orbit_wish_click(void) {
     xSemaphoreTake(mutex, portMAX_DELAY);
-    if (view.ready && desired && xQueueSend(clicks, &generation, 0) != pdTRUE) overflow = true;
+    wish_click_t click = {.epoch = generation, .queued_ms = esp_timer_get_time() / 1000};
+    if (view.ready && desired && xQueueSend(clicks, &click, 0) != pdTRUE) overflow = true;
     xSemaphoreGive(mutex);
 }
 static void publish(const orbit_wish_store_t *s, uint32_t epoch, orbit_wish_status_t status) {
@@ -140,6 +143,7 @@ static void worker(void *arg) {
     desired = state.enabled; view.ready = true; view.enabled = desired;
     xSemaphoreGive(mutex);
     uint32_t epoch = 0; bool dirty = false, storage_ok = true;
+    int64_t queue_wait_max = 0;
     int64_t last_save = 0, next_send = 0; unsigned failures = 0;
     for (;;) {
         bool requested; uint32_t wanted;
@@ -150,10 +154,12 @@ static void worker(void *arg) {
             else orbit_wish_disable(&state);
             dirty = true;
         }
-        uint32_t click;
+        wish_click_t click;
         unsigned drained = 0;
         while (drained++ < 64 && xQueueReceive(clicks, &click, 0) == pdTRUE) {
-            if (click == epoch && state.enabled) {
+            if (click.epoch == epoch && state.enabled) {
+                int64_t wait = esp_timer_get_time() / 1000 - click.queued_ms;
+                if (wait > queue_wait_max) queue_wait_max = wait;
                 if (orbit_wish_add(&state)) dirty = true;
                 else overflow = true;
             }
@@ -174,14 +180,19 @@ static void worker(void *arg) {
             !strncmp(CONFIG_ORBIT_WISH_URL, "https://", 8) && online() && now >= next_send) {
             unsigned count = orbit_wish_pending(&state);
             if (count > ORBIT_WISH_BATCH) count = ORBIT_WISH_BATCH;
-            if (send_batch(&state, count)) {
+            int64_t sent_at = esp_timer_get_time() / 1000;
+            bool sent = send_batch(&state, count);
+            ESP_LOGI("orbit_wish", "batch=%u ok=%d queue_wait_max_ms=%lld send_ms=%lld", count, sent,
+                     (long long)queue_wait_max, (long long)(esp_timer_get_time() / 1000 - sent_at));
+            queue_wait_max = 0;
+            if (sent) {
                 /* Persisting the new prefix may fail; retries use the same event IDs. */
                 orbit_wish_store_t acknowledged = state;
                 orbit_wish_ack(&acknowledged, state.acknowledged, count);
                 storage_ok = persist(nvs, &acknowledged);
                 if (storage_ok) { state = acknowledged; failures = 0; status = WISH_SYNCED; }
                 else { status = WISH_STORAGE_ERROR; dirty = true; }
-                next_send = esp_timer_get_time() / 1000 + 1000;
+                next_send = esp_timer_get_time() / 1000 + 500;
             } else {
                 if (failures < 5) ++failures;
                 next_send = esp_timer_get_time() / 1000 + (1000LL << failures); status = WISH_RETRY;
@@ -192,7 +203,8 @@ static void worker(void *arg) {
     }
 }
 void orbit_wish_start(void) {
-    mutex = xSemaphoreCreateMutex(); clicks = xQueueCreate(64, sizeof(uint32_t));
+    mutex = xSemaphoreCreateMutex(); clicks = xQueueCreate(64, sizeof(wish_click_t));
     configASSERT(mutex && clicks);
-    configASSERT(xTaskCreate(worker, "orbit_wish", 8192, NULL, 3, NULL) == pdPASS);
+    /* Share CPU with input/LVGL, below PCM; animated taps must not starve sync. */
+    configASSERT(xTaskCreate(worker, "orbit_wish", 8192, NULL, 4, NULL) == pdPASS);
 }
