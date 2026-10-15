@@ -18,7 +18,7 @@
 
 - [设备页面、状态和配网／同步流程图](docs/ai-passport/device-guide/README.zh_CN.md)（[English](docs/ai-passport/device-guide/README.md)）
 - [语言支持矩阵（简体中文）](docs/ai-passport/language-support.zh_CN.md)
-- [版本兼容表](docs/ai-passport/COMPATIBILITY.md)
+- [版本兼容表](docs/ai-passport/COMPATIBILITY.zh_CN.md)
 - [Passport Mac 同步助手源码](tools/lan-quota/)
 - [AI Passport 固件源码与构建说明](main/)
 
