@@ -1,4 +1,4 @@
-# Quota Orbit · Passport Mac Sync Assistant 0.3.1 (public preview)
+# Quota Orbit · Passport Mac Sync Assistant 0.3.2 (public preview)
 
 <p align="right"><a href="README.zh_CN.md">简体中文</a> · <a href="README.zh_TW.md">Traditional Chinese</a> · <a href="README.md">English</a></p>
 
@@ -6,7 +6,7 @@ Send the personal quota available from your signed-in Codex account on a Mac to 
 
 ## Download
 
-[Download for Apple silicon](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.1/StarshorePassport-AppleSilicon-0.3.1-notarized.zip) · [Checksum file](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.1/SHA256SUMS.txt) · [Release and all assets](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.1)
+[Download for Apple silicon](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.2/StarshorePassport-AppleSilicon-0.3.2-notarized.zip) · [Checksum file](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.2/SHA256SUMS.txt) · [Release and all assets](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.2)
 
 This package is Developer ID signed and Apple-notarized, with its notarization ticket stapled and Gatekeeper assessment passed. It remains a public preview; functional test limits are listed below.
 
@@ -53,7 +53,7 @@ Redact personal quota and account details from screenshots. Do not upload pairin
 ## Scope and limitations
 
 - Data refreshes about every 30 seconds. Missing Codex quota windows are not converted into zero. When offline or the Mac sleeps, the device keeps the last snapshot and marks its update age.
-- Periodic sync after a device restart was checked on one device. Actual Mac logout/login or reboot startup, and recovery after a real DHCP address change, remain untested.
+- Device-restart sync and 0.3.2 login-service sync recovery were verified locally. A subsequent full Mac reboot, a real DHCP address change and first pairing on a fresh Mac remain untested.
 - Community REV-2886 and later include device address discovery; older REV-2840 does not. Check the [public release notes](https://ai-passport.folotoy.cn/plays/1250/). Actual DHCP address-change recovery remains unverified. Some larger subnets skip scanning; reconnect the device if needed without first revoking pairing.
 - Codex credentials and pairing keys stay on the Mac; the device receives only encrypted quota summaries. A public reset announcement does not establish that your own quota recovered.
 - When reporting an issue, include assistant, firmware and macOS versions and the steps taken. Never send sign-in credentials, pairing files or Wi-Fi passwords.

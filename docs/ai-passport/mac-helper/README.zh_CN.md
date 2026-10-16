@@ -1,4 +1,4 @@
-# 额度星盘 · Passport Mac 同步助手 0.3.1（公开试用版）
+# 额度星盘 · Passport Mac 同步助手 0.3.2（公开试用版）
 
 <p align="right"><a href="README.zh_CN.md">简体中文</a> · <a href="README.zh_TW.md">繁體中文</a> · <a href="README.md">English</a></p>
 
@@ -6,7 +6,7 @@
 
 ## 下载
 
-[下载 Apple 芯片 Mac 安装包](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.1/StarshorePassport-AppleSilicon-0.3.1-notarized.zip) · [校验文件](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.1/SHA256SUMS.txt) · [版本与全部附件](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.1)
+[下载 Apple 芯片 Mac 安装包](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.2/StarshorePassport-AppleSilicon-0.3.2-notarized.zip) · [校验文件](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.2/SHA256SUMS.txt) · [版本与全部附件](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.2)
 
 安装包已完成 Developer ID 签名与 Apple 公证，已装订公证票据并通过 Gatekeeper 检查。仍作为公开试用版发布；功能测试范围见下方限制。
 
@@ -53,7 +53,7 @@ macOS 版本／Apple 芯片型号：
 ## 范围与限制
 
 - 约每 30 秒更新一次。Codex 未提供的额度窗口不会被补成零；离线或 Mac 休眠时，设备保留旧数据并标记更新时间。
-- 设备重启后的周期同步已在一台设备验证；Mac 实际注销／登录或系统重启后的自动启动，以及真实 DHCP 换址恢复仍未完成实测。
+- 设备重启后的同步和 0.3.2 登录服务恢复同步已在本机验证；修复后再次完整重启 Mac、真实 DHCP 换址及全新电脑首次配对仍待实测。
 - 社区 REV-2886 起包含设备地址发现支持；较旧 REV-2840 不含此功能。请先核对[社区公开更新日志](https://ai-passport.folotoy.cn/plays/1250/)。地址发现已实现，但真实 DHCP 换址恢复仍待实测；某些较大网段会跳过扫描，找不到时可重新连接设备，不必先解除配对。
 - Codex 登录凭据与配对密钥留在 Mac，设备只接收加密额度摘要。公开重置公告不能证明个人额度已恢复。
 - 反馈请提供助手版本、固件版本、macOS 版本和操作步骤；不要发送登录凭据、配对文件或 Wi-Fi 密码。

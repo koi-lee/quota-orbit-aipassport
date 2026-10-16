@@ -31,9 +31,9 @@
 | 用途 | 安裝位置 | 入口 |
 |---|---|---|
 | 必裝：裝置韌體 | AI Passport | [社群作品 1250 → 安裝最新版](https://ai-passport.folotoy.cn/plays/1250/) |
-| 選裝：Passport Mac 同步助手 0.3.1 | Apple 晶片 Mac | [繁體安裝說明](../mac-helper/README.zh_TW.md) · [下載附件](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.1) |
+| 選裝：Passport Mac 同步助手 0.3.2 | Apple 晶片 Mac | [繁體安裝說明](../mac-helper/README.zh_TW.md) · [下載附件](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.2) |
 
-助手安裝包是 `StarshorePassport-AppleSilicon-0.3.1-notarized.zip`，不必安裝 Python。Source code 是原始碼，不是安裝包。助手仍是預發行版本，新版 `-notarized.zip` 已通過 Apple 公證；若 macOS 阻止正常開啟，請停止並回報提示，不要關閉系統安全防護。Intel Mac 與 Windows 尚無經過驗證的助手安裝包。
+助手安裝包是 `StarshorePassport-AppleSilicon-0.3.2-notarized.zip`，不必安裝 Python。Source code 是原始碼，不是安裝包。助手仍是預發行版本，新版 `-notarized.zip` 已通過 Apple 公證；若 macOS 阻止正常開啟，請停止並回報提示，不要關閉系統安全防護。Intel Mac 與 Windows 尚無經過驗證的助手安裝包。
 
 ## 第一次使用
 
