@@ -2,8 +2,27 @@
 import json, math, os, selectors, shutil, subprocess, time
 from pathlib import Path
 
+def codex_executable():
+    # Login agents do not inherit the interactive shell's Homebrew PATH.
+    candidates = [shutil.which('codex'), '/opt/homebrew/bin/codex',
+                  '/usr/local/bin/codex', '/Applications/Codex.app/Contents/Resources/codex',
+                  str(Path.home() / 'Applications/Codex.app/Contents/Resources/codex')]
+    for candidate in candidates:
+        if candidate and Path(candidate).is_file() and os.access(candidate, os.X_OK):
+            return candidate
+    raise FileNotFoundError('Codex executable unavailable')
+
+def codex_environment():
+    env = os.environ.copy()
+    paths = env.get('PATH', '/usr/bin:/bin:/usr/sbin:/sbin').split(os.pathsep)
+    # npm's Codex launcher also needs Node on PATH in a login-agent session.
+    for directory in ['/opt/homebrew/bin', '/usr/local/bin']:
+        if directory not in paths: paths.append(directory)
+    env['PATH'] = os.pathsep.join(paths)
+    return env
+
 def read_quota(timeout=15):
-    process = subprocess.Popen([shutil.which('codex') or '/Applications/Codex.app/Contents/Resources/codex', 'app-server'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, bufsize=0)
+    process = subprocess.Popen([codex_executable(), 'app-server'], env=codex_environment(), stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, bufsize=0)
     selector = selectors.DefaultSelector(); selector.register(process.stdout, selectors.EVENT_READ)
     pending = b''
     def send(value):

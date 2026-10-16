@@ -27,6 +27,8 @@ class AssistantTests(unittest.TestCase):
             self.assertEqual(path.name,assistant.LOGIN_AGENT_LABEL+'.plist')
             with path.open('rb') as stream:payload=plistlib.load(stream)
             self.assertEqual(payload['ProgramArguments'],[executable,'--allow-device','--no-browser','--auto-sync'])
+            self.assertIn('/opt/homebrew/bin', payload['EnvironmentVariables']['PATH'].split(':'))
+            self.assertIn('/usr/local/bin', payload['EnvironmentVariables']['PATH'].split(':'))
             self.assertTrue(payload['RunAtLoad'])
             self.assertFalse(payload['KeepAlive'])
             self.assertEqual(stat.S_IMODE(path.stat().st_mode),0o600)

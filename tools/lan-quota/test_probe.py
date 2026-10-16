@@ -2,6 +2,28 @@ import json, subprocess, sys, unittest
 from unittest.mock import patch
 import probe
 class ProbeTests(unittest.TestCase):
+    def test_login_environment_includes_node_paths_without_mutating_parent(self):
+        with patch.dict('probe.os.environ', {'PATH':'/usr/bin:/bin'}, clear=True):
+            env=probe.codex_environment()
+            self.assertEqual(env['PATH'], '/usr/bin:/bin:/opt/homebrew/bin:/usr/local/bin')
+            self.assertEqual(probe.os.environ['PATH'], '/usr/bin:/bin')
+
+    def test_login_path_finds_homebrew_codex(self):
+        with patch('probe.shutil.which', return_value=None), \
+             patch('probe.Path.is_file', lambda p: str(p) == '/opt/homebrew/bin/codex'), \
+             patch('probe.os.access', return_value=True):
+            self.assertEqual(probe.codex_executable(), '/opt/homebrew/bin/codex')
+    def test_nonexecutable_codex_is_not_selected(self):
+        with patch('probe.shutil.which', return_value=None), \
+             patch('probe.Path.is_file', return_value=True), \
+             patch('probe.os.access', return_value=False):
+            with self.assertRaises(FileNotFoundError): probe.codex_executable()
+    def test_shell_path_keeps_precedence(self):
+        with patch('probe.shutil.which', return_value='/custom/bin/codex'), \
+             patch('probe.Path.is_file', return_value=True), \
+             patch('probe.os.access', return_value=True):
+            self.assertEqual(probe.codex_executable(), '/custom/bin/codex')
+
     def test_bucket_selection_and_missing(self):
         window={'usedPercent':25,'windowDurationMins':10080,'resetsAt':1800000000}
         other={'limitId':'codex_other','primary':window}

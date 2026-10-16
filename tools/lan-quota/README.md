@@ -23,3 +23,7 @@ Version 0.3.1 distinguishes missing or unreadable pairing records, an unreachabl
 After a successful Quit request, the page stops polling, disables actions and shows an explicit exit message in all three languages. A disconnected helper shows a separate message. Duplicate launches recognize the existing helper page; an unrelated occupied port shows a local notice and does not overwrite the login item. Page recognition is a compatibility check, not authentication.
 
 These fixes are included in the signed and notarized 0.3.1 package. The older 0.3.0 package remains available but does not contain them.
+
+## Pending login-start fix
+
+The next helper resolves Codex in standard Homebrew and application locations and supplies Node paths when launched by macOS login services. This fixes a limited login PATH causing quota sync to fail while manual launch succeeds. The local 0.3.2 candidate is signed but not notarized or publicly released; public 0.3.1 does not include this fix.

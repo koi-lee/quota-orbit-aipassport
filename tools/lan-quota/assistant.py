@@ -89,6 +89,7 @@ def install_login_agent(agent_dir=None, executable=None):
     except OSError:pass
     destination=agent_dir/(LOGIN_AGENT_LABEL+'.plist')
     payload={'Label':LOGIN_AGENT_LABEL,'ProgramArguments':[executable,'--allow-device','--no-browser','--auto-sync'],
+             'EnvironmentVariables':{'PATH':'/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:/usr/local/bin'},
              'RunAtLoad':True,'KeepAlive':False,'LimitLoadToSessionType':'Aqua','ProcessType':'Background'}
     fd,temp_path=tempfile.mkstemp(prefix=LOGIN_AGENT_LABEL+'.',suffix='.tmp',dir=agent_dir)
     try:
