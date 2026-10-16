@@ -1,6 +1,6 @@
 <p align="right"><a href="README.zh_CN.md">简体中文</a> · <a href="docs/ai-passport/device-guide/README.zh_TW.md">Traditional Chinese</a> · <strong>English</strong></p>
 
-# Quota Orbit · AI Passport
+# Quota Orbit · Codex quota and reset reminders for AI Passport
 
 **Keep Codex quota and public reset news on a small screen beside your desk, with fewer window switches.** This play runs on AI Passport hardware. It is not a Mac desktop app.
 
@@ -15,6 +15,14 @@
 - **Follow announcements:** Wi-Fi lets the device read public forecasts and completion notices independently, with distinct optional sounds. No Mac or Codex sign-in is needed for public news.
 - **See your own quota:** add the optional Mac Sync Assistant to show remaining quota and matching lights on the Moonlight Archivist's book.
 - **Interact:** press Confirm for stars and a prayer sound, or scan the message screen's code in WeChat to open the Starshore Reset Assistant.
+
+## New here? Start with your goal
+
+Public notices only: **install the device play → set up Wi-Fi with your phone → see “Synced · public notices” on Home**. No Mac is needed. For personal Codex quota, add the Mac helper and complete one USB pairing using the four steps below; unplug after quota appears on Character.
+
+- **Home** shows current status, **Letter** explains the notice and its times, and **Character** shows personal quota and star interactions.
+- Star taps can anonymously trigger starlight on the [Quota Orbit website](https://www.starshoreai.com/quota-orbit/). Disable Website wishes in Settings if desired. Wishes do not increase quota.
+- No source build or Python installation is needed. [Setup steps](#first-use-in-four-steps) · [Helper troubleshooting](docs/ai-passport/mac-helper/README.md).
 
 ## See it in motion
 
@@ -60,11 +68,15 @@ Public news is checked about every **5 minutes**; personal quota syncs about eve
 - [Version compatibility](docs/ai-passport/COMPATIBILITY.md) · [Language support](docs/ai-passport/language-support.md)
 - [Mac helper source](tools/lan-quota/) · [Firmware source](main/) · [Build and release notes](docs/development/releasing.md)
 
-Community REV-2886 and later include three-language UI, confirmation screens and device-address discovery. Consult the community release notes: repository updates do not automatically update public firmware. Helper 0.3.0 pairing, unplugged sync and device-restart recovery were verified on one device. Actual Mac reboot/login startup, real DHCP address changes and prolonged sleep recovery still need testing. Codex credentials stay on the Mac; hardware receives only encrypted quota summaries.
+Consult the community release notes and [compatibility table](docs/ai-passport/COMPATIBILITY.md) for the installed version; repository updates do not publish community firmware. Current helper verification and recovery limits are recorded in the [helper guide](docs/ai-passport/mac-helper/README.md). Codex credentials stay on the Mac; the device receives only an encrypted quota summary.
 
 ## Looking for the Mac desktop app?
 
 The independent desktop-pet and menu-bar app is in the [Quota Orbit Mac repository](https://github.com/koi-lee/quota-orbit). **It is not required to use Passport or its sync helper.** See the [Quota Orbit website](https://www.starshoreai.com/quota-orbit/) for the wider product.
+
+## For agents and developers
+
+Read [AGENTS.md](AGENTS.md), then follow the [product context and source map](docs/ai-passport/product-context.md). Installation, personal quota and website wishes have separate entry points; upstream hardware examples do not describe this play’s current UI.
 
 ## Repository contents
 

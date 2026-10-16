@@ -42,7 +42,7 @@ Community REV-2886 and later include three-language UI, confirmation screens and
 
 ## Screens and states
 
-These examples use the firmware's native 240×320 LVGL output, with a separate card combining quota and prayer states; they are not hardware photographs. Announcements, quota, battery, times and hotspot credentials are fictional demonstration values. The [Chinese illustrated guide](README.zh_CN.md) includes the same examples. Home/Letter show public information; Character shows quota supplied by the paired Mac. The top icon is battery charge. Star taps affect only the local star count, while book lights follow synced quota and turn grey after two minutes without fresh data.
+These examples use the firmware's native 240×320 LVGL output, with a separate card combining quota and prayer states; they are not hardware photographs. Announcements, quota, battery, times and hotspot credentials are fictional demonstration values. The [Chinese illustrated guide](README.zh_CN.md) includes the same examples. Home/Letter show public information; Character shows quota supplied by the paired Mac. The top icon is battery charge. Star taps update the session count and, when Website wishes is enabled, anonymously sync wishes to the website. They do not increase quota. Book lights follow synced quota and turn grey after two minutes without fresh data.
 
 ### Public completion notice
 
