@@ -273,7 +273,7 @@ int main(int argc, char **argv) {
     lv_obj_t *effect = NULL;
     for (unsigned i = 0; i < lv_obj_get_child_count(lv_screen_active()); i++) {
         lv_obj_t *obj = lv_obj_get_child(lv_screen_active(), i);
-        if (lv_obj_get_x(obj) == 24 && lv_obj_get_y(obj) == 96)
+        if (lv_obj_get_x(obj) == 24 && lv_obj_get_y(obj) == 60)
             effect = obj;
     }
     assert(effect);
@@ -290,8 +290,8 @@ int main(int argc, char **argv) {
         lv_refr_now(NULL);
         /* Inspect rendered pixels, not just changing frame pointers. */
         unsigned visible_pixels = 0;
-        for (int y = 96; y < 256; ++y) for (int x = 24; x < 216; ++x) {
-            if (x >= 148 && x < 159 && y >= 164 && y < 180) continue;
+        for (int y = 60; y < 220; ++y) for (int x = 24; x < 216; ++x) {
+            if (x >= 148 && x < 159 && y >= 128 && y < 144) continue;
             unsigned offset = (unsigned)(y * 240 + x) * 3;
             if (memcmp(pixels + offset, idle_scene + offset, 3)) ++visible_pixels;
         }
@@ -499,16 +499,16 @@ int main(int argc, char **argv) {
         for (unsigned i = 0; i < 12; ++i) motion_frame(argv[1], book_names[v], i);
         save(argv[1], book_names[v], &ui, &n);
         bool changed = false;
-        for (int y = 164; y < 180; ++y)
+        for (int y = 128; y < 144; ++y)
             for (int x = 148; x < 159; ++x)
                 if (memcmp(pixels + (y * 240 + x) * 3, book_before + (y * 240 + x) * 3, 3)) changed = true;
         assert(changed);
         /* Quota transitions must leave the character, gold rim and paper untouched. */
-        for (int y = 0; y < 257; ++y) for (int x = 0; x < 240; ++x) {
+        for (int y = 0; y < 239; ++y) for (int x = 0; x < 240; ++x) {
             if (!memcmp(pixels + (y * 240 + x) * 3, book_before + (y * 240 + x) * 3, 3)) continue;
             bool inset = false;
             for (unsigned i = 0; i < sizeof(orbit_book_pixels) / sizeof(orbit_book_pixels[0]); ++i)
-                if (x == 148 + orbit_book_pixels[i].x && y == 164 + orbit_book_pixels[i].y) inset = true;
+                if (x == 148 + orbit_book_pixels[i].x && y == 128 + orbit_book_pixels[i].y) inset = true;
             assert(inset);
         }
         memcpy(book_before, pixels, sizeof(pixels));

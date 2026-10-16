@@ -43,7 +43,7 @@ static lv_obj_t *star_count, *orbit_stars[3], *celebration;
 static unsigned celebration_level;
 static int celebration_step;
 static unsigned celebration_index;
-static lv_obj_t *quota_status, *quota_age, *book_overlay;
+static lv_obj_t *quota_status, *quota_age, *quota_number, *quota_bar, *quota_track, *book_overlay;
 static uint8_t book_pixels[11 * 16 * 4];
 static const lv_image_dsc_t book_image = {
     .header = {.magic = LV_IMAGE_HEADER_MAGIC, .cf = LV_COLOR_FORMAT_ARGB8888,
@@ -229,14 +229,15 @@ static void star_response(unsigned stars, bool pressed) {
         animate(celebration, celebration_frame, 0, 23, 1120, 0);
 }
 static void star_scene(unsigned stars, bool pressed) {
-    celebration = box(screen, 24, 96, 192, 160, 0, BG);
+    celebration = box(screen, 24, 60, 192, 160, 0, BG);
     lv_obj_set_user_data(celebration, (void *)orbit_celebration_frame(0, -1));
     lv_obj_add_event_cb(celebration, celebration_draw, LV_EVENT_DRAW_MAIN, NULL);
     celebration_index = 0;
-    static const int positions[][2] = {{35, 159}, {167, 105}, {190, 216}};
+    static const int positions[][2] = {{35, 123}, {167, 69}, {190, 180}};
     for (unsigned i = 0; i < 3; i++)
         orbit_stars[i] = sparkle(positions[i][0], positions[i][1], 0x877594);
-    star_response(stars, pressed);
+    (void)stars;
+    (void)pressed;
 }
 static void tabs(unsigned active, bool paper) {
     const char *names[] = {orbit_tr("首页"), orbit_tr("来信"), orbit_tr("角色")};
@@ -535,70 +536,89 @@ void orbit_ui_draw(const orbit_ui_t *u, const orbit_network_t *n, int battery, i
     if (u->page == 0) {
         lv_obj_t *portrait = lv_image_create(screen);
         lv_image_set_src(portrait, &orbit_archivist_small);
-        lv_obj_set_pos(portrait, 170, 35);
+        lv_obj_set_pos(portrait, 170, 48);
         lv_obj_t *eyebrow = label(20, 48, 145, orbit_tr("公开重置公告"), MUTED);
         lv_obj_set_style_text_font(eyebrow, font_14(), 0);
         lv_obj_t *heading = label(20, 78, 145, overdue ? orbit_tr("等待后续") : title, GOLD);
         lv_obj_set_style_text_font(heading, u->language == ORBIT_EN ? font_20() : font_24(), 0);
-        box(screen, 0, 156, 240, 164, 0, PAPER);
-        centered_font(170, orbit_tr(summary), PLUM, font_12());
+        lv_obj_t *note = label(20, 120, 145, orbit_tr("个人额度需核实"), MUTED);
+        lv_obj_set_style_text_font(note, font_12(), 0);
+        box(screen, 12, 154, 216, 132, 10, PAPER);
+        centered_font(164, status, PAPER_MUTED, font_12());
+        centered_font(187, orbit_tr(summary), PLUM, font_12());
         if (snap->received && snap->kind == ORBIT_FORECAST && !overdue) {
-            timing_row(200, timing[1]);
-            if (snap->time_kind == ORBIT_TIME_WINDOW) timing_row(226, timing[2]);
+            timing_row(209, timing[1]);
+            if (snap->time_kind == ORBIT_TIME_WINDOW) timing_row(232, timing[2]);
         } else {
-            centered_font(207, orbit_tr("个人额度请到角色页查看"), PAPER_MUTED, font_12());
+            centered_font(213, orbit_tr("个人额度请到角色页查看"), PAPER_MUTED, font_12());
         }
-        centered_font(247, status, PAPER_MUTED, font_12());
-        centered_font(270, orbit_tr("确定 · 查看来信"), PLUM, font_12());
+        box(screen, 24, 258, 192, 1, 0, 0xD5CBC9);
+        centered_font(266, orbit_tr("确定 · 查看来信"), PLUM, font_12());
     } else if (u->page == 1) {
-        centered_font(36, status, PAPER_MUTED, font_12());
+        centered_font(39, status, PAPER_MUTED, font_12());
         const char *letter_title = !snap->received ? (n->link == NET_OFFLINE ? "等待同步" : "正在查收来信") :
             snap->kind == ORBIT_COMPLETED ? "完成公告解读" :
             snap->kind == ORBIT_FORECAST ? "预告解读" : "暂时没有来信";
-        centered_font(64, orbit_tr(letter_title), PLUM, font_20());
-        centered_font(96, orbit_tr("状态解读 · 非公告原文"), PAPER_MUTED, font_12());
-        box(screen, 20, 121, 28, 2, 0, 0x9A7B55);
-        centered_font(136, orbit_tr(summary), PLUM, font_12());
-        centered_font(157, orbit_tr(!snap->received ? "同步成功后自动显示" :
+        lv_obj_t *heading = label(20, 64, 200, orbit_tr(letter_title), PLUM);
+        lv_obj_set_style_text_font(heading, font_20(), 0);
+        lv_obj_t *note = label(20, 96, 200, orbit_tr("状态解读 · 非公告原文"), PAPER_MUTED);
+        lv_obj_set_style_text_font(note, font_12(), 0);
+        box(screen, 20, 119, 200, 1, 0, 0x9A7B55);
+        lv_obj_t *body = label(20, 132, 200, orbit_tr(summary), PLUM);
+        lv_obj_set_style_text_font(body, font_12(), 0);
+        body = label(20, 154, 200, orbit_tr(!snap->received ? "同步成功后自动显示" :
             snap->kind == ORBIT_COMPLETED ? "各账号请以自己的额度为准" :
-            snap->kind == ORBIT_FORECAST ? "尚未收到完成公告" : "收到新消息后自动显示"), PLUM, font_12());
+            snap->kind == ORBIT_FORECAST ? "尚未收到完成公告" : "收到新消息后自动显示"), PLUM);
+        lv_obj_set_style_text_font(body, font_12(), 0);
+        int meta_y = 199;
         if (snap->received && snap->kind == ORBIT_FORECAST) {
-            timing_row(182, timing[1]);
-            if (snap->time_kind == ORBIT_TIME_WINDOW) timing_row(205, timing[2]);
+            timing_row(179, timing[1]);
+            meta_y = 221;
+            if (snap->time_kind == ORBIT_TIME_WINDOW) {
+                timing_row(202, timing[2]);
+                meta_y = 237;
+            }
         } else if (snap->received && snap->kind == ORBIT_COMPLETED && snap->effective) {
-            timing_row(190, timing[1]);
+            timing_row(179, timing[1]);
+            meta_y = 221;
         }
+        box(screen, 20, meta_y - 9, 200, 1, 0, 0xD5CBC9);
         if (snap->received && snap->published) {
             timestamp(text, sizeof(text), orbit_tr("发布"), snap->published);
-            centered_font(230, text, PAPER_MUTED, font_12());
+            lv_obj_t *published = label(20, meta_y, 200, text, PAPER_MUTED);
+            lv_obj_set_style_text_font(published, font_12(), 0);
         }
         timestamp(text, sizeof(text), orbit_tr("上次同步"), snap->received);
-        centered_font(249, text, PAPER_MUTED, font_12());
-        centered_font(272, orbit_tr("北京时间 · 确定打开小程序"), PAPER_MUTED, font_12());
+        lv_obj_t *updated = label(20, meta_y + 18, 200, text, PAPER_MUTED);
+        lv_obj_set_style_text_font(updated, font_12(), 0);
+        centered_font(275, orbit_tr("北京时间 · 确定打开小程序"), PAPER_MUTED, font_12());
     } else {
-        centered_font(36, orbit_tr("月夜档案员"), GOLD, font_24());
-        snprintf(text, sizeof(text), orbit_tr("本次点亮 %u 颗星"), u->stars);
-        star_count = label(14, 72, 212, text, MUTED);
-        lv_obj_set_style_text_font(star_count, font_14(), 0);
-        lv_obj_set_style_text_align(star_count, LV_TEXT_ALIGN_CENTER, 0);
-        star_scene(u->stars, u->stars != rendered_stars);
-        /* Recolor only original inset pixels; never draw over the rim or silhouette. */
+        centered_font(36, orbit_tr("月夜档案员"), GOLD, font_20());
+        star_scene(u->stars, false);
+        /* Scene, sparks and original book mask share the same vertical shift. */
         book_overlay = lv_image_create(screen);
         lv_image_set_src(book_overlay, &book_image);
-        lv_obj_set_pos(book_overlay, 148, 164);
+        lv_obj_set_pos(book_overlay, 148, 128);
         book_amount = book_target = -2;
-        quota_status = label(14, 257, 212, "", MUTED);
+        star_count = label(14, 222, 212, "", MUTED);
+        lv_obj_set_style_text_font(star_count, font_12(), 0);
+        lv_obj_set_style_text_align(star_count, LV_TEXT_ALIGN_RIGHT, 0);
+        star_response(u->stars, u->stars != rendered_stars);
+        quota_status = label(20, 247, 200, "", MUTED);
         lv_obj_set_style_text_font(quota_status, font_12(), 0);
-        lv_obj_set_style_text_align(quota_status, LV_TEXT_ALIGN_CENTER, 0);
-        quota_age = label(14, 275, 212, "", MUTED);
+        quota_number = label(156, 239, 64, "", GOLD);
+        lv_obj_set_style_text_font(quota_number, font_24(), 0);
+        lv_obj_set_style_text_align(quota_number, LV_TEXT_ALIGN_RIGHT, 0);
+        quota_track = box(screen, 20, 270, 200, 3, 1, 0x483951);
+        quota_bar = box(screen, 20, 270, 1, 3, 1, GOLD);
+        quota_age = label(20, 278, 200, "", MUTED);
         lv_obj_set_style_text_font(quota_age, font_12(), 0);
-        lv_obj_set_style_text_align(quota_age, LV_TEXT_ALIGN_CENTER, 0);
         quota_refresh(&u->quota, now);
     }
     retained_character = character;
     retained_battery = battery;
     rendered_stars = u->stars;
-    tabs(u->page, u->page != 2);
+    tabs(u->page, u->page == 1);
 }
 
 static void book_animate(void *obj, int32_t amount) {
@@ -646,6 +666,26 @@ static void quota_refresh(const orbit_quota_t *q, int64_t now) {
     }
     char age_text[120];
     orbit_quota_summary(q, now, text, sizeof(text), age_text, sizeof(age_text));
+    bool single = q->paired && q->valid && ((slots[0] != NULL) != (slots[1] != NULL));
+    lv_label_set_text(quota_number, "");
+    if (single) {
+        /* Keep the translated period and remaining label; enlarge only its value. */
+        char *value = strrchr(text, ' ');
+        if (value) {
+            lv_label_set_text(quota_number, value + 1);
+            *value = 0;
+        }
+    }
     lv_label_set_text(quota_status, text);
+    if (remaining < 0 || !q->paired) {
+        lv_obj_add_flag(quota_track, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(quota_bar, LV_OBJ_FLAG_HIDDEN);
+    } else {
+        lv_obj_remove_flag(quota_track, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_set_width(quota_bar, remaining > 0 ? remaining * 2 : 1);
+        lv_obj_set_style_bg_color(quota_bar, lv_color_hex(fresh ? GOLD : MUTED), 0);
+        if (remaining) lv_obj_remove_flag(quota_bar, LV_OBJ_FLAG_HIDDEN);
+        else lv_obj_add_flag(quota_bar, LV_OBJ_FLAG_HIDDEN);
+    }
     lv_label_set_text(quota_age, age_text);
 }
