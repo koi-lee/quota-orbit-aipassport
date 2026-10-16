@@ -16,6 +16,14 @@
 - **See your own quota:** add the optional Mac Sync Assistant to show remaining quota and matching lights on the Moonlight Archivist's book.
 - **Interact:** press Confirm for stars and a prayer sound, or scan the message screen's code in WeChat to open the Starshore Reset Assistant.
 
+## See it in motion
+
+<p align="center"><img src="docs/ai-passport/media/wish-sync-v1.gif" width="600" alt="Simulated AI Passport star taps and the website starlight response"></p>
+
+A silent 6.4-second preview of Role taps and the website wish effect. The shell is an AI illustration; screens and linkage use simulated data, not device footage. Wishes do not increase Codex quota.
+
+[Download the full 40-second V1 video with music](docs/ai-passport/media/demo-rev3012.mp4) · [Visual setup guide (Chinese)](docs/ai-passport/media/quick-start-rev3012.png)
+
 | Public announcements: Home / Letter | Personal quota: Character / book lights |
 |---|---|
 | ![Example public reset notice](docs/ai-passport/device-guide/images/home.png) | ![Example personal quota](docs/ai-passport/device-guide/images/quota-week-only.png) |
