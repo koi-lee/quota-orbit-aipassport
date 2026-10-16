@@ -16,6 +16,14 @@
 - **看自己的额度：** 选装 Mac 同步助手，角色页显示个人剩余额度，月夜档案员手中的书灯随额度变化。
 - **轻松互动：** 按确定点亮星星、听祈愿音；来信页微信扫码进入「星岸重置助手」查看详情。
 
+## 动图预览
+
+<p align="center"><img src="docs/ai-passport/media/wish-sync-v1.gif" width="600" alt="AI Passport角色页点星与官网星光联动示意"></p>
+
+约6.4秒无声预览：角色页点星，官网星光回应。机壳为AI示意，界面与联动使用模拟数据，非实机录像；祈愿不会增加Codex额度。
+
+[下载40秒V1完整配乐视频](docs/ai-passport/media/demo-rev3012.mp4) · [一张图上手](docs/ai-passport/media/quick-start-rev3012.png)
+
 | 公开消息：首页／来信 | 个人额度：角色／书灯 |
 |---|---|
 | ![公开重置公告示意](docs/ai-passport/device-guide/images/home.png) | ![个人剩余额度示意](docs/ai-passport/device-guide/images/quota-week-only.png) |
