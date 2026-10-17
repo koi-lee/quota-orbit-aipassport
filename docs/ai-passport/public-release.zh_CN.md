@@ -7,7 +7,7 @@
 ## 如何核对
 
 - 查看 `play.revisionId`、`play.status`、`play.updatedAt`；使用说明在 `play.instructions`，当前变化在 `play.changelog`，历史变化在 `play.changelogHistory`。
-- 固件格式、大小和 SHA-256 在 `play.firmware`。这些是设备固件，不是 Mac 助手；助手通过[单独 Release](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.2)提供。
+- 固件格式、大小和 SHA-256 在 `play.firmware`。这些是设备固件，不是 Mac 助手；助手通过[单独 Release](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.3)提供。
 - 纯文本接口仅供读取与核对，不执行安装。安装仍需在电脑 Chrome / Edge 打开作品页，以 USB 数据线连接开机设备，并按页面提示选择设备。安装是否需要登录，以实际页面要求为准；本次没有重新刷机验证。
 
 ## 核验快照：2026-10-17

@@ -1,4 +1,4 @@
-# 額度星盤 · Passport Mac 同步助手 0.3.2（公開試用版）
+# 額度星盤 · Passport Mac 同步助手 0.3.3（公開試用版）
 
 <p align="right"><a href="README.zh_CN.md">简体中文</a> · <a href="README.zh_TW.md">繁體中文</a> · <a href="README.md">English</a></p>
 
@@ -6,13 +6,13 @@
 
 ## 下載
 
-[下載 Apple 晶片 Mac 安裝套件](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.2/StarshorePassport-AppleSilicon-0.3.2-notarized.zip) · [校驗檔案](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.2/SHA256SUMS.txt) · [版本與全部附件](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.2)
+[下載 Apple 晶片 Mac 安裝套件](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.3/StarshorePassport-AppleSilicon-0.3.3-notarized.zip) · [校驗檔案](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.3/SHA256SUMS.txt) · [版本與全部附件](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.3)
 
 安裝包已完成 Developer ID 簽章與 Apple 公證，已附加公證票據並通過 Gatekeeper 檢查。仍作為公開試用版發行；功能測試範圍見下方限制。
 
 ## 準備
 
-**請先核對系統版本：** 目前 0.3.2 安裝包僅在 macOS 27.0.1 / Apple 晶片 Mac 驗證；較舊系統暫不列為已支援。這是目前安裝包的相容限制，簽章及公證通過不代表舊系統相容；裝置獨立查看公開公告不受影響。
+**請先核對系統版本：** 0.3.3 修正舊包夾帶較新系統相依套件的問題，已在 Apple 晶片 macOS 14.8.9、15.7.9 完成建置與基本運行檢查；14 建置產物在 macOS 27.0.1 複驗通過。macOS 11–13 未測，Intel Mac 不支援。基本運行檢查不取代實際配對驗收；裝置獨立查看公開公告不受影響。
 
 需要 Apple 晶片 Mac；安裝並登入 Codex CLI，或使用安裝在「應用程式」中的 Codex 桌面應用程式。Mac 與裝置連接同一 Wi-Fi，Mac 保持開機、喚醒與連網。首次配對使用 USB 傳輸線。
 
@@ -57,7 +57,7 @@ macOS 版本／Apple 晶片型號：
 ## 範圍與限制
 
 - 約每 30 秒更新一次。Codex 未提供的額度時段不會被補成零；離線或 Mac 休眠時，裝置保留舊資料並標記更新時間。
-- 裝置重新啟動後的同步及 0.3.2 登入服務恢復同步已在本機驗證；修復後再次完整重新啟動 Mac、真實 DHCP 換址及全新電腦首次配對仍待實測。
+- 裝置重啟同步及登入服務恢復已驗證。2026-10-17 作者回報現有安裝的 Mac 重啟與斷網恢復實測正常；這不是 0.3.3 新包的重新驗收。全新電腦首次配對與真實 DHCP 換址仍待實測。
 - 社群 REV-2886 起包含裝置位址探索；舊 REV-2840 不含此功能。請核對[社群更新記錄](https://ai-passport.folotoy.cn/plays/1250/)。實際 DHCP 換址恢復仍待測試；部分較大網段會跳過掃描，找不到時可重新連接裝置，不必先解除配對。
 - Codex 登入憑證與配對金鑰留在 Mac，裝置只接收加密額度摘要。公開重置公告不能證明個人額度已恢復。
 - 回報問題請提供助手版本、韌體版本、macOS 版本及操作步驟；不要傳送登入憑證、配對檔案或 Wi-Fi 密碼。

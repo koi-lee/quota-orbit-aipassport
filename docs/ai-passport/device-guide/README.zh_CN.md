@@ -7,7 +7,7 @@
 | 先后顺序 | 安装位置 | 入口 |
 |---|---|---|
 | 先装设备固件 | AI Passport 硬件 | [社区作品 1250 → 安装最新版](https://ai-passport.folotoy.cn/plays/1250/) |
-| 个人额度选装助手 | Apple 芯片 Mac | [助手 0.3.2 下载与安装](../mac-helper/README.zh_CN.md) |
+| 个人额度选装助手 | Apple 芯片 Mac | [助手 0.3.3 下载与安装](../mac-helper/README.zh_CN.md) |
 
 不必安装额度星盘 Mac 主客户端。Source code 是开发者源码，不是安装包。新版助手 `-notarized.zip` 已通过 Apple 公证，若 macOS 阻止正常打开，请停止并反馈，不要关闭系统保护。
 

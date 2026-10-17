@@ -1,4 +1,4 @@
-# 额度星盘 · Passport Mac 同步助手 0.3.2（公开试用版）
+# 额度星盘 · Passport Mac 同步助手 0.3.3（公开试用版）
 
 <p align="right"><a href="README.zh_CN.md">简体中文</a> · <a href="README.zh_TW.md">繁體中文</a> · <a href="README.md">English</a></p>
 
@@ -6,13 +6,13 @@
 
 ## 下载
 
-[下载 Apple 芯片 Mac 安装包](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.2/StarshorePassport-AppleSilicon-0.3.2-notarized.zip) · [校验文件](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.2/SHA256SUMS.txt) · [版本与全部附件](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.2)
+[下载 Apple 芯片 Mac 安装包](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.3/StarshorePassport-AppleSilicon-0.3.3-notarized.zip) · [校验文件](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.3/SHA256SUMS.txt) · [版本与全部附件](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.3)
 
 安装包已完成 Developer ID 签名与 Apple 公证，已装订公证票据并通过 Gatekeeper 检查。仍作为公开试用版发布；功能测试范围见下方限制。
 
 ## 准备
 
-**系统版本先核对：** 当前 0.3.2 包仅在 macOS 27.0.1 / Apple 芯片 Mac 验证；较旧系统暂不列为已支持。这是当前安装包的兼容限制，签名与公证通过不代表低版本兼容；设备独立查看公开公告不受影响。
+**系统版本先核对：** 0.3.3 修复了旧包带入较新系统依赖的问题，已在 Apple 芯片 macOS 14.8.9、15.7.9 完成构建与基础运行检查；14 构建产物在 macOS 27.0.1 复验通过。macOS 11–13 未做运行验收，Intel Mac 不支持。基础运行检查不替代真实配对验收；设备独立查看公开公告不受影响。
 
 需要 Apple 芯片 Mac；安装并登录 Codex CLI，或使用安装在“应用程序”中的 Codex 桌面应用。Mac 与设备连接同一 Wi-Fi，Mac 保持开机、唤醒和联网。首次配对用 USB 数据线。
 
@@ -55,7 +55,7 @@ macOS 版本／Apple 芯片型号：
 ## 范围与限制
 
 - 约每 30 秒更新一次。Codex 未提供的额度窗口不会被补成零；离线或 Mac 休眠时，设备保留旧数据并标记更新时间。
-- 设备重启后的同步和 0.3.2 登录服务恢复同步已在本机验证；修复后再次完整重启 Mac、真实 DHCP 换址及全新电脑首次配对仍待实测。
+- 设备重启同步及登录服务恢复已验证。2026-10-17，作者反馈现有安装的 Mac 重启和断网恢复实测正常；这不是 0.3.3 新包的重新验收。0.3.3 全新电脑首次配对、真实 DHCP 换址仍待实测。
 - 社区 REV-2886 起包含设备地址发现支持；较旧 REV-2840 不含此功能。请先核对[社区版本与纯文本更新日志入口](../public-release.zh_CN.md)。地址发现已实现，但真实 DHCP 换址恢复仍待实测；某些较大网段会跳过扫描，找不到时可重新连接设备，不必先解除配对。
 - Codex 登录凭据与配对密钥留在 Mac，设备只接收加密额度摘要。公开重置公告不能证明个人额度已恢复。
 - 反馈请提供助手版本、固件版本、macOS 版本和操作步骤；不要发送登录凭据、配对文件或 Wi-Fi 密码。

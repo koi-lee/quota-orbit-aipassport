@@ -7,7 +7,7 @@
 | Order | Install on | Entry |
 |---|---|---|
 | Install device firmware first | AI Passport hardware | [Community play 1250 → Install latest](https://ai-passport.folotoy.cn/plays/1250/) |
-| Optional helper for personal quota | Apple silicon Mac | [Helper 0.3.2 download and setup](../mac-helper/README.md) |
+| Optional helper for personal quota | Apple silicon Mac | [Helper 0.3.3 download and setup](../mac-helper/README.md) |
 
 The Quota Orbit Mac desktop app is not required. Source code archives are for developers, not installers. The new `-notarized.zip` helper is Apple-notarized; if macOS blocks normal opening, stop and report it rather than disabling system protection.
 

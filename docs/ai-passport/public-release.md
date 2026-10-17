@@ -7,7 +7,7 @@
 ## What to check
 
 - Inspect `play.revisionId`, `play.status` and `play.updatedAt`. Instructions are in `play.instructions`, current changes in `play.changelog`, and previous changes in `play.changelogHistory`.
-- Firmware format, size and SHA-256 are in `play.firmware`. This is device firmware, not the Mac helper; the latter has a [separate Release](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.2).
+- Firmware format, size and SHA-256 are in `play.firmware`. This is device firmware, not the Mac helper; the latter has a [separate Release](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.3).
 - The endpoint is for reading and verification, not installation. Install through the play page in computer Chrome / Edge with a USB data cable and the powered-on device, following the device picker. Follow the actual page if login is requested; this audit did not repeat a firmware installation.
 
 ## Verification snapshot: 2026-10-17
