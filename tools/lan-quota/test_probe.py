@@ -44,6 +44,8 @@ for line in sys.stdin:
 """
         original=subprocess.Popen
         def factory(*args,**kwargs):return original([sys.executable,'-u','-c',script],**kwargs)
-        with patch('probe.subprocess.Popen',side_effect=factory):windows=probe.read_quota(timeout=2)
+        with patch('probe.codex_executable', return_value='/fixture/codex'), \
+             patch('probe.subprocess.Popen', side_effect=factory):
+            windows=probe.read_quota(timeout=2)
         self.assertEqual(windows[0]['remainingPercent'],58)
 if __name__=='__main__':unittest.main()
