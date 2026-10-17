@@ -9,7 +9,7 @@
 
 **1. [Install the device play](https://ai-passport.folotoy.cn/plays/1250/)** — Connect AI Passport by USB and use Chrome or Edge on your computer. This is all you need for public notices.
 
-**2. [Get the Mac quota sync assistant](docs/ai-passport/mac-helper/README.md)** — Add this only to see your own quota on Role. The current 0.3.2 installer was verified only on an Apple silicon Mac running macOS 27.0.1; older systems are not listed as supported. The separate Quota Orbit desktop app is not required.
+**2. [Get the Mac quota sync assistant](docs/ai-passport/mac-helper/README.md)** — Add this only to see your own quota on Role. The notarized 0.3.3 preview passed basic runtime checks on Apple silicon macOS 14.8.9, 15.7.9 and 27.0.1; macOS 11–13 are untested. The separate Quota Orbit desktop app is not required.
 
 
 - **Follow announcements:** Wi-Fi lets the device read public forecasts and completion notices independently, with distinct optional sounds. No Mac or Codex sign-in is needed for public news.
@@ -47,9 +47,9 @@ You need an AI Passport device. Choose the first item for public news; add the s
 | Purpose | Install on | Entry |
 |---|---|---|
 | Required: Quota Orbit firmware | AI Passport hardware | [Community play 1250 → Install latest](https://ai-passport.folotoy.cn/plays/1250/) |
-| Optional: Passport Mac Sync Assistant 0.3.2 | Apple silicon Mac | [Download and setup guide](docs/ai-passport/mac-helper/README.md) · [Release assets](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.2) |
+| Optional: Passport Mac Sync Assistant 0.3.3 | Apple silicon Mac | [Download and setup guide](docs/ai-passport/mac-helper/README.md) · [Release assets](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.3) |
 
-Firmware does not install on a Mac. **Source code archives are not installers.** The helper installer is `StarshorePassport-AppleSilicon-0.3.2-notarized.zip`; Python is not required.
+Firmware does not install on a Mac. **Source code archives are not installers.** The helper installer is `StarshorePassport-AppleSilicon-0.3.3-notarized.zip`; Python is not required.
 
 The new `-notarized.zip` helper is Developer ID signed and Apple-notarized, and remains a pre-release. If macOS blocks normal opening, stop and report the message rather than disabling system protection. No verified helper installer is provided for Intel Macs or Windows.
 

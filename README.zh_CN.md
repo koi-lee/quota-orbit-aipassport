@@ -9,7 +9,7 @@
 
 **① [给 AI Passport 安装玩法](https://ai-passport.folotoy.cn/plays/1250/)** — 用电脑 Chrome / Edge，USB 连接硬件。只看公开消息，到这里即可。
 
-**② [给 Mac 下载个人额度同步助手](docs/ai-passport/mac-helper/README.zh_CN.md)** — 想在角色页看自己的额度，再安装此助手。当前 0.3.2 安装包仅在 macOS 27.0.1 的 Apple 芯片 Mac 验证，较旧系统未列为已支持；无需安装额度星盘桌面主客户端。
+**② [给 Mac 下载个人额度同步助手](docs/ai-passport/mac-helper/README.zh_CN.md)** — 想在角色页看自己的额度，再安装此助手。已公证的 0.3.3 预览版通过 Apple 芯片 macOS 14.8.9、15.7.9、27.0.1 基础运行检查，macOS 11–13 未测；无需安装额度星盘桌面主客户端。
 
 
 - **看公告：** 设备连上 Wi-Fi，即可独立查看公开预告和完成公告；新消息可用不同提示音提醒，不需要 Mac 或登录 Codex。
@@ -47,9 +47,9 @@
 | 用途 | 安装到哪里 | 入口 |
 |---|---|---|
 | 必装：额度星盘设备固件 | AI Passport 硬件 | [社区作品 1250 → 安装最新版](https://ai-passport.folotoy.cn/plays/1250/) |
-| 选装：Passport Mac 同步助手 0.3.2 | Apple 芯片 Mac | [下载与安装说明](docs/ai-passport/mac-helper/README.zh_CN.md) · [Release 附件](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.2) |
+| 选装：Passport Mac 同步助手 0.3.3 | Apple 芯片 Mac | [下载与安装说明](docs/ai-passport/mac-helper/README.zh_CN.md) · [Release 附件](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.3) |
 
-设备固件不能装到 Mac；Release 中的 **Source code 是源码，不是安装包**。助手安装包名为 `StarshorePassport-AppleSilicon-0.3.2-notarized.zip`，无需安装 Python。
+设备固件不能装到 Mac；Release 中的 **Source code 是源码，不是安装包**。助手安装包名为 `StarshorePassport-AppleSilicon-0.3.3-notarized.zip`，无需安装 Python。
 
 助手目前是预发布，新版 `-notarized.zip` 已通过 Apple 公证；如 macOS 阻止正常打开，请停止并反馈提示，不要关闭系统安全保护。Intel Mac 和 Windows 尚未提供经过验证的助手安装包。
 

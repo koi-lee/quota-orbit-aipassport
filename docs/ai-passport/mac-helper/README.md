@@ -1,4 +1,4 @@
-# Quota Orbit · Passport Mac Sync Assistant 0.3.2 (public preview)
+# Quota Orbit · Passport Mac Sync Assistant 0.3.3 (public preview)
 
 <p align="right"><a href="README.zh_CN.md">简体中文</a> · <a href="README.zh_TW.md">Traditional Chinese</a> · <a href="README.md">English</a></p>
 
@@ -6,13 +6,13 @@ Send the personal quota available from your signed-in Codex account on a Mac to 
 
 ## Download
 
-[Download for Apple silicon](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.2/StarshorePassport-AppleSilicon-0.3.2-notarized.zip) · [Checksum file](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.2/SHA256SUMS.txt) · [Release and all assets](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.2)
+[Download for Apple silicon](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.3/StarshorePassport-AppleSilicon-0.3.3-notarized.zip) · [Checksum file](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.3/SHA256SUMS.txt) · [Release and all assets](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.3)
 
 This package is Developer ID signed and Apple-notarized, with its notarization ticket stapled and Gatekeeper assessment passed. It remains a public preview; functional test limits are listed below.
 
 ## Requirements
 
-**Check the OS before downloading:** the current 0.3.2 package was verified only on macOS 27.0.1 / Apple silicon. Older systems are not listed as supported. This is a limitation of the current package; signing and notarization do not establish compatibility with older systems. Public notices on the device are unaffected.
+**Check the OS before downloading:** 0.3.3 fixes the newer-OS dependencies bundled in the old package. Build and basic runtime checks passed on Apple silicon macOS 14.8.9 and 15.7.9; the macOS 14 artifact also passed checks on macOS 27.0.1. macOS 11–13 are untested; Intel Macs are unsupported. Basic runtime checks do not replace real pairing acceptance. Device public notices are unaffected.
 
 Use an Apple silicon Mac with Codex CLI installed and signed in, or the Codex desktop app installed in Applications. Keep the Mac and device on the same Wi-Fi, with the Mac awake, running and online. First pairing needs a USB data cable.
 
@@ -55,7 +55,7 @@ Redact personal quota and account details from screenshots. Do not upload pairin
 ## Scope and limitations
 
 - Data refreshes about every 30 seconds. Missing Codex quota windows are not converted into zero. When offline or the Mac sleeps, the device keeps the last snapshot and marks its update age.
-- Device-restart sync and 0.3.2 login-service sync recovery were verified locally. A subsequent full Mac reboot, a real DHCP address change and first pairing on a fresh Mac remain untested.
+- Device-restart sync and login-service recovery were verified. On 2026-10-17 the author reported that Mac reboot and network recovery worked with the existing installation; this is not a fresh acceptance test of the 0.3.3 package. Fresh-Mac pairing and a real DHCP address change remain untested.
 - Community REV-2886 and later include device address discovery; older REV-2840 does not. Check the [community revision and text-only release notes](../public-release.md). Actual DHCP address-change recovery remains unverified. Some larger subnets skip scanning; reconnect the device if needed without first revoking pairing.
 - Codex credentials and pairing keys stay on the Mac; the device receives only encrypted quota summaries. A public reset announcement does not establish that your own quota recovered.
 - When reporting an issue, include assistant, firmware and macOS versions and the steps taken. Never send sign-in credentials, pairing files or Wi-Fi passwords.

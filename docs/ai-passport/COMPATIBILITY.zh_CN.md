@@ -6,7 +6,7 @@
 |---|---|---|---|
 | AI Passport 社区固件 | [社区作品 1250](https://ai-passport.folotoy.cn/plays/1250/) | 安装到设备的固件 | 社区 REV-2886 起包含三语界面、重要操作二次确认及 `/discover` 设备地址发现。请按安装页公开更新日志核对实际版本。 |
 | 固件源码 | [设备应用源码](../../main/) | 基于 FoloToy AI Passport 的可构建源码 | 源码可能先于社区包更新；更新源码不会自动发布或安装固件。 |
-| Passport Mac 同步助手 0.3.2 | [GitHub 预发布](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.2) | Apple 芯片 Mac 配套安装包 | 预发布；新版 `-notarized.zip` 已通过 Developer ID 签名与 Apple 公证。仅 macOS 27.0.1 / Apple 芯片 Mac 经过验证，较旧系统未列为已支持。登录服务恢复已验证，修复后完整重启及真实 DHCP 换址仍待实测；自动找回需要设备固件提供 `/discover`。 |
+| Passport Mac 同步助手 0.3.3 | [GitHub 预发布](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.3) | Apple 芯片 Mac 配套安装包 | 预发布；已签名、公证及装订。Apple 芯片 macOS 14.8.9、15.7.9、27.0.1 基础运行检查通过；11–13 未测，Intel 不支持。作者反馈现有安装重启与断网恢复正常；不等于 0.3.3 新包或全新电脑配对验收。DHCP 换址仍待实测，自动找回需 `/discover`。 |
 | Quota Orbit Mac 主客户端 | [最新正式版](https://github.com/koi-lee/quota-orbit/releases/latest) | 独立 Mac 桌面客户端 | 不要用 Passport 助手替换主客户端。 |
 
 只看公开公告时安装社区固件即可，Mac 助手是选装项。需要在设备查看个人 Codex 额度时，安装助手并通过 USB 配对一次。
