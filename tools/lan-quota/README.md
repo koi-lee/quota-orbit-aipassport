@@ -6,6 +6,8 @@ This folder contains the Python source for the Passport companion that sends an 
 
 For installation and user steps, see the [0.3.2 instructions](../../docs/ai-passport/mac-helper/README.md) ([Chinese (Simplified)](../../docs/ai-passport/mac-helper/README.zh_CN.md), [Chinese (Traditional)](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.2/README.zh_TW.md)). The Apple-silicon pre-release package and checksum are attached to the [`passport-helper-v0.3.2` release](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.2).
 
+[Mac packaging and compatibility gate](../../docs/ai-passport/mac-helper/packaging.md) describes the isolated candidate build and older-OS CI.
+
 ## Development checks
 
 Use Python 3 with `cryptography` and `pyserial`, then run from the repository root:

@@ -6,6 +6,8 @@
 
 安装和上手步骤请看[0.3.2 安装说明](../../docs/ai-passport/mac-helper/README.zh_CN.md)（[繁體中文](https://github.com/koi-lee/quota-orbit-aipassport/releases/download/passport-helper-v0.3.2/README.zh_TW.md) · [English](../../docs/ai-passport/mac-helper/README.md)）。Apple 芯片预发布安装包和校验值位于 [`passport-helper-v0.3.2` Release](https://github.com/koi-lee/quota-orbit-aipassport/releases/tag/passport-helper-v0.3.2)。
 
+[Mac 打包与兼容检查](../../docs/ai-passport/mac-helper/packaging.zh_CN.md)说明独立候选构建及旧系统 CI。
+
 ## 开发检查
 
 使用 Python 3，并安装 `cryptography` 和 `pyserial`；在仓库根目录运行：
