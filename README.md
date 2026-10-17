@@ -9,7 +9,7 @@
 
 **1. [Install the device play](https://ai-passport.folotoy.cn/plays/1250/)** — Connect AI Passport by USB and use Chrome or Edge on your computer. This is all you need for public notices.
 
-**2. [Get the Mac quota sync assistant](docs/ai-passport/mac-helper/README.md)** — Add this only to see your own quota on Role. Apple silicon Mac required; the separate Quota Orbit desktop app is not required.
+**2. [Get the Mac quota sync assistant](docs/ai-passport/mac-helper/README.md)** — Add this only to see your own quota on Role. The current 0.3.2 installer was verified only on an Apple silicon Mac running macOS 27.0.1; older systems are not listed as supported. The separate Quota Orbit desktop app is not required.
 
 
 - **Follow announcements:** Wi-Fi lets the device read public forecasts and completion notices independently, with distinct optional sounds. No Mac or Codex sign-in is needed for public news.
@@ -21,7 +21,7 @@
 Public notices only: **install the device play → set up Wi-Fi with your phone → see “Synced · public notices” on Home**. No Mac is needed. For personal Codex quota, add the Mac helper and complete one USB pairing using the four steps below; unplug after quota appears on Character.
 
 - **Home** shows current status, **Letter** explains the notice and its times, and **Character** shows personal quota and star interactions.
-- Star taps can anonymously trigger starlight on the [Quota Orbit website](https://www.starshoreai.com/quota-orbit/). Disable Website wishes in Settings if desired. Wishes do not increase quota.
+- **Website wishes is on by default on first use.** Character taps upload anonymous event IDs to trigger [website starlight](https://www.starshoreai.com/quota-orbit/), without sending your account or personal quota. Hold Confirm → Settings → Website wishes to turn it off: this stops new events and clears pending ones; already-counted anonymous events cannot be withdrawn per person. [Data and retry details](docs/ai-passport/wish-sync.md). Wishes do not increase quota.
 - No source build or Python installation is needed. [Setup steps](#first-use-in-four-steps) · [Helper troubleshooting](docs/ai-passport/mac-helper/README.md).
 
 ## See it in motion
@@ -42,7 +42,7 @@ These are code-rendered examples with sample data, not device photos; some scree
 
 ## What do I install?
 
-You need an AI Passport device. Choose the first item for public news; add the second for personal quota.
+You need an AI Passport device. Choose the first item for public news; add the second for personal quota. Without hardware, start with the [official FoloToy AI Passport introduction](https://ai-passport.folotoy.cn/) before deciding whether to buy.
 
 | Purpose | Install on | Entry |
 |---|---|---|
@@ -65,6 +65,7 @@ Public news is checked about every **5 minutes**; personal quota syncs about eve
 ## More help
 
 - [Device screens, controls, Wi-Fi setup and sync diagrams](docs/ai-passport/device-guide/README.md)
+- [Community revision and text-only access](docs/ai-passport/public-release.md)
 - [Version compatibility](docs/ai-passport/COMPATIBILITY.md) · [Language support](docs/ai-passport/language-support.md)
 - [Mac helper source](tools/lan-quota/) · [Firmware source](main/) · [Build and release notes](docs/development/releasing.md)
 

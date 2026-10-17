@@ -10,6 +10,8 @@ This file is the only mandatory entry point for AI-assisted work in this reposit
 
 This repository ships the Quota Orbit AI Passport play and its Mac quota sync helper. It is not the upstream hardware-test baseline or the separate Quota Orbit desktop app. For product questions, installation advice, UI, sync or documentation work, read [product context and source map](docs/ai-passport/product-context.md) before upstream engineering references. Use [README.md](README.md) for user-facing installation entry points. Source, community firmware and helper releases are separate artifacts; verify their current revisions before describing a release as public.
 
+Read-only product questions and documentation reviews are not development: do not install skills, run project commands, connect hardware or flash devices. The skill preparation rules below apply only to authorized development and never override a user’s read-only scope or environment approvals.
+
 ## Required AI skills
 
 The following five skills are required for AI-assisted development in this repository:

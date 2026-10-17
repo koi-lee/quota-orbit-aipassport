@@ -11,6 +11,8 @@
 
 The Quota Orbit Mac desktop app is not required. Source code archives are for developers, not installers. The new `-notarized.zip` helper is Apple-notarized; if macOS blocks normal opening, stop and report it rather than disabling system protection.
 
+[Text-only community revision and release notes](../public-release.md) are available when the play page cannot be rendered.
+
 ## Setup and controls
 
 1. Open the community play in Chrome or Edge on your computer. Connect the powered-on device with a USB data cable, choose Install latest and select the device. Keep it connected until installation finishes; this replaces the current play and may clear settings. Join the device's displayed Starshore-… hotspot with its displayed password. Open [http://192.168.4.1](http://192.168.4.1), enter2.4GHz Wi-Fi and save. The “Synced · public notices” state confirms success. Retry the form on failure; after timeout or to change networks, hold Confirm and select Settings > Wi-Fi setup.

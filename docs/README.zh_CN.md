@@ -2,6 +2,8 @@
 
 > **额度星盘分支：** 本仓库的成品玩法、安装入口与 Mac 助手见[产品首页](../README.zh_CN.md)和[产品上下文](ai-passport/product-context.zh_CN.md)。下方硬件测试底座与 demo 描述属于上游平台说明，不代表本分支当前应用。
 
+[社区版本与纯文本更新日志入口](ai-passport/public-release.zh_CN.md)。
+
 <h1 align="center">FoloToy AI PASSPORT</h1>
 
 <p align="center">
