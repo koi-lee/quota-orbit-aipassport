@@ -2,7 +2,7 @@
 
 # Passport wish ingress
 
-This service adds anonymous hardware events to the **existing website counter database**, not a separate public total. The ingress was deployed on 2026-10-15 at `https://www.starshoreai.com/quota-orbit/api/passport/wishes`; this development branch defaults to that address. Physical end-to-end testing is pending, and this feature is not in the community release.
+This service adds anonymous hardware events to the **existing website counter database**, not a separate public total. The ingress was deployed on 2026-10-15 at `https://www.starshoreai.com/quota-orbit/api/passport/wishes`; this development branch defaults to that address. Controlled device-to-website tests passed; see the [wish-sync guide](../../docs/ai-passport/wish-sync.md) for evidence and limits. Community availability follows the [public revision](../../docs/ai-passport/public-release.md).
 
 ## Protocol
 

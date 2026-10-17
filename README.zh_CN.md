@@ -9,7 +9,7 @@
 
 **① [给 AI Passport 安装玩法](https://ai-passport.folotoy.cn/plays/1250/)** — 用电脑 Chrome / Edge，USB 连接硬件。只看公开消息，到这里即可。
 
-**② [给 Mac 下载个人额度同步助手](docs/ai-passport/mac-helper/README.zh_CN.md)** — 想在角色页看自己的额度，再安装此助手。仅 Apple 芯片 Mac；无需安装额度星盘桌面主客户端。
+**② [给 Mac 下载个人额度同步助手](docs/ai-passport/mac-helper/README.zh_CN.md)** — 想在角色页看自己的额度，再安装此助手。当前 0.3.2 安装包仅在 macOS 27.0.1 的 Apple 芯片 Mac 验证，较旧系统未列为已支持；无需安装额度星盘桌面主客户端。
 
 
 - **看公告：** 设备连上 Wi-Fi，即可独立查看公开预告和完成公告；新消息可用不同提示音提醒，不需要 Mac 或登录 Codex。
@@ -21,8 +21,8 @@
 只看公开公告：**安装设备玩法 → 手机配好 Wi-Fi → 首页显示「已同步 · 公开消息」**，不需要 Mac。想看自己的 Codex 额度：再装 Mac 助手，按下面四步完成一次 USB 配对，看到角色页额度后即可拔线。
 
 - **首页**看当前状态，**来信**看公告解读和时间，**角色**看个人额度与点星互动。
-- 点星可匿名联动[额度星盘官网](https://www.starshoreai.com/quota-orbit/)的星光；设置中的「官网祈愿」可关闭。祈愿不增加额度。
-- 不用编译源码，也不用安装 Python。[完整上手步骤](#第一次使用按这四步) · [安装失败或不同步怎么办](docs/ai-passport/mac-helper/README.zh_CN.md)。
+- **官网祈愿首次使用默认开启**：角色页点星会上传匿名事件编号，联动[官网星光](https://www.starshoreai.com/quota-orbit/)，不发送账号或个人额度。长按确定 → 设置 → 官网祈愿可关闭；关闭停止新增并清除待发，已计入的匿名次数不能按个人撤回。[数据与重试说明](docs/ai-passport/wish-sync.zh_CN.md)。祈愿不增加额度。
+- 不用编译源码，也不用安装 Python。[完整上手步骤](#第一次使用按这四步) · [Mac 助手安装与同步排查](docs/ai-passport/mac-helper/README.zh_CN.md)。
 
 ## 动图预览
 
@@ -42,7 +42,7 @@
 
 ## 我需要下载什么？
 
-先准备一台 AI Passport。只看公告选第一项；想看个人额度，再加第二项。
+先准备一台 AI Passport。只看公告选第一项；想看个人额度，再加第二项。没有设备可先看 [FoloToy 官方 AI Passport 介绍](https://ai-passport.folotoy.cn/)，是否购买由你决定。
 
 | 用途 | 安装到哪里 | 入口 |
 |---|---|---|
@@ -65,6 +65,7 @@
 ## 更多说明
 
 - [设备页面、按键、配网与同步流程图](docs/ai-passport/device-guide/README.zh_CN.md)
+- [社区版本与纯文本读取入口](docs/ai-passport/public-release.zh_CN.md)
 - [版本兼容表](docs/ai-passport/COMPATIBILITY.zh_CN.md) · [三语支持说明](docs/ai-passport/language-support.zh_CN.md)
 - [Mac 同步助手源码](tools/lan-quota/) · [固件源码](main/) · [构建与发布说明](docs/development/releasing.zh_CN.md)
 

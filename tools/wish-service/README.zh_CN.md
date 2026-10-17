@@ -2,7 +2,7 @@
 
 # Passport 官网祈愿接收服务
 
-本服务把匿名硬件事件加入**官网现有计数数据库**，不另建一套公开总数。2026-10-15已部署至 `https://www.starshoreai.com/quota-orbit/api/passport/wishes`，本开发分支默认使用此地址。硬件端到端联调仍待完成，此功能尚未进入社区版本。
+本服务把匿名硬件事件加入**官网现有计数数据库**，不另建一套公开总数。2026-10-15已部署至 `https://www.starshoreai.com/quota-orbit/api/passport/wishes`，本开发分支默认使用此地址。受控硬件到官网联调已通过，验证与限制见[祈愿同步说明](../../docs/ai-passport/wish-sync.zh_CN.md)；社区可用功能以[公开版本](../../docs/ai-passport/public-release.zh_CN.md)为准。
 
 ## 协议与隐私
 

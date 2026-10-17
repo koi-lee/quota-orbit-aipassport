@@ -12,6 +12,8 @@ Use this map for product questions and implementation lookup without loading eve
 - Confirm taps on Character update the session star count. With Website wishes enabled, they also anonymously contribute to the website wish count and starlight. Wishes never reset or increase Codex quota; this path is separate from personal quota sync.
 - Rendered or simulated media is illustrative, not device footage or proof of current account data. Do not infer implemented behavior from a promotional animation alone.
 
+For text-only verification of the community package, use [community revision and public JSON access](public-release.md).
+
 ## Task routes
 
 | Task | Authoritative entry |

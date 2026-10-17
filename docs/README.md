@@ -2,6 +2,8 @@
 
 > **Quota Orbit fork:** for this repository’s finished play, installation and Mac helper, start at the [product README](../README.md) and [product context](ai-passport/product-context.md). The hardware-test baseline and demo descriptions below describe the upstream platform, not this fork’s current application.
 
+[Text-only community revision and release notes](ai-passport/public-release.md).
+
 <h1 align="center">FoloToy AI PASSPORT</h1>
 
 <p align="center">

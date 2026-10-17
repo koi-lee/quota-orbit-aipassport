@@ -12,6 +12,8 @@ This package is Developer ID signed and Apple-notarized, with its notarization t
 
 ## Requirements
 
+**Check the OS before downloading:** the current 0.3.2 package was verified only on macOS 27.0.1 / Apple silicon. Older systems are not listed as supported. This is a limitation of the current package; signing and notarization do not establish compatibility with older systems. Public notices on the device are unaffected.
+
 Use an Apple silicon Mac with Codex CLI installed and signed in, or the Codex desktop app installed in Applications. Keep the Mac and device on the same Wi-Fi, with the Mac awake, running and online. First pairing needs a USB data cable.
 
 ## First use
@@ -54,7 +56,7 @@ Redact personal quota and account details from screenshots. Do not upload pairin
 
 - Data refreshes about every 30 seconds. Missing Codex quota windows are not converted into zero. When offline or the Mac sleeps, the device keeps the last snapshot and marks its update age.
 - Device-restart sync and 0.3.2 login-service sync recovery were verified locally. A subsequent full Mac reboot, a real DHCP address change and first pairing on a fresh Mac remain untested.
-- Community REV-2886 and later include device address discovery; older REV-2840 does not. Check the [public release notes](https://ai-passport.folotoy.cn/plays/1250/). Actual DHCP address-change recovery remains unverified. Some larger subnets skip scanning; reconnect the device if needed without first revoking pairing.
+- Community REV-2886 and later include device address discovery; older REV-2840 does not. Check the [community revision and text-only release notes](../public-release.md). Actual DHCP address-change recovery remains unverified. Some larger subnets skip scanning; reconnect the device if needed without first revoking pairing.
 - Codex credentials and pairing keys stay on the Mac; the device receives only encrypted quota summaries. A public reset announcement does not establish that your own quota recovered.
 - When reporting an issue, include assistant, firmware and macOS versions and the steps taken. Never send sign-in credentials, pairing files or Wi-Fi passwords.
 
