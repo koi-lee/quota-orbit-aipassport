@@ -14,6 +14,7 @@
 #include "orbit_ui.h"
 #include "orbit_language.h"
 #include "orbit_input.h"
+#include "orbit_power.h"
 #include "orbit_audio.h"
 #include "orbit_quota.h"
 #include "orbit_input_dispatch.h"
@@ -23,6 +24,8 @@
 static QueueHandle_t input;
 static key_guard_t guard;
 static orbit_input_t key_edges;
+static orbit_power_t power = {.brightness = ORBIT_POWER_BRIGHT};
+static portMUX_TYPE power_lock = portMUX_INITIALIZER_UNLOCKED;
 static volatile bool s_input_ready;
 static volatile bool s_click_sound_context;
 /* Bounded, anonymous counters distinguish driver edges from queue/UI stalls. */
@@ -65,6 +68,10 @@ static void on_key(bsp_btn_t key, bsp_btn_ev_t event, void *user) {
     orbit_input_event_t edge = event == BSP_BTN_PRESS ? ORBIT_INPUT_PRESS
                               : event == BSP_BTN_RELEASE ? ORBIT_INPUT_RELEASE
                               : event == BSP_BTN_LONG ? ORBIT_INPUT_LONG : ORBIT_INPUT_OTHER;
+    taskENTER_CRITICAL(&power_lock);
+    bool wake_only = orbit_power_edge(&power, (unsigned)key, edge, esp_timer_get_time());
+    taskEXIT_CRITICAL(&power_lock);
+    if (wake_only) return;
     taskENTER_CRITICAL(&input_metrics_lock);
     if (key == BSP_BTN_OK && edge == ORBIT_INPUT_PRESS) ++input_metrics.press;
     if (key == BSP_BTN_OK && edge == ORBIT_INPUT_RELEASE) ++input_metrics.release;
@@ -116,6 +123,8 @@ void app_main(void) {
     orbit_wish_start();
     /* Match taskLVGL (4), below PCM (5): unlocking LVGL must not starve input. */
     vTaskPrioritySet(NULL, 4);
+    power.active_us = esp_timer_get_time();
+    uint8_t brightness = ORBIT_POWER_BRIGHT;
     s_input_ready = true;
     orbit_network_t previous = {0};
     orbit_quota_t previous_quota = {0};
@@ -187,7 +196,18 @@ void app_main(void) {
         s_click_sound_context = ui.page == 2 && !ui.settings && !ui.source && !ui.pairing && !net.setup;
         if (memcmp(&net, &previous, sizeof(net)) || now / 60 != last_minute)
             dirty = true;
-        if (dirty && bsp_lvgl_lock(500)) {
+        taskENTER_CRITICAL(&power_lock);
+        uint8_t next_brightness = orbit_power_tick(&power, esp_timer_get_time(),
+                                                  net.setup || ui.pairing || ui.quota.pairing);
+        taskEXIT_CRITICAL(&power_lock);
+        if (next_brightness != brightness) {
+            bsp_display_backlight(next_brightness);
+            ESP_LOGI("orbit_power", "Backlight %u -> %u", brightness, next_brightness);
+            if (!brightness && next_brightness) dirty = true;
+            brightness = next_brightness;
+        }
+        /* Keep networking alive; defer page rebuilds until the display is visible. */
+        if (dirty && brightness && bsp_lvgl_lock(500)) {
             int64_t draw_started = esp_timer_get_time();
             orbit_ui_draw(&ui, &net, battery, now);
             uint32_t elapsed = (uint32_t)(esp_timer_get_time() - draw_started);
@@ -199,7 +219,7 @@ void app_main(void) {
             previous_quota_fresh = orbit_quota_fresh(&ui.quota, now);
             last_minute = now / 60;
             dirty = false;
-        } else if (dirty) {
+        } else if (dirty && brightness) {
             ++input_metrics.lock_fail;
         }
         uint32_t loop_us = (uint32_t)(esp_timer_get_time() - loop_started);

@@ -83,6 +83,9 @@ run_static_checks() {
         tests/test_orbit_input.c -o "${test_dir}/test_orbit_input"
     "${test_dir}/test_orbit_input"
     "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Imain \
+        tests/test_orbit_power.c -o "${test_dir}/test_orbit_power"
+    "${test_dir}/test_orbit_power"
+    "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Imain \
         tests/test_orbit_sound.c -lm -o "${test_dir}/test_orbit_sound"
     "${test_dir}/test_orbit_sound"
     "${CC:-cc}" -std=c11 -Wall -Wextra -Werror tests/test_orbit_audio_device.c -o "${test_dir}/test_orbit_audio_device"

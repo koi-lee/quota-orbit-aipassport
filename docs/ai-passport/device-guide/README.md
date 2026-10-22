@@ -102,3 +102,10 @@ These examples use the firmware's native 240×320 LVGL output, with a separate c
 Some screenshots retain earlier wording; follow the steps above and the current device UI.
 
 </details>
+
+
+## Idle display and wake
+
+After 30 seconds without a function-key operation, the screen dims; after 90 seconds the backlight turns off. Press Up, Down or Confirm to wake it. The first complete wake gesture only lights the screen; press again to operate. Wi-Fi setup and Mac pairing keep the display lit. Networking continues while blanked; this is not full-device sleep.
+
+The separate hardware power button is not a screen-wake key. The official specification describes holding it for about 0.5 seconds to power on and about 2 seconds to power off. No standby duration or saving percentage has been measured.
