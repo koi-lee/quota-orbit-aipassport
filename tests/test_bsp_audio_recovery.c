@@ -25,12 +25,14 @@ static int fail_codec_delete;
 static bool tx_data_enabled, rx_data_enabled;
 static unsigned codec_creations, codec_starts, ctrl_creations, ctrl_deletions;
 static bool read_reg0e_reserved_zero;
+static bool drop_volume_write, fail_volume_read, skip_volume_set;
 
 static int reg_write(const audio_codec_ctrl_if_t *ctrl, int reg, int reg_len,
                      void *value, int size) {
     (void)ctrl;
     assert(reg_len == 1 && size == 1);
     uint8_t byte = *(uint8_t *)value;
+    if (reg == 0x32 && drop_volume_write) return ESP_OK;
     if (reg == fail_reg && (fail_value < 0 || byte == fail_value) && fail_writes) {
         --fail_writes;
         return ESP_FAIL;
@@ -43,6 +45,7 @@ static int reg_read(const audio_codec_ctrl_if_t *ctrl, int reg, int reg_len,
                     void *value, int size) {
     (void)ctrl;
     assert(reg_len == 1 && size == 1);
+    if (reg == 0x32 && fail_volume_read) return ESP_FAIL;
     *(uint8_t *)value = registers[reg];
     if (reg == 0x0e && read_reg0e_reserved_zero) *(uint8_t *)value &= 0x7f;
     return ESP_OK;
@@ -238,6 +241,7 @@ int esp_codec_dev_set_in_gain(esp_codec_dev_handle_t dev, float gain) {
     return ESP_OK;
 }
 int esp_codec_dev_set_out_vol(esp_codec_dev_handle_t dev, int volume) {
+    if (skip_volume_set) return ESP_OK;
     (void)codec_write((struct test_codec *)dev->codec, 0x32, (uint8_t)volume);
     return ESP_OK;
 }
@@ -250,6 +254,7 @@ int esp_codec_dev_read(esp_codec_dev_handle_t dev, void *pcm, int bytes) {
 
 static void fresh(void) {
     fail_writes = 0;
+    drop_volume_write = fail_volume_read = skip_volume_set = false;
     fail_tx_fmt = fail_rx_fmt = fail_tx_enable = fail_rx_enable = 0;
     audio_cleanup();
     memset(registers, 0, sizeof(registers));
@@ -273,6 +278,25 @@ static void assert_active(void) {
 }
 
 int main(void) {
+    fresh();
+    assert(bsp_audio_set_volume_checked(80) == ESP_ERR_INVALID_STATE);
+    assert(bsp_audio_set_format(16000, 16, 1) == ESP_OK);
+    assert(bsp_audio_set_volume_checked(65) == ESP_OK && registers[0x32] == 65);
+    fault(0x32, 80, 1); // The fake public API still returns OK after an I2C failure.
+    assert(bsp_audio_set_volume_checked(80) != ESP_OK && s_volume == 65);
+    drop_volume_write = true; // Bus reports success, register keeps the old value.
+    assert(bsp_audio_set_volume_checked(80) != ESP_OK && s_volume == 65);
+    drop_volume_write = false;
+    skip_volume_set = true; // Codec refuses the call, dependency swallows the error.
+    assert(bsp_audio_set_volume_checked(80) != ESP_OK);
+    skip_volume_set = false;
+    fail_volume_read = true;
+    assert(bsp_audio_set_volume_checked(80) != ESP_OK && s_volume == 65);
+    fail_volume_read = false;
+    assert(bsp_audio_set_volume_checked(80) == ESP_OK && s_volume == 80);
+    assert(bsp_audio_set_volume_checked(255) == ESP_OK && s_volume == 100);
+    assert(bsp_audio_sleep() == ESP_OK);
+    assert(bsp_audio_set_volume_checked(80) == ESP_ERR_INVALID_STATE);
     fresh();
     bsp_audio_set_volume(43);
     assert(bsp_audio_set_format(16000, 16, 1) == ESP_OK);

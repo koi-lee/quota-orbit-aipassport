@@ -1,0 +1,9 @@
+{
+  "profile": "B-light-denoise-v1",
+  "clip_id": 0,
+  "samples": 287520,
+  "pcm_sha256": "30fbaddd0544305c49a56ff321da88b91f32a9e40be77a4e8c425f9e8fb04fa4",
+  "text_sha256": "a271d60332f11d493e19d8bc9f230cd6feecab4a862236dc23438224fa6438da",
+  "scope": "Author-selected B audition, first 17.97 seconds excluding the audition-only 30ms excerpt fade",
+  "adpcm_sha256": "330f6ed227a35bf0f38b6b66f446771d71b2e5ed39f1cc95332a62886357b1b3"
+}

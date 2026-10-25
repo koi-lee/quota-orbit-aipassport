@@ -98,6 +98,23 @@ run_static_checks() {
     "${test_dir}/test_orbit_quota_model"
     "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Imain tests/test_orbit_wish_model.c -o "${test_dir}/test_orbit_wish_model"
     "${test_dir}/test_orbit_wish_model"
+    "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Imain \
+        tests/test_guide.c main/guide_data.c main/guide_record.c main/guide_model.c \
+        -o "${test_dir}/test_guide"
+    "${test_dir}/test_guide"
+    "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Imain \
+        tests/test_guide_adpcm.c main/guide_adpcm.c -o "${test_dir}/test_guide_adpcm"
+    "${test_dir}/test_guide_adpcm"
+    "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Itests/guide_audio_stubs -Icomponents/bsp/include -Imain \
+        tests/test_guide_audio_worker.c main/guide_adpcm.c -o "${test_dir}/test_guide_audio_worker"
+    "${test_dir}/test_guide_audio_worker"
+    "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Itests/guide_settings_stubs -Imain \
+        tests/test_guide_settings.c main/guide_settings.c -o "${test_dir}/test_guide_settings"
+    "${test_dir}/test_guide_settings"
+    "${CC:-cc}" -std=c11 -Wall -Wextra -Werror -Imain \
+        tools/decode-guide-voice.c main/guide_adpcm.c -o "${test_dir}/decode-guide-voice"
+    PYTHONDONTWRITEBYTECODE=1 python3 tests/test_guide_voice_assets.py \
+        --decoder "${test_dir}/decode-guide-voice" --summary
     rm -rf "${test_dir}"
     PYTHONDONTWRITEBYTECODE=1 python3 tests/test_orbit_wifi_config.py
     PYTHONDONTWRITEBYTECODE=1 python3 tools/wish-service/test_server.py

@@ -1,3 +1,5 @@
+> **Current development branch: Pocket Scenic Guide v0.5.0.** This branch now builds a separate offline guide for Jiuzhaigou and Huanglong. It is not a Quota Orbit firmware update. See [scope, quick start, content sources and validation](docs/ai-passport/pocket-guide.md). Historical Quota Orbit documentation below describes the previous application and does not enable those features in this build. Version 0.5.0 passed the complete build and host checks, was installed on the device, and its sound controls, subjective listening and volume retention were accepted by the author. Public release status is tracked separately.
+
 <p align="right"><a href="README.zh_CN.md">简体中文</a> · <a href="docs/ai-passport/device-guide/README.zh_TW.md">Traditional Chinese</a> · <strong>English</strong></p>
 
 # Quota Orbit · Codex quota and reset reminders for AI Passport

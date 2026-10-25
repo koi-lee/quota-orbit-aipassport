@@ -44,3 +44,7 @@ esp_err_t bsp_audio_read(void *pcm, size_t bytes);
 
 // 输出音量 0..100(%)。
 void bsp_audio_set_volume(uint8_t percent);
+
+// Checked playback-only setter: reject swallowed control errors and verify the
+// ES8311 DAC volume register. Call serially after opening the codec.
+esp_err_t bsp_audio_set_volume_checked(uint8_t percent);

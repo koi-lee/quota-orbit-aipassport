@@ -1,3 +1,5 @@
+> **当前开发分支：口袋景区导览 v0.5.0。** 本分支构建九寨沟、黄龙离线导览，是独立应用，不是额度星盘更新。请先读[范围、上手、资料与验收](docs/ai-passport/pocket-guide.zh_CN.md)。下方额度星盘文档属于上一应用，不代表本固件含有这些功能；v0.5.0已通过完整构建与主机检查、安装到设备，并经作者确认声音调节、听感与重启音量保存正常；公开发布状态单独记录。
+
 <p align="right"><strong>简体中文</strong> · <a href="docs/ai-passport/device-guide/README.zh_TW.md">繁體中文</a> · <a href="README.md">English</a></p>
 
 # 额度星盘 · AI Passport Codex 额度与重置提醒

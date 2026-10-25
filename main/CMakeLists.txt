@@ -1,13 +1,9 @@
+file(GLOB GUIDE_VOICE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/../assets/voice/clip_*.adpcm")
 idf_component_register(
-    SRCS "main.c" "orbit_model.c" "orbit_language.c" "orbit_access.c" "orbit_net.c" "orbit_audio.c" "orbit_quota.c" "orbit_ui.c" "orbit_wish.c"
-         "../assets/fonts/orbit_font_16.c" "../assets/fonts/orbit_font_14.c"
-         "../assets/fonts/orbit_font_20.c" "../assets/fonts/orbit_font_12.c" "../assets/fonts/orbit_font_24.c" "../assets/character/orbit_archivist.c" "../assets/character/orbit_celebration.c" "../assets/wechat/orbit_miniapp.c"
-         "../assets/fonts/orbit_font_tc_12.c"
-         "../assets/fonts/orbit_font_tc_14.c"
-         "../assets/fonts/orbit_font_tc_16.c"
-         "../assets/fonts/orbit_font_tc_20.c"
-         "../assets/fonts/orbit_font_tc_24.c"
+    SRCS "main.c" "guide_data.c" "guide_record.c" "guide_model.c" "guide_settings.c" "guide_ui.c" "guide_audio.c" "guide_adpcm.c" "guide_voice_assets.c" "../assets/guide/guide_art.c"
+         "../assets/fonts/guide_font_12.c" "../assets/fonts/guide_font_14.c"
+         "../assets/fonts/guide_font_16.c" "../assets/fonts/guide_font_20.c"
+    EMBED_FILES ${GUIDE_VOICE_FILES}
     INCLUDE_DIRS "."
-    REQUIRES bsp esp_event esp_netif esp_timer esp_wifi nvs_flash
-             esp_http_client esp_http_server mbedtls lwip json
+    REQUIRES bsp esp_timer nvs_flash
 )

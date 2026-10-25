@@ -31,6 +31,8 @@ static esp_err_t s_sleep_result;
 static bool     s_codec_release_failed;
 static uint8_t  s_volume;
 static int      s_io_error;
+static bool     s_volume_write_seen;
+static uint8_t  s_volume_written;
 
 // esp_codec_dev 1.6.2 discards some control/data interface errors. Remember the
 // first one at the public interface boundary; never inspect its private state.
@@ -55,7 +57,12 @@ static int audio_ctrl_read(const audio_codec_ctrl_if_t *ctrl, int reg,
 static int audio_ctrl_write(const audio_codec_ctrl_if_t *ctrl, int reg,
                             int reg_len, void *data, int data_len) {
     (void)ctrl;
-    return audio_track_error(s_ctrl->write_reg(s_ctrl, reg, reg_len, data, data_len));
+    int result = audio_track_error(s_ctrl->write_reg(s_ctrl, reg, reg_len, data, data_len));
+    if (result == ESP_CODEC_DEV_OK && reg == 0x32 && reg_len == 1 && data_len == 1) {
+        s_volume_written = *(const uint8_t *)data;
+        s_volume_write_seen = true;
+    }
+    return result;
 }
 
 static int audio_ctrl_info(const audio_codec_ctrl_if_t *ctrl,
@@ -567,4 +574,27 @@ esp_err_t bsp_audio_read(void *pcm, size_t bytes) {
 void bsp_audio_set_volume(uint8_t percent) {
     s_volume = percent > 100 ? 100 : percent;
     if (s_dev && s_opened && !s_sleeping) esp_codec_dev_set_out_vol(s_dev, s_volume);
+}
+
+esp_err_t bsp_audio_set_volume_checked(uint8_t percent) {
+    if (!s_dev || !s_opened || s_sleeping || !s_ctrl) return ESP_ERR_INVALID_STATE;
+    uint8_t requested = percent > 100 ? 100 : percent;
+    s_io_error = ESP_CODEC_DEV_OK;
+    s_volume_write_seen = false;
+    int result = esp_codec_dev_set_out_vol(s_dev, requested);
+    // codec-dev 1.6.2 returns OK even when codec->set_vol fails.
+    if (result != ESP_CODEC_DEV_OK || s_io_error != ESP_CODEC_DEV_OK || !s_volume_write_seen) {
+        ESP_LOGE(TAG, "Output volume %u%% write failed", requested);
+        return ESP_FAIL;
+    }
+    uint8_t actual = 0;
+    result = audio_ctrl_read(&s_checked_ctrl, 0x32, 1, &actual, 1);
+    if (result != ESP_CODEC_DEV_OK || actual != s_volume_written) {
+        ESP_LOGE(TAG, "Output volume %u%% readback failed: expected=0x%02x actual=0x%02x",
+                 requested, s_volume_written, actual);
+        return ESP_FAIL;
+    }
+    s_volume = requested;
+    ESP_LOGI(TAG, "Output volume %u%% DAC=0x%02x verified", requested, actual);
+    return ESP_OK;
 }

@@ -1,3 +1,7 @@
+## 当前分支：口袋景区导览
+
+`feature/pocket-guide` 当前获准开发的是离线导览，不是额度星盘。先读[导览说明](docs/ai-passport/pocket-guide.zh_CN.md)。保留旧源码与历史，应用目标只编译导览相关源码，隔离 NVS；不得把导览更新到社区作品 1250。下列规则继续适用。
+
 <p align="right">
   <strong>简体中文</strong> · <a href="AGENTS.md">English</a>
 </p>

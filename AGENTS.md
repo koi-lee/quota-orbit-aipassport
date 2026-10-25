@@ -1,3 +1,7 @@
+## Current branch: Pocket Scenic Guide
+
+The authorized application on `feature/pocket-guide` is the offline guide, not Quota Orbit. Read [Pocket Guide](docs/ai-passport/pocket-guide.md) first. Preserve the legacy source/history, use only guide application sources in the target, keep NVS namespaces isolated, and never publish this guide as community project 1250. The rules below still apply.
+
 <p align="right">
   <a href="AGENTS.zh_CN.md">简体中文</a> · <strong>English</strong>
 </p>
